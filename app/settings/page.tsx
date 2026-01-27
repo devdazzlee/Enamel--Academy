@@ -1,0 +1,154 @@
+"use client";
+
+import { Navigation } from "@/components/navigation";
+import { Footer } from "@/components/footer";
+import { Key, HelpCircle, Users, Info, Contact } from "lucide-react";
+import Link from "next/link";
+
+export default function SettingsPage() {
+  return (
+    <div className="min-h-screen bg-[#e8e8e8] flex flex-col">
+      <Navigation />
+
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-6">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-[#8b5cf6] to-[#a855f7] rounded-2xl p-6 mb-8 flex justify-between items-center">
+          <h1 className="text-2xl font-semibold text-white">Settings</h1>
+          <div className="text-right text-white">
+            <p className="font-semibold">meta xoft</p>
+            <p className="text-sm text-white/80">metaxoft5@gmail.com</p>
+          </div>
+        </div>
+
+        {/* Account Security Section */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-4">
+            <span className="text-[#1a1a1a]">Account </span>
+            <span className="text-[#8b5cf6]">Secu</span>
+            <span className="text-[#d4a574]">rity</span>
+          </h2>
+
+          <div className="space-y-4">
+            {/* Change Password */}
+            <Link 
+              href="/settings/change-password"
+              className="bg-white rounded-2xl border border-border p-6 flex items-center gap-4 hover:bg-[#f8f9fa] transition-colors group"
+            >
+              <div className="text-[#6b7280] group-hover:text-[#8b5cf6] transition-colors">
+                <Key className="w-6 h-6" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-medium text-[#1a1a1a] group-hover:text-[#8b5cf6] transition-colors">Change Password</h3>
+                <p className="text-sm text-[#6b7280]">
+                  Replace your current password
+                </p>
+              </div>
+              <div className="text-[#6b7280] group-hover:text-[#8b5cf6] transition-colors">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </Link>
+
+            {/* Change Security Question */}
+            <Link 
+              href="/settings/security-question"
+              className="bg-white rounded-2xl border border-border p-6 flex items-center gap-4 hover:bg-[#f8f9fa] transition-colors group"
+            >
+              <div className="text-[#6b7280] group-hover:text-[#8b5cf6] transition-colors">
+                <HelpCircle className="w-6 h-6" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-medium text-[#1a1a1a] group-hover:text-[#8b5cf6] transition-colors">
+                  Change Security Question / Answer
+                </h3>
+                <p className="text-sm text-[#6b7280]">
+                  Amend your security question and/or answer
+                </p>
+              </div>
+              <div className="text-[#6b7280] group-hover:text-[#8b5cf6] transition-colors">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </Link>
+          </div>
+        </div>
+
+        {/* Communications Section */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-4">
+            <span className="text-[#1a1a1a]">Communi</span>
+            <span className="text-[#8b5cf6]">cat</span>
+            <span className="text-[#d4a574]">ions</span>
+          </h2>
+
+          <div className="space-y-4">
+            {/* Manage Permissions */}
+            <Link 
+              href="/settings/permissions"
+              className="bg-white rounded-2xl border border-border p-6 flex items-center gap-4 hover:bg-[#f8f9fa] transition-colors group"
+            >
+              <div className="text-[#6b7280] group-hover:text-[#8b5cf6] transition-colors">
+                <Users className="w-6 h-6" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-medium text-[#1a1a1a] group-hover:text-[#8b5cf6] transition-colors">
+                  Manage your Permissions
+                </h3>
+                <p className="text-sm text-[#6b7280]">
+                  Update or Revoke access granted to your Account
+                </p>
+              </div>
+              <div className="text-[#6b7280] group-hover:text-[#8b5cf6] transition-colors">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </Link>
+
+            {/* Help */}
+            <Link 
+              href="/settings/help"
+              className="bg-white rounded-2xl border border-border p-6 flex items-center gap-4 hover:bg-[#f8f9fa] transition-colors group"
+            >
+              <div className="text-[#6b7280] group-hover:text-[#8b5cf6] transition-colors">
+                <Info className="w-6 h-6" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-medium text-[#1a1a1a] group-hover:text-[#8b5cf6] transition-colors">Help</h3>
+                <p className="text-sm text-[#6b7280]">Get help and support</p>
+              </div>
+              <div className="text-[#6b7280] group-hover:text-[#8b5cf6] transition-colors">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </Link>
+
+            {/* Contact Us */}
+            <Link 
+              href="/settings/contact"
+              className="bg-white rounded-2xl border border-border p-6 flex items-center gap-4 hover:bg-[#f8f9fa] transition-colors group"
+            >
+              <div className="text-[#6b7280] group-hover:text-[#8b5cf6] transition-colors">
+                <Contact className="w-6 h-6" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-medium text-[#1a1a1a] group-hover:text-[#8b5cf6] transition-colors">Contact Us</h3>
+                <p className="text-sm text-[#6b7280]">Get in touch with our support team</p>
+              </div>
+              <div className="text-[#6b7280] group-hover:text-[#8b5cf6] transition-colors">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}
