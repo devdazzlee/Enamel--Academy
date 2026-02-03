@@ -1,6 +1,9 @@
+"use client"
+
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { Check, Phone } from "lucide-react"
+import { Check } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 const plans = [
   {
@@ -20,8 +23,7 @@ const plans = [
       "Automated Personal Development Plan features.",
       "GDC Reports and Annual Statements.",
     ],
-    buttonText: "Call Us Now",
-    buttonIcon: Phone,
+    buttonText: "Subscribe Now",
     highlighted: true,
   },
   {
@@ -75,6 +77,12 @@ const plans = [
 ]
 
 export default function PricingPage() {
+  const router = useRouter()
+
+  const handleSubscribe = (planName: string) => {
+    router.push('/payment')
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Navigation />
@@ -86,7 +94,6 @@ export default function PricingPage() {
 
         <div className="space-y-6">
           {plans.map((plan) => {
-            const ButtonIcon = plan.buttonIcon
             return (
               <div
                 key={plan.name}
@@ -118,8 +125,10 @@ export default function PricingPage() {
                     ))}
                   </div>
 
-                  <button className="flex items-center gap-2 px-6 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors">
-                    {ButtonIcon && <ButtonIcon className="h-4 w-4" />}
+                  <button 
+                    onClick={() => handleSubscribe(plan.name)}
+                    className="flex items-center gap-2 px-6 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors"
+                  >
                     {plan.buttonText}
                   </button>
                 </div>

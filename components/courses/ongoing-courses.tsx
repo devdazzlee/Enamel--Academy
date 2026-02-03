@@ -1,5 +1,8 @@
+"use client"
+
 import Image from "next/image"
 import { FileText } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 const ongoingCourses = [
   {
@@ -17,6 +20,12 @@ const ongoingCourses = [
 ]
 
 export function OngoingCourses() {
+  const router = useRouter()
+
+  const handleResumeCourse = (courseId: number) => {
+    router.push(`/course/${courseId}`)
+  }
+
   return (
     <section className="mb-8">
       <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
@@ -47,7 +56,10 @@ export function OngoingCourses() {
                   style={{ width: `${course.progress}%` }}
                 />
               </div>
-              <button className="w-full py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors">
+              <button 
+                onClick={() => handleResumeCourse(course.id)}
+                className="w-full py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors"
+              >
                 Resume Course
               </button>
             </div>

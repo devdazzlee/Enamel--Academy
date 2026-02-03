@@ -151,7 +151,7 @@ const defaultCourses: Course[] = [
     duration: "2h",
     lessons: 20,
     progress: 45,
-    image: "/placeholder.svg?height=200&width=400&text=Dentistry",
+    image: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400&h=200&fit=crop",
     category: "Aesthetic Dentistry",
     level: "Advanced",
     status: "in_progress",
@@ -164,7 +164,7 @@ const defaultCourses: Course[] = [
     duration: "3h",
     lessons: 20,
     progress: 45,
-    image: "/placeholder.svg?height=200&width=400&text=Safeguarding",
+    image: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=400&h=200&fit=crop",
     category: "Safeguarding",
     level: "Advanced",
     status: "in_progress",
@@ -177,7 +177,7 @@ const defaultCourses: Course[] = [
     duration: "2h",
     lessons: 8,
     progress: 0,
-    image: "/placeholder.svg?height=200&width=400&text=Medical",
+    image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=200&fit=crop",
     category: "Medical Emergencies",
     level: "Intermediate",
     status: "not_started",
@@ -190,7 +190,7 @@ const defaultCourses: Course[] = [
     duration: "3h",
     lessons: 12,
     progress: 45,
-    image: "/placeholder.svg?height=200&width=400&text=Radiography",
+    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=200&fit=crop",
     category: "Radiography",
     level: "Intermediate",
     status: "in_progress",
@@ -203,7 +203,7 @@ const defaultCourses: Course[] = [
     duration: "4h",
     lessons: 15,
     progress: 0,
-    image: "/placeholder.svg?height=200&width=400&text=Digital",
+    image: "https://images.unsplash.com/photo-1582719471388-4dcefb7d0fd8?w=400&h=200&fit=crop",
     category: "Digital Dentistry",
     level: "Beginner",
     status: "not_started",
@@ -216,7 +216,7 @@ const defaultCourses: Course[] = [
     duration: "2h",
     lessons: 10,
     progress: 100,
-    image: "/placeholder.svg?height=200&width=400&text=Infection",
+    image: "https://images.unsplash.com/photo-1559839734-2b71ea19dce8?w=400&h=200&fit=crop",
     category: "Infection Control",
     level: "Essential",
     status: "completed",
@@ -229,7 +229,7 @@ const defaultCourses: Course[] = [
     duration: "1.5h",
     lessons: 6,
     progress: 0,
-    image: "/placeholder.svg?height=200&width=400&text=Communication",
+    image: "https://images.unsplash.com/photo-1601225184983-7da4b9d1a7a2?w=400&h=200&fit=crop",
     category: "Professional Development",
     level: "Beginner",
     status: "not_started",
@@ -242,7 +242,7 @@ const defaultCourses: Course[] = [
     duration: "2h",
     lessons: 8,
     progress: 0,
-    image: "/placeholder.svg?height=200&width=400&text=Anxiety",
+    image: "https://images.unsplash.com/photo-1611689384274-2a4c6b9b8b5c?w=400&h=200&fit=crop",
     category: "Anxiety & Sedation",
     level: "Intermediate",
     status: "not_started",
@@ -379,7 +379,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const resumeCourse = useCallback((courseId: string) => {
     setCourses(prev => prev.map(course => 
       course.id === courseId 
-        ? { ...course, progress: Math.min(course.progress + 10, 100) }
+        ? { 
+            ...course, 
+            progress: Math.min(course.progress + 10, 100),
+            status: Math.min(course.progress + 10, 100) >= 100 ? "completed" : "in_progress"
+          }
         : course
     ))
   }, [])

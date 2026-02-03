@@ -14,9 +14,10 @@ export default function SignupPage() {
     mobile: "",
     password: "",
     confirmPassword: "",
+    iAmA: "",
   })
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
@@ -43,7 +44,7 @@ export default function SignupPage() {
                 placeholder="Enter your name.."
                 value={formData.firstName}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-card border-b-2 border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                className="w-full px-4 py-3 bg-card border border-border rounded-full text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
               />
             </div>
             <div>
@@ -54,7 +55,7 @@ export default function SignupPage() {
                 placeholder="Enter your name.."
                 value={formData.lastName}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-card border-b-2 border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                className="w-full px-4 py-3 bg-card border border-border rounded-full text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
               />
             </div>
             <div>
@@ -65,7 +66,7 @@ export default function SignupPage() {
                 placeholder="info@xyz.com"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-card border-b-2 border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                className="w-full px-4 py-3 bg-card border border-border rounded-full text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
               />
             </div>
             <div>
@@ -73,10 +74,10 @@ export default function SignupPage() {
               <input
                 type="tel"
                 name="mobile"
-                placeholder="+91 - 98596 58000"
+                placeholder="+1 - (555) 123-4567"
                 value={formData.mobile}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-card border-b-2 border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                className="w-full px-4 py-3 bg-card border border-border rounded-full text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
               />
             </div>
             <div>
@@ -87,7 +88,7 @@ export default function SignupPage() {
                 placeholder="xxxxxxxxxx"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-card border-b-2 border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                className="w-full px-4 py-3 bg-card border border-border rounded-full text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
               />
             </div>
             <div>
@@ -98,8 +99,22 @@ export default function SignupPage() {
                 placeholder="xxxxxxxxxx"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-card border-b-2 border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                className="w-full px-4 py-3 bg-card border border-border rounded-full text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
               />
+            </div>
+            <div>
+              <label className="block text-sm text-muted-foreground mb-2">I am a :</label>
+              <select
+                name="iAmA"
+                value={formData.iAmA}
+                onChange={handleChange}
+                className="w-full px-4 py-3 bg-card border border-border rounded-full text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+              >
+                <option value="">Select your profession</option>
+                <option value="dentist">Dentist</option>
+                <option value="dental-nurse">Dental Nurse</option>
+                <option value="dental-care-professional">Dental Care Professional</option>
+              </select>
             </div>
           </div>
 

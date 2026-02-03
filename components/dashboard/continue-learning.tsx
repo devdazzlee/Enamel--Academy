@@ -11,7 +11,7 @@ export function ContinueLearning() {
 
   const handleResume = (courseId: string) => {
     resumeCourse(courseId)
-    router.push(`/courses/${courseId}`)
+    router.push(`/course/${courseId}`)
   }
 
   if (inProgressCourses.length === 0) {
@@ -42,10 +42,14 @@ export function ContinueLearning() {
           >
             <div className="relative w-full md:w-48 h-32 rounded-xl overflow-hidden flex-shrink-0">
               <Image
-                src={course.image || "/placeholder.svg"}
+                src={course.image && course.image !== "" ? course.image : "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400&h=200&fit=crop"}
                 alt={course.title}
                 fill
                 className="object-cover"
+                onError={(e) => {
+                  // Fallback to a default image if the main image fails to load
+                  e.currentTarget.src = "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400&h=200&fit=crop"
+                }}
               />
             </div>
             <div className="flex-1">

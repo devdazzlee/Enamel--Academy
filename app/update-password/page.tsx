@@ -1,0 +1,69 @@
+"use client"
+
+import React, { useState } from "react"
+import { EnamelLogo } from "@/components/enamel-logo"
+import { PasswordInput } from "@/components/password-input"
+
+export default function UpdatePasswordPage() {
+  const [formData, setFormData] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmNewPassword: "",
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Handle update password logic
+    console.log("Update password:", formData)
+  }
+
+  return (
+    <main className="min-h-screen bg-[#e8e8e8] flex items-center justify-center p-4">
+      <div className="w-full max-w-xl">
+        <div className="flex flex-col items-center mb-10">
+          <EnamelLogo className="mb-2" />
+          <p className="text-[#6b7280] text-sm">Update Password</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <PasswordInput
+            label="Current Password"
+            name="currentPassword"
+            value={formData.currentPassword}
+            onChange={handleChange}
+            placeholder="Current Password"
+          />
+
+          <PasswordInput
+            label="New Password"
+            name="newPassword"
+            value={formData.newPassword}
+            onChange={handleChange}
+            placeholder="New Password"
+          />
+
+          <PasswordInput
+            label="Confirm New Password"
+            name="confirmNewPassword"
+            value={formData.confirmNewPassword}
+            onChange={handleChange}
+            placeholder="Confirm New Password"
+          />
+
+          <div className="flex justify-center pt-4">
+            <button
+              type="submit"
+              className="px-16 py-3 bg-[#8b5cf6] text-white rounded-lg font-medium hover:bg-[#7c3aed] transition-colors"
+            >
+              Update Password
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+  )
+}

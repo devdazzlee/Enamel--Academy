@@ -24,12 +24,20 @@ const filterOptions = {
     "Oral Cancer: Early Detection", "Personal Development", "Practice Management",
     "Radiography & Radiation Protection", "Safeguarding", "Staff & HR", "Staff Development"
   ],
-  "Format": [],
-  "Length": [],
-  "Grouping": [],
+  "Format": [
+    "Article", "Audio", "Blended Learning", "Book", "Clinical", "Conference", "Course", "e-Learning", 
+    "Event", "Hands On", "ILM", "Journal", "Live", "Live Webinar", "Online", "On-demand", "On-demand Webinar",
+    "Podcast", "Practical", "Recorded Webinar", "Seminar", "Theatre", "Video", "Virtual", "Webinar", "Workshop"
+  ],
+  "Length": [
+    "0-15 mins", "15-30 mins", "30-60 mins", "1-2 hours", "2-3 hours", "3-4 hours", "4+ hours"
+  ],
+  "Grouping": [
+    "Alphabetical", "Newest First", "Oldest First", "Most Popular", "Highest Rated", "Lowest Price", "Highest Price"
+  ]
 }
 
-export function CourseFilters() {
+export function CourseFilters({ onFiltersChange }: { onFiltersChange: (filters: Record<string, string[]>) => void }) {
   const [openFilter, setOpenFilter] = useState<string | null>(null)
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({})
 
@@ -38,20 +46,49 @@ export function CourseFilters() {
   }
 
   const toggleOption = (filter: string, option: string) => {
-    setSelectedFilters((prev) => {
+    const newFilters = setSelectedFilters((prev) => {
       const current = prev[filter] || []
       if (current.includes(option)) {
-        return { ...prev, [filter]: current.filter((o) => o !== option) }
+        const updated = { ...prev, [filter]: current.filter((o) => o !== option) }
+        onFiltersChange(updated)
+        return updated
       }
-      return { ...prev, [filter]: [...current, option] }
+      const updated = { ...prev, [filter]: [...current, option] }
+      onFiltersChange(updated)
+      return updated
     })
+    return newFilters
+  }
+
+  const clearAllFilters = () => {
+    setSelectedFilters({})
+    onFiltersChange({})
+  }
+
+  const getActiveFilterCount = () => {
+    return Object.values(selectedFilters).reduce((total, filterArray) => total + filterArray.length, 0)
   }
 
   return (
     <div className="mb-6">
-      <div className="flex items-center gap-2 mb-4">
-        <Filter className="h-4 w-4 text-primary" />
-        <span className="text-primary font-medium">Filters</span>
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2">
+          <Filter className="h-4 w-4 text-primary" />
+          <span className="text-primary font-medium">Filters</span>
+          {getActiveFilterCount() > 0 && (
+            <span className="bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full">
+              {getActiveFilterCount()}
+            </span>
+          )}
+        </div>
+        {getActiveFilterCount() > 0 && (
+          <button
+            onClick={clearAllFilters}
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Clear all
+          </button>
+        )}
       </div>
       <div className="flex flex-wrap gap-3">
         {Object.keys(filterOptions).map((filter) => (

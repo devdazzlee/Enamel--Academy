@@ -127,3 +127,31 @@
     font-size: 1rem; /* Base font size */
   }
 }
+
+/* Print styles: print only the PDP content area */
+@media print {
+  /* Hide everything by default */
+  body * {
+    visibility: hidden !important;
+  }
+  /* Show only the print area */
+  #pdp-print-area, #pdp-print-area * {
+    visibility: visible !important;
+  }
+  #pdp-print-area {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    background: white !important;
+  }
+  /* Remove default chrome */
+  nav, header, footer, .no-print {
+    display: none !important;
+  }
+}
+
+@page {
+  size: A4;
+  margin: 16mm;
+}

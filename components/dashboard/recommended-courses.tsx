@@ -1,5 +1,8 @@
+"use client"
+
 import Image from "next/image"
 import { Clock, FileText } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 const recommendedCourses = [
   {
@@ -21,6 +24,12 @@ const recommendedCourses = [
 ]
 
 export function RecommendedCourses() {
+  const router = useRouter()
+
+  const handleStartCourse = (courseId: number) => {
+    router.push('/course-detail')
+  }
+
   return (
     <section>
       <h2 className="text-xl font-semibold mb-4">
@@ -54,7 +63,10 @@ export function RecommendedCourses() {
                   {course.lessons} lessons
                 </span>
               </div>
-              <button className="w-full py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors">
+              <button 
+                onClick={() => handleStartCourse(course.id)}
+                className="w-full py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors"
+              >
                 Start Course
               </button>
             </div>

@@ -10,12 +10,17 @@ import { Search } from "lucide-react"
 
 export default function CoursesPage() {
   const [searchQuery, setSearchQuery] = useState("")
+  const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({})
+
+  const handleFiltersChange = (filters: Record<string, string[]>) => {
+    setActiveFilters(filters)
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Navigation />
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-6">
-        <CourseFilters />
+        <CourseFilters onFiltersChange={handleFiltersChange} />
         
         <div className="relative mb-8">
           <input
@@ -31,7 +36,7 @@ export default function CoursesPage() {
         </div>
 
         <OngoingCourses />
-        <CourseGrid />
+        <CourseGrid activeFilters={activeFilters} searchQuery={searchQuery} />
       </main>
       <Footer />
     </div>
