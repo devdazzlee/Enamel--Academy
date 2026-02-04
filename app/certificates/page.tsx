@@ -387,35 +387,35 @@ export default function CertificatesPage() {
   return (
     <div className="min-h-screen flex flex-col bg-[#e8e8e8]">
       <Navigation activeItem="CPD Certificates" />
-      <main className="flex-1 max-w-7xl mx-auto w-full px-6 py-8">
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 py-6 sm:py-8">
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#8b5cf6] to-[#a855f7] rounded-2xl p-6 mb-8">
-          <h1 className="text-2xl font-semibold text-white">Training and Certificates</h1>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4">
-              <div className="flex items-center gap-3">
-                <Award className="h-8 w-8 text-white" />
+        <div className="bg-gradient-to-r from-[#8b5cf6] to-[#a855f7] rounded-2xl p-4 sm:p-6 mb-6 sm:mb-8">
+          <h1 className="text-xl sm:text-2xl font-semibold text-white">Training and Certificates</h1>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-4 sm:mt-6">
+            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-3 sm:p-4">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <Award className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
                 <div>
-                  <p className="text-white/80 text-sm">Total CPD Hours</p>
-                  <p className="text-2xl font-bold text-white">{totalCpdHours.toFixed(1)}</p>
+                  <p className="text-white/80 text-xs sm:text-sm">Total CPD Hours</p>
+                  <p className="text-xl sm:text-2xl font-bold text-white">{totalCpdHours.toFixed(1)}</p>
                 </div>
               </div>
             </div>
-            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4">
-              <div className="flex items-center gap-3">
-                <FileText className="h-8 w-8 text-white" />
+            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-3 sm:p-4">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <FileText className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
                 <div>
-                  <p className="text-white/80 text-sm">Completed Courses</p>
-                  <p className="text-2xl font-bold text-white">{completedCourses}</p>
+                  <p className="text-white/80 text-xs sm:text-sm">Completed Courses</p>
+                  <p className="text-xl sm:text-2xl font-bold text-white">{completedCourses}</p>
                 </div>
               </div>
             </div>
-            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4">
-              <div className="flex items-center gap-3">
-                <Award className="h-8 w-8 text-white" />
+            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-3 sm:p-4">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <Award className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
                 <div>
-                  <p className="text-white/80 text-sm">Average Score</p>
-                  <p className="text-2xl font-bold text-white">{averageScore}%</p>
+                  <p className="text-white/80 text-xs sm:text-sm">Average Score</p>
+                  <p className="text-xl sm:text-2xl font-bold text-white">{averageScore}%</p>
                 </div>
               </div>
             </div>
@@ -423,21 +423,21 @@ export default function CertificatesPage() {
         </div>
 
         {/* Filters and Search */}
-        <div className="flex gap-6 mb-6">
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 mb-4 sm:mb-6">
           {/* Sidebar Filters */}
-          <div className="w-56 flex-shrink-0">
-            <div className="bg-white rounded-xl border border-[#e5e7eb] p-4">
-              <h2 className="text-[#8b5cf6] font-semibold mb-3 flex items-center gap-2">
+          <div className="w-full lg:w-56 flex-shrink-0">
+            <div className="bg-white rounded-xl border border-[#e5e7eb] p-3 sm:p-4">
+              <h2 className="text-[#8b5cf6] font-semibold mb-2 sm:mb-3 flex items-center gap-2 text-sm sm:text-base">
                 <Filter className="h-4 w-4" />
                 Filters
               </h2>
               <div>
-                <label className="text-sm text-[#6b7280] mb-2 block">Categories</label>
+                <label className="text-xs sm:text-sm text-[#6b7280] mb-1 sm:mb-2 block">Categories</label>
                 <div className="relative">
                   <select
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="w-full px-3 py-2 bg-[#f5f5f5] border-0 rounded-lg text-sm text-[#9ca3af] appearance-none focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]/20"
+                    className="w-full px-3 py-2 bg-[#f5f5f5] border-0 rounded-lg text-xs sm:text-sm text-[#9ca3af] appearance-none focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]/20"
                   >
                     <option value="">All Categories</option>
                     <option value="clinical">Clinical</option>
@@ -448,12 +448,12 @@ export default function CertificatesPage() {
                 </div>
               </div>
               
-              <div className="mt-4">
-                <label className="text-sm text-[#6b7280] mb-2 block">Sort By</label>
+              <div className="mt-3 sm:mt-4">
+                <label className="text-xs sm:text-sm text-[#6b7280] mb-1 sm:mb-2 block">Sort By</label>
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="w-full px-3 py-2 bg-[#f5f5f5] border-0 rounded-lg text-sm text-[#9ca3af] appearance-none focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]/20"
+                  className="w-full px-3 py-2 bg-[#f5f5f5] border-0 rounded-lg text-xs sm:text-sm text-[#9ca3af] appearance-none focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]/20"
                 >
                   <option value="date">Date</option>
                   <option value="title">Title</option>
@@ -465,37 +465,38 @@ export default function CertificatesPage() {
           </div>
 
           {/* Main Content */}
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             {/* Search and Export */}
-            <div className="flex items-start gap-4 mb-4">
+            <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
               <div className="flex-1 relative">
                 <input
                   type="text"
                   placeholder="Search certificates by title, instructor, or ID..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-4 py-3 pr-14 bg-white border border-[#e5e7eb] rounded-xl text-[#1a1a1a] placeholder:text-[#9ca3af] focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]/20 focus:border-[#8b5cf6] transition-colors"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 pr-10 sm:pr-14 bg-white border border-[#e5e7eb] rounded-xl text-xs sm:text-sm sm:text-base text-[#1a1a1a] placeholder:text-[#9ca3af] focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]/20 focus:border-[#8b5cf6] transition-colors"
                 />
-                <button className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-[#8b5cf6] rounded-lg flex items-center justify-center text-white hover:bg-[#7c3aed] transition-colors">
-                  <Search className="h-5 w-5" />
+                <button className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-[#8b5cf6] rounded-lg flex items-center justify-center text-white hover:bg-[#7c3aed] transition-colors">
+                  <Search className="h-4 w-4 sm:h-5 sm:w-5" />
                 </button>
               </div>
               <button 
                 onClick={handleExport}
-                className="px-6 py-2.5 bg-[#8b5cf6] text-white rounded-lg text-sm font-medium hover:bg-[#7c3aed] transition-colors flex items-center gap-2"
+                className="w-full sm:w-auto px-3 sm:px-6 py-2 sm:py-2.5 bg-[#8b5cf6] text-white rounded-lg text-xs sm:text-sm font-medium hover:bg-[#7c3aed] transition-colors flex items-center justify-center gap-1 sm:gap-2"
               >
-                <Download className="h-4 w-4" />
-                Export to Excel
+                <Download className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline">Export to Excel</span>
+                <span className="sm:hidden">Export</span>
               </button>
             </div>
 
             {/* Column Filters */}
-            <div className="flex flex-wrap gap-3 mb-6">
+            <div className="flex flex-wrap gap-2 sm:gap-3 mb-3 sm:mb-6">
               {activeFilters.map((filter) => (
                 <button
                   key={filter.label}
                   onClick={() => toggleFilter(filter.label)}
-                  className={`px-5 py-2.5 text-sm rounded-full border transition-colors ${
+                  className={`px-3 sm:px-5 py-1.5 sm:py-2.5 text-xs sm:text-sm rounded-full border transition-colors ${
                     filter.active
                       ? "border-[#8b5cf6] bg-white text-[#1a1a1a] shadow-sm"
                       : "border-[#e5e7eb] bg-white text-[#6b7280] hover:border-[#8b5cf6]/50"
@@ -507,7 +508,7 @@ export default function CertificatesPage() {
             </div>
 
             {/* Results Summary */}
-            <div className="mb-4 text-sm text-[#6b7280]">
+            <div className="mb-3 sm:mb-4 text-xs sm:text-sm text-[#6b7280]">
               Showing {filteredAndSortedData.length} of {certificatesData.length} certificates
             </div>
           </div>
@@ -516,23 +517,23 @@ export default function CertificatesPage() {
         {/* Table */}
         <div className="bg-white rounded-xl border border-[#e5e7eb] overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full min-w-[600px]">
               <thead className="bg-[#f9f5ff] border-b border-[#e5e7eb]">
                 <tr>
                   {activeFilters.filter(f => f.active).map((filter) => (
                     <th 
                       key={filter.label}
-                      className="px-6 py-4 text-left text-xs font-medium text-[#6b7280] uppercase tracking-wider cursor-pointer hover:bg-[#f0ebff] transition-colors"
+                      className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-medium text-[#6b7280] uppercase tracking-wider cursor-pointer hover:bg-[#f0ebff] transition-colors"
                       onClick={() => {
                         if (filter.label === "Date") handleSort("date")
                         if (filter.label === "Title") handleSort("title")
                         if (filter.label === "Time Taken") handleSort("cpdHours")
                       }}
                     >
-                      <div className="flex items-center gap-2">
-                        {filter.label}
+                      <div className="flex items-center gap-1 sm:gap-2">
+                        <span className="truncate">{filter.label}</span>
                         {(filter.label === "Date" || filter.label === "Title" || filter.label === "Time Taken") && (
-                          <span className="text-[#8b5cf6]">
+                          <span className="text-[#8b5cf6] flex-shrink-0">
                             {sortBy === (filter.label === "Time Taken" ? "cpdHours" : filter.label.toLowerCase()) && 
                              (sortOrder === "asc" ? "↑" : "↓")
                             }
@@ -541,7 +542,7 @@ export default function CertificatesPage() {
                       </div>
                     </th>
                   ))}
-                  <th className="px-6 py-4 text-left text-xs font-medium text-[#6b7280] uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-medium text-[#6b7280] uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
@@ -550,10 +551,10 @@ export default function CertificatesPage() {
                 {filteredAndSortedData.map((certificate) => (
                   <tr key={certificate.id} className="hover:bg-[#f9f5ff] transition-colors">
                     {activeFilters.filter(f => f.active).map((filter) => (
-                      <td key={filter.label} className="px-6 py-4 whitespace-nowrap">
+                      <td key={filter.label} className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
                         {filter.label === "Date" && (
                           <div>
-                            <div className="text-sm font-medium text-[#1a1a1a]">
+                            <div className="text-xs sm:text-sm font-medium text-[#1a1a1a]">
                               {new Date(certificate.date).toLocaleDateString()}
                             </div>
                             <div className="text-xs text-[#6b7280]">
@@ -563,13 +564,13 @@ export default function CertificatesPage() {
                         )}
                         {filter.label === "Title" && (
                           <div>
-                            <div className="text-sm font-medium text-[#1a1a1a]">{certificate.title}</div>
+                            <div className="text-xs sm:text-sm font-medium text-[#1a1a1a] truncate max-w-[150px] sm:max-w-none">{certificate.title}</div>
                             <div className="text-xs text-[#6b7280]">ID: {certificate.id}</div>
-                            <div className="text-xs text-[#6b7280]">Instructor: {certificate.instructor}</div>
+                            <div className="text-xs text-[#6b7280] truncate max-w-[150px] sm:max-w-none">Instructor: {certificate.instructor}</div>
                           </div>
                         )}
                         {filter.label === "Format" && (
-                          <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
+                          <span className={`inline-flex px-1.5 sm:px-2 py-1 text-xs font-medium rounded-full ${
                             certificate.format === "Online" ? "bg-blue-100 text-blue-700" :
                             certificate.format === "Workshop" ? "bg-green-100 text-green-700" :
                             certificate.format === "Hands-on" ? "bg-purple-100 text-purple-700" :
@@ -579,15 +580,15 @@ export default function CertificatesPage() {
                           </span>
                         )}
                         {filter.label === "Status" && (
-                          <span className="inline-flex px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700">
+                          <span className="inline-flex px-1.5 sm:px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700">
                             {certificate.status}
                           </span>
                         )}
                         {filter.label === "Time Taken" && (
-                          <div className="text-sm text-[#1a1a1a]">{certificate.timeTaken}</div>
+                          <div className="text-xs sm:text-sm text-[#1a1a1a]">{certificate.timeTaken}</div>
                         )}
                         {filter.label === "Type" && (
-                          <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
+                          <span className={`inline-flex px-1.5 sm:px-2 py-1 text-xs font-medium rounded-full ${
                             certificate.type === "Core CPD" ? "bg-[#8b5cf6]/10 text-[#8b5cf6]" :
                             certificate.type === "Mandatory" ? "bg-red-100 text-red-700" :
                             certificate.type === "Advanced" ? "bg-orange-100 text-orange-700" :
@@ -597,7 +598,7 @@ export default function CertificatesPage() {
                           </span>
                         )}
                         {filter.label === "Categories" && (
-                          <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
+                          <span className={`inline-flex px-1.5 sm:px-2 py-1 text-xs font-medium rounded-full ${
                             certificate.category === "Clinical" ? "bg-blue-100 text-blue-700" :
                             certificate.category === "Compliance" ? "bg-red-100 text-red-700" :
                             "bg-green-100 text-green-700"
@@ -607,21 +608,21 @@ export default function CertificatesPage() {
                         )}
                       </td>
                     ))}
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center gap-2">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
+                      <div className="flex items-center gap-1 sm:gap-2">
                         <button
                           onClick={() => handleViewCertificate(certificate.id)}
-                          className="p-2 text-[#8b5cf6] hover:bg-[#8b5cf6]/10 rounded-lg transition-colors"
+                          className="p-1.5 sm:p-2 text-[#8b5cf6] hover:bg-[#8b5cf6]/10 rounded-lg transition-colors"
                           title="View Certificate"
                         >
-                          <Eye className="h-4 w-4" />
+                          <Eye className="h-3 w-3 sm:h-4 sm:w-4" />
                         </button>
                         <button
                           onClick={() => handleDownloadCertificate(certificate.id, certificate.title)}
-                          className="p-2 text-[#8b5cf6] hover:bg-[#8b5cf6]/10 rounded-lg transition-colors"
+                          className="p-1.5 sm:p-2 text-[#8b5cf6] hover:bg-[#8b5cf6]/10 rounded-lg transition-colors"
                           title="Download Certificate"
                         >
-                          <Download className="h-4 w-4" />
+                          <Download className="h-3 w-3 sm:h-4 sm:w-4" />
                         </button>
                       </div>
                     </td>
@@ -632,10 +633,10 @@ export default function CertificatesPage() {
           </div>
           
           {filteredAndSortedData.length === 0 && (
-            <div className="text-center py-12">
-              <FileText className="h-12 w-12 text-[#9ca3af] mx-auto mb-4" />
-              <p className="text-[#9ca3af] text-lg">No certificates found</p>
-              <p className="text-[#9ca3af] text-sm mt-2">Try adjusting your search or filters</p>
+            <div className="text-center py-8 sm:py-12">
+              <FileText className="h-10 w-10 sm:h-12 sm:w-12 text-[#9ca3af] mx-auto mb-3 sm:mb-4" />
+              <p className="text-[#9ca3af] text-base sm:text-lg">No certificates found</p>
+              <p className="text-[#9ca3af] text-xs sm:text-sm mt-2">Try adjusting your search or filters</p>
             </div>
           )}
         </div>
@@ -647,10 +648,7 @@ export default function CertificatesPage() {
       {selectedCertificate && (
         <CertificateModal
           isOpen={isModalOpen}
-          onClose={() => {
-            setIsModalOpen(false)
-            setSelectedCertificate(null)
-          }}
+          onClose={() => setIsModalOpen(false)}
           certificate={selectedCertificate}
         />
       )}
