@@ -313,15 +313,7 @@ export default function PDPDetailView() {
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="mt-8 pt-6 border-t border-gray-200 flex justify-between items-center text-sm text-gray-600">
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-gray-900">Terms & Conditions</a>
-            <a href="#" className="hover:text-gray-900">Privacy Policy</a>
-            <a href="#" className="hover:text-gray-900">Cookies</a>
-          </div>
-          <div>© 2025 · All rights reserved</div>
-        </div>
+    
       </div>
     </div>
   );

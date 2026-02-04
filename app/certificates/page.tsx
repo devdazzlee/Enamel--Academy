@@ -3,7 +3,12 @@
 import { useState } from "react"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
+import { CertificateModal } from "@/components/certificate-modal"
 import { Search, ChevronDown, Download, Calendar, Clock, Award, Filter, FileText, Eye } from "lucide-react"
+import jsPDF from 'jspdf';
+import { toPng } from 'html-to-image';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 const columnFilters = [
   { label: "Date", active: true },
@@ -144,6 +149,8 @@ export default function CertificatesPage() {
   const [activeFilters, setActiveFilters] = useState(columnFilters)
   const [sortBy, setSortBy] = useState("date")
   const [sortOrder, setSortOrder] = useState("desc")
+  const [selectedCertificate, setSelectedCertificate] = useState<typeof certificatesData[0] | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const toggleFilter = (label: string) => {
     setActiveFilters(prev => 
@@ -198,15 +205,183 @@ export default function CertificatesPage() {
   }
 
   const handleExport = () => {
-    alert("Export functionality would download Excel file with certificate data")
+    try {
+      // Prepare data for Excel export
+      const exportData = filteredAndSortedData.map(cert => ({
+        'Certificate ID': cert.id,
+        'Course Title': cert.title,
+        'Category': cert.category,
+        'Type': cert.type,
+        'Date': new Date(cert.date).toLocaleDateString(),
+        'Completion Date': new Date(cert.completionDate).toLocaleDateString(),
+        'Time Taken': cert.timeTaken,
+        'CPD Hours': cert.cpdHours,
+        'Status': cert.status,
+        'Format': cert.format,
+        'Instructor': cert.instructor,
+        'Score (%)': cert.score
+      }));
+
+      // Create workbook
+      const ws = XLSX.utils.json_to_sheet(exportData);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "CPD Certificates");
+
+      // Auto-size columns
+      const colWidths = [
+        { wch: 15 }, // Certificate ID
+        { wch: 35 }, // Course Title
+        { wch: 15 }, // Category
+        { wch: 15 }, // Type
+        { wch: 12 }, // Date
+        { wch: 15 }, // Completion Date
+        { wch: 12 }, // Time Taken
+        { wch: 10 }, // CPD Hours
+        { wch: 12 }, // Status
+        { wch: 12 }, // Format
+        { wch: 20 }, // Instructor
+        { wch: 10 }  // Score
+      ];
+      ws['!cols'] = colWidths;
+
+      // Generate Excel file
+      const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+      
+      // Create blob and download
+      const blob = new Blob([excelBuffer], { 
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' 
+      });
+      
+      const fileName = `CPD-Certificates-${new Date().toISOString().split('T')[0]}.xlsx`;
+      saveAs(blob, fileName);
+      
+    } catch (error) {
+      console.error('Error exporting to Excel:', error);
+      alert('Error exporting to Excel. Please try again.');
+    }
   }
 
   const handleViewCertificate = (certId: string) => {
-    alert(`Viewing certificate ${certId} - would open certificate preview`)
+    const certificate = certificatesData.find(cert => cert.id === certId)
+    if (certificate) {
+      setSelectedCertificate(certificate)
+      setIsModalOpen(true)
+    }
   }
 
-  const handleDownloadCertificate = (certId: string, title: string) => {
-    alert(`Downloading certificate: ${title}`)
+  const handleDownloadCertificate = async (certId: string, title: string) => {
+    const certificate = certificatesData.find(cert => cert.id === certId)
+    if (!certificate) return
+
+    // Create a temporary certificate element for download
+    const tempDiv = document.createElement('div')
+    tempDiv.style.position = 'absolute'
+    tempDiv.style.left = '-9999px'
+    tempDiv.style.top = '-9999px'
+    tempDiv.style.width = '800px'
+    tempDiv.style.padding = '48px'
+    tempDiv.style.backgroundColor = 'white'
+    tempDiv.style.border = '1px solid #e5e7eb'
+    tempDiv.style.borderRadius = '8px'
+    tempDiv.style.fontFamily = 'system-ui, -apple-system, sans-serif'
+
+    tempDiv.innerHTML = `
+      <div style="text-align: center; margin-bottom: 24px;">
+        <div style="color: #8b5cf6; margin-bottom: 16px;">
+          <svg width="48" height="48" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+          </svg>
+        </div>
+        <h2 style="font-size: 32px; font-weight: bold; color: #7c3aed; margin-bottom: 8px;">Certificate of Completion</h2>
+        <p style="color: #6b7280;">Continuing Professional Development</p>
+      </div>
+      
+      <div style="border-top: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; padding: 32px 0; margin-bottom: 32px;">
+        <p style="text-align: center; color: #6b7280; margin-bottom: 16px;">This is to certify that</p>
+        <h3 style="font-size: 32px; font-weight: bold; color: #111827; text-align: center; margin-bottom: 8px;">Dr. Sarah Johnson</h3>
+        <p style="text-align: center; color: #6b7280; margin-bottom: 24px;">GDC Registration: 123456</p>
+        
+        <p style="text-align: center; color: #6b7280; margin-bottom: 16px;">has successfully completed</p>
+        <h4 style="font-size: 24px; font-weight: bold; color: #7c3aed; text-align: center; margin-bottom: 16px;">${certificate.title}</h4>
+        
+        <div style="display: flex; justify-content: center; gap: 24px; color: #6b7280; margin-bottom: 24px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            <span>${new Date(certificate.completionDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <span>${certificate.cpdHours} CPD Hours</span>
+          </div>
+        </div>
+        
+        <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; color: #15803d;">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+          <span style="font-weight: 600;">Assessment Passed with ${certificate.score}%</span>
+        </div>
+      </div>
+      
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; font-size: 14px; color: #6b7280;">
+        <div>
+          <p style="color: #9ca3af;">Provided by</p>
+          <p style="font-weight: 600; color: #111827;">Enamel CPD</p>
+        </div>
+        <div style="text-align: right;">
+          <p style="color: #9ca3af;">Certificate Number</p>
+          <p style="font-weight: 600; color: #111827;">ENAMEL-CPD-${certificate.id}</p>
+        </div>
+      </div>
+      
+      <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid #e5e7eb;">
+        <p style="font-size: 12px; color: #6b7280; text-align: center;">
+          This certificate is awarded in recognition of successful completion of verified CPD activity and meets the requirements of the GDC Enhanced CPD Framework.
+        </p>
+      </div>
+    `
+
+    document.body.appendChild(tempDiv)
+
+    try {
+      const dataUrl = await toPng(tempDiv, {
+        cacheBust: true,
+        pixelRatio: 2,
+        backgroundColor: '#ffffff'
+      })
+
+      const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' })
+      const img = new Image()
+      img.src = dataUrl
+      await new Promise((res) => { img.onload = () => res(null) })
+
+      const pdfWidth = pdf.internal.pageSize.getWidth()
+      const pdfHeight = pdf.internal.pageSize.getHeight()
+      const ratio = Math.min(pdfWidth / img.width, pdfHeight / img.height)
+      const imgW = img.width * ratio
+      const imgH = img.height * ratio
+      const imgX = (pdfWidth - imgW) / 2
+      const imgY = 0
+
+      pdf.addImage(img, 'PNG', imgX, imgY, imgW, imgH)
+
+      const fileName = `CPD-Certificate-${title.replace(/\s+/g, '-')}-${certificate.date}.pdf`
+      pdf.save(fileName)
+    } catch (error) {
+      console.error('Error generating PDF:', error)
+      alert('Error generating PDF. Please try again.')
+    } finally {
+      document.body.removeChild(tempDiv)
+    }
   }
 
   return (
@@ -467,6 +642,18 @@ export default function CertificatesPage() {
       </main>
 
       <Footer />
+      
+      {/* Certificate Modal */}
+      {selectedCertificate && (
+        <CertificateModal
+          isOpen={isModalOpen}
+          onClose={() => {
+            setIsModalOpen(false)
+            setSelectedCertificate(null)
+          }}
+          certificate={selectedCertificate}
+        />
+      )}
     </div>
   )
 }

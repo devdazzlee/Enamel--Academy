@@ -15,6 +15,20 @@ import {
   ChevronDown,
   User,
   Settings,
+  Phone,
+  Mail,
+  MapPin,
+  MessageSquare,
+  Users,
+  BarChart3,
+  Clock,
+  CheckCircle,
+  Star,
+  Shield,
+  Bell,
+  Search,
+  Menu,
+  X,
 } from "lucide-react"
 import {
   DropdownMenu,
@@ -32,6 +46,7 @@ const navItems = [
   { href: "/track-cpd", label: "Track CPD", icon: Activity },
   { href: "/certificates", label: "CPD Certificates", icon: Award },
   { href: "/help", label: "Help & Support", icon: HelpCircle },
+  { href: "/contact", label: "Contact Us", icon: MessageSquare },
 ]
 
 interface NavigationProps {

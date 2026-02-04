@@ -1,227 +1,331 @@
-"use client";
-
-import { useState } from "react";
+'use client';
+import React, { useMemo, useState } from "react";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { ArrowLeft, Users, Shield, Eye, Edit, Trash2, Check, X } from "lucide-react";
-import Link from "next/link";
 
-interface Permission {
+type ToggleRow = {
   id: string;
-  name: string;
-  email: string;
-  role: string;
-  permissions: string[];
-  status: "active" | "inactive";
-  lastActive: string;
+  title: string;
+  desc: string;
+  defaultOn: boolean;
+};
+
+function classNames(...xs: Array<string | false | undefined | null>) {
+  return xs.filter(Boolean).join(" ");
 }
 
-const mockPermissions: Permission[] = [
-  {
-    id: "1",
-    name: "Dr. Sarah Johnson",
-    email: "sarah.j@dentclinic.com",
-    role: "Dentist",
-    permissions: ["View Reports", "Manage Courses", "Access CPD"],
-    status: "active",
-    lastActive: "2 hours ago"
-  },
-  {
-    id: "2", 
-    name: "Mike Chen",
-    email: "mike.c@dentclinic.com",
-    role: "Assistant",
-    permissions: ["View Reports", "Access CPD"],
-    status: "active",
-    lastActive: "1 day ago"
-  },
-  {
-    id: "3",
-    name: "Emma Wilson",
-    email: "emma.w@dentclinic.com",
-    role: "Hygienist", 
-    permissions: ["View Reports"],
-    status: "inactive",
-    lastActive: "3 days ago"
+function Toggle({
+  checked,
+  onChange,
+  disabled,
+  "aria-label": ariaLabel,
+}: {
+  checked: boolean;
+  onChange: (next: boolean) => void;
+  disabled?: boolean;
+  "aria-label": string;
+}) {
+  return (
+    <button
+      type="button"
+      aria-label={ariaLabel}
+      role="switch"
+      aria-checked={checked}
+      disabled={disabled}
+      onClick={() => onChange(!checked)}
+      className={classNames(
+        "relative inline-flex h-6 w-11 items-center rounded-full transition-colors",
+        checked ? "bg-[#7C3AED]" : "bg-gray-200",
+        disabled ? "opacity-60 cursor-not-allowed" : "cursor-pointer"
+      )}
+    >
+      <span
+        className={classNames(
+          "inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform",
+          checked ? "translate-x-5" : "translate-x-1"
+        )}
+      />
+    </button>
+  );
+}
+
+function IconChevronLeft(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" {...props}>
+      <path
+        d="M15 18l-6-6 6-6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function IconShield(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" {...props}>
+      <path
+        d="M12 22s8-4 8-10V6l-8-4-8 4v6c0 6 8 10 8 10Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function IconMail(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" {...props}>
+      <path
+        d="M4 6h16v12H4V6Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M4 7l8 6 8-6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function IconLock(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" {...props}>
+      <path
+        d="M7 11V8a5 5 0 0 1 10 0v3"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M6 11h12v10H6V11Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export default function ManagePermissionsPage() {
+  const emailRows: ToggleRow[] = useMemo(
+    () => [
+      {
+        id: "email_notifications",
+        title: "Email Notifications",
+        desc: "Receive email notifications about account activity",
+        defaultOn: true,
+      },
+      {
+        id: "course_updates",
+        title: "Course Updates",
+        desc: "Get notified when new courses are added or courses are updated",
+        defaultOn: true,
+      },
+      {
+        id: "pdp_reminders",
+        title: "PDP Reminders",
+        desc: "Receive reminders about your PDP goals and deadlines",
+        defaultOn: true,
+      },
+      {
+        id: "marketing_emails",
+        title: "Marketing Emails",
+        desc: "Receive promotional offers and educational content",
+        defaultOn: false,
+      },
+      {
+        id: "cpd_certificates",
+        title: "CPD Certificates",
+        desc: "Get notified when CPD certificates are ready to download",
+        defaultOn: true,
+      },
+      {
+        id: "progress_reports",
+        title: "Progress Reports",
+        desc: "Receive monthly progress reports on your learning journey",
+        defaultOn: true,
+      },
+    ],
+    []
+  );
+
+  const privacyRows: ToggleRow[] = useMemo(
+    () => [
+      {
+        id: "third_party_sharing",
+        title: "Third-Party Data Sharing",
+        desc: "Allow sharing of anonymized data with educational partners",
+        defaultOn: false,
+      },
+      {
+        id: "analytics_tracking",
+        title: "Analytics Tracking",
+        desc: "Help us improve by allowing analytics tracking of your platform usage",
+        defaultOn: true,
+      },
+      {
+        id: "personalization",
+        title: "Personalization",
+        desc: "Use your data to personalize course recommendations and content",
+        defaultOn: true,
+      },
+    ],
+    []
+  );
+
+  const [toggles, setToggles] = useState<Record<string, boolean>>(() => {
+    const init: Record<string, boolean> = {};
+    [...emailRows, ...privacyRows].forEach((r) => (init[r.id] = r.defaultOn));
+    return init;
+  });
+
+  function setToggle(id: string, next: boolean) {
+    setToggles((p) => ({ ...p, [id]: next }));
   }
-];
-
-const availablePermissions = [
-  "View Reports",
-  "Manage Courses", 
-  "Access CPD",
-  "Manage Team",
-  "Admin Access"
-];
-
-export default function PermissionsPage() {
-  const [permissions, setPermissions] = useState<Permission[]>(mockPermissions);
-  const [editingId, setEditingId] = useState<string | null>(null);
-  const [showAddForm, setShowAddForm] = useState(false);
-
-  const togglePermission = (userId: string, permission: string) => {
-    setPermissions(prev => prev.map(user => {
-      if (user.id === userId) {
-        const hasPermission = user.permissions.includes(permission);
-        return {
-          ...user,
-          permissions: hasPermission 
-            ? user.permissions.filter(p => p !== permission)
-            : [...user.permissions, permission]
-        };
-      }
-      return user;
-    }));
-  };
-
-  const toggleStatus = (userId: string) => {
-    setPermissions(prev => prev.map(user => {
-      if (user.id === userId) {
-        return {
-          ...user,
-          status: user.status === "active" ? "inactive" : "active"
-        };
-      }
-      return user;
-    }));
-  };
 
   return (
-    <div className="min-h-screen bg-[#e8e8e8] flex flex-col">
+    <div className="min-h-screen bg-[#e8e8e8] font-sans text-[#1a1a1a] flex flex-col">
       <Navigation />
-
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-6">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-4">
-            <Link 
-              href="/settings"
-              className="flex items-center gap-2 text-[#6b7280] hover:text-[#1a1a1a] transition-colors"
-            >
-              <ArrowLeft className="h-5 w-5" />
-              Back to Settings
-            </Link>
+      
+      <main className="flex-1">
+        <div className="mx-auto max-w-[860px] px-6 py-6">
+          {/* Header */}
+          <div className="flex items-center gap-2 text-sm text-[#6b7280]">
+            <IconChevronLeft className="h-4 w-4" />
+            <span>Back to Settings</span>
           </div>
-          <button
-            onClick={() => setShowAddForm(!showAddForm)}
-            className="flex items-center gap-2 px-4 py-2 bg-[#8b5cf6] text-white rounded-lg text-sm font-medium hover:bg-[#7c3aed] transition-colors"
-          >
-            <Users className="h-4 w-4" />
-            Add User
-          </button>
-        </div>
 
-        <div className="bg-white rounded-2xl border border-border p-8">
-          <h1 className="text-2xl font-semibold mb-6">
-            <span className="text-[#1a1a1a]">Manage </span>
-            <span className="text-[#8b5cf6]">Permissions</span>
-          </h1>
+          <div className="mt-6 flex items-start gap-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-purple-100">
+              <IconShield className="h-6 w-6 text-[#8b5cf6]" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-semibold text-[#1a1a1a]">
+                Manage Your Permissions
+              </h1>
+              <p className="mt-1 text-sm text-[#6b7280]">
+                Control how we use and share your information
+              </p>
+            </div>
+          </div>
 
-          {/* Add User Form */}
-          {showAddForm && (
-            <div className="mb-8 p-6 bg-[#f8f9fa] rounded-xl border border-border">
-              <h3 className="text-lg font-medium mb-4">Add New User</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  className="px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]/20"
-                />
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  className="px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]/20"
-                />
-                <select className="px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]/20">
-                  <option>Select Role</option>
-                  <option>Dentist</option>
-                  <option>Assistant</option>
-                  <option>Hygienist</option>
-                  <option>Admin</option>
-                </select>
-                <div className="flex gap-2">
-                  <button className="flex-1 py-2 bg-[#8b5cf6] text-white rounded-lg font-medium hover:bg-[#7c3aed] transition-colors">
-                    Add User
-                  </button>
-                  <button 
-                    onClick={() => setShowAddForm(false)}
-                    className="flex-1 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-colors"
-                  >
-                    Cancel
-                  </button>
+          {/* Card: Email Communications */}
+          <div className="mt-7 overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white">
+            <div className="flex items-center gap-3 border-b border-[#e5e7eb] bg-white px-6 py-4">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-50">
+                <IconMail className="h-5 w-5 text-[#8b5cf6]" />
+              </div>
+              <div className="font-semibold text-[#1a1a1a]">Email Communications</div>
+            </div>
+
+            <div className="divide-y divide-[#e5e7eb]">
+              {emailRows.map((r) => (
+                <div
+                  key={r.id}
+                  className="flex items-center justify-between gap-6 px-6 py-5"
+                >
+                  <div>
+                    <div className="text-sm font-medium text-[#1a1a1a]">
+                      {r.title}
+                    </div>
+                    <div className="mt-1 text-sm text-[#6b7280]">{r.desc}</div>
+                  </div>
+                  <Toggle
+                    checked={!!toggles[r.id]}
+                    onChange={(n) => setToggle(r.id, n)}
+                    aria-label={r.title}
+                  />
                 </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Card: Data & Privacy */}
+          <div className="mt-6 overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white">
+            <div className="flex items-center gap-3 border-b border-[#e5e7eb] bg-white px-6 py-4">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-50">
+                <IconShield className="h-5 w-5 text-[#8b5cf6]" />
+              </div>
+              <div className="font-semibold text-[#1a1a1a]">Data &amp; Privacy</div>
+            </div>
+
+            <div className="divide-y divide-[#e5e7eb]">
+              {privacyRows.map((r) => (
+                <div
+                  key={r.id}
+                  className="flex items-center justify-between gap-6 px-6 py-5"
+                >
+                  <div>
+                    <div className="text-sm font-medium text-[#1a1a1a]">
+                      {r.title}
+                    </div>
+                    <div className="mt-1 text-sm text-[#6b7280]">{r.desc}</div>
+                  </div>
+                  <Toggle
+                    checked={!!toggles[r.id]}
+                    onChange={(n) => setToggle(r.id, n)}
+                    aria-label={r.title}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="mt-6 flex items-center gap-4">
+            <button
+              type="button"
+              className="flex-1 rounded-xl bg-[#8b5cf6] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#7c3aed] active:bg-[#6d28d9] transition-colors"
+            >
+              Save Preferences
+            </button>
+            <button
+              type="button"
+              className="w-[120px] rounded-xl border border-[#e5e7eb] bg-white px-6 py-3 text-sm font-medium text-[#1a1a1a] hover:bg-[#f9fafb] transition-colors"
+            >
+              Cancel
+            </button>
+          </div>
+
+          {/* Privacy Notice */}
+          <div className="mt-6 rounded-2xl border border-blue-200 bg-blue-50 px-6 py-5">
+            <div className="flex items-start gap-3">
+              <div className="mt-[2px] flex h-8 w-8 items-center justify-center rounded-lg bg-white/60">
+                <IconLock className="h-5 w-5 text-blue-700" />
+              </div>
+              <div>
+                <div className="text-sm font-semibold text-blue-900">
+                  Your Privacy Matters
+                </div>
+                <p className="mt-2 text-sm leading-5 text-blue-800">
+                  We respect your privacy and are committed to protecting your
+                  personal data. You can change these permissions at any time.
+                </p>
+                <p className="mt-3 text-sm leading-5 text-blue-800">
+                  For more information about how we handle your data, please
+                  review our{" "}
+                  <a
+                    href="#"
+                    className="font-medium text-blue-800 underline underline-offset-2"
+                  >
+                    Privacy Policy
+                  </a>
+                  .
+                </p>
               </div>
             </div>
-          )}
-
-          {/* Permissions List */}
-          <div className="space-y-6">
-            {permissions.map((user) => (
-              <div key={user.id} className="border border-border rounded-xl p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-[#8b5cf6]/10 rounded-full flex items-center justify-center">
-                      <Users className="h-6 w-6 text-[#8b5cf6]" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-[#1a1a1a]">{user.name}</h3>
-                      <p className="text-sm text-[#6b7280]">{user.email}</p>
-                      <div className="flex items-center gap-4 mt-1">
-                        <span className="text-sm text-[#6b7280]">{user.role}</span>
-                        <span className={`text-xs px-2 py-1 rounded-full ${
-                          user.status === "active" 
-                            ? "bg-green-100 text-green-700" 
-                            : "bg-gray-100 text-gray-700"
-                        }`}>
-                          {user.status}
-                        </span>
-                        <span className="text-xs text-[#6b7280]">Last active: {user.lastActive}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => toggleStatus(user.id)}
-                      className={`p-2 rounded-lg transition-colors ${
-                        user.status === "active"
-                          ? "bg-green-100 text-green-600 hover:bg-green-200"
-                          : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                      }`}
-                    >
-                      {user.status === "active" ? <Eye className="h-4 w-4" /> : <X className="h-4 w-4" />}
-                    </button>
-                    <button className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-colors">
-                      <Trash2 className="h-4 w-4" />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Permissions */}
-                <div>
-                  <h4 className="text-sm font-medium text-[#1a1a1a] mb-3">Permissions</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {availablePermissions.map((permission) => (
-                      <button
-                        key={permission}
-                        onClick={() => togglePermission(user.id, permission)}
-                        className={`px-3 py-1.5 text-sm rounded-lg border transition-colors ${
-                          user.permissions.includes(permission)
-                            ? "bg-[#8b5cf6]/10 border-[#8b5cf6] text-[#8b5cf6]"
-                            : "bg-gray-50 border-gray-200 text-gray-600 hover:bg-gray-100"
-                        }`}
-                      >
-                        {user.permissions.includes(permission) && <Check className="inline h-3 w-3 mr-1" />}
-                        {permission}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </main>
-
+      
       <Footer />
     </div>
   );
