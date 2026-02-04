@@ -347,7 +347,7 @@ export default function LogExternalCPD() {
   );
 }
 
-function NavLink({ label, active = false }) {
+function NavLink({ label, active = false }: { label: string; active?: boolean }) {
   return (
     <a
       href="#"

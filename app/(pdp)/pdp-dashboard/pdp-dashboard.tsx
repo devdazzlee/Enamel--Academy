@@ -91,7 +91,7 @@ export default function PDPDashboard() {
 
   const currentPlan = plans.find(p => p.id === selectedPlan);
 
-  const getStatusColor = (status) => {
+  const getStatusColor = (status: string) => {
     switch (status) {
       case 'Completed':
         return 'bg-green-100 text-green-700';

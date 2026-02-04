@@ -5,6 +5,13 @@ import React from "react"
 import { useState } from "react"
 import Link from "next/link"
 import { EnamelLogo } from "@/components/enamel-logo"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -102,19 +109,18 @@ export default function SignupPage() {
                 className="w-full px-4 py-3 bg-card border border-border rounded-full text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
               />
             </div>
-            <div>
+            <div className="md:col-span-2">
               <label className="block text-sm text-muted-foreground mb-2">I am a :</label>
-              <select
-                name="iAmA"
-                value={formData.iAmA}
-                onChange={handleChange}
-                className="w-full px-4 py-3 bg-card border border-border rounded-full text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
-              >
-                <option value="">Select your profession</option>
-                <option value="dentist">Dentist</option>
-                <option value="dental-nurse">Dental Nurse</option>
-                <option value="dental-care-professional">Dental Care Professional</option>
-              </select>
+              <Select value={formData.iAmA} onValueChange={(value) => setFormData({ ...formData, iAmA: value })}>
+                <SelectTrigger className="w-full rounded-lg md:rounded-full bg-white">
+                  <SelectValue placeholder="Select your profession" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border border-gray-200">
+                  <SelectItem value="dentist">Dentist</SelectItem>
+                  <SelectItem value="dental-nurse">Dental Nurse</SelectItem>
+                  <SelectItem value="dental-care-professional">Dental Care Professional</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 

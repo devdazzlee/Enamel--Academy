@@ -175,7 +175,7 @@ export function PDPSections() {
                         <div>
                           <h4 className="font-medium text-foreground mb-2">Career Objectives</h4>
                           <ul className="space-y-1">
-                            {section.content.objectives.map((objective, index) => (
+                            {(section.content.objectives ?? []).map((objective, index) => (
                               <li key={index} className="flex items-start gap-2 text-sm text-muted-foreground">
                                 <Check className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
                                 {objective}
@@ -202,7 +202,7 @@ export function PDPSections() {
                           <div>
                             <h4 className="font-medium text-foreground mb-2">Current Skills</h4>
                             <ul className="space-y-1">
-                              {section.content.currentSkills.map((skill, index) => (
+                              {(section.content.currentSkills ?? []).map((skill, index) => (
                                 <li key={index} className="flex items-center gap-2 text-sm">
                                   <div className={cn(
                                     "w-2 h-2 rounded-full",
@@ -219,7 +219,7 @@ export function PDPSections() {
                           <div>
                             <h4 className="font-medium text-foreground mb-2">Areas for Development</h4>
                             <ul className="space-y-1">
-                              {section.content.areasForDevelopment.map((area, index) => (
+                              {(section.content.areasForDevelopment ?? []).map((area, index) => (
                                 <li key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
                                   <Target className="h-3 w-3 text-primary" />
                                   {area}
@@ -240,7 +240,7 @@ export function PDPSections() {
                         <div>
                           <h4 className="font-medium text-foreground mb-2">Enrolled Courses</h4>
                           <ul className="space-y-2">
-                            {section.content.enrolledCourses.map((course, index) => (
+                            {(section.content.enrolledCourses ?? []).map((course, index) => (
                               <li key={index} className="flex items-center justify-between p-2 bg-muted/50 rounded-lg">
                                 <span className="text-sm text-muted-foreground">{course}</span>
                               </li>
@@ -250,7 +250,7 @@ export function PDPSections() {
                         <div>
                           <h4 className="font-medium text-foreground mb-2">Recommended Courses</h4>
                           <ul className="space-y-1">
-                            {section.content.recommendedCourses.map((course, index) => (
+                            {(section.content.recommendedCourses ?? []).map((course, index) => (
                               <li key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
                                 <BookOpen className="h-3 w-3 text-primary" />
                                 {course}
@@ -265,11 +265,11 @@ export function PDPSections() {
                               <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
                                 <div 
                                   className="h-full bg-primary rounded-full" 
-                                  style={{ width: `${(section.content.completedHours / section.content.totalHours) * 100}%` }}
+                                  style={{ width: `${((section.content.completedHours ?? 0) / (section.content.totalHours ?? 1)) * 100}%` }}
                                 />
                               </div>
                               <span className="text-sm text-muted-foreground">
-                                {section.content.completedHours}/{section.content.totalHours}h
+                                {section.content.completedHours ?? 0}/{section.content.totalHours ?? 0}h
                               </span>
                             </div>
                           </div>
@@ -282,7 +282,7 @@ export function PDPSections() {
                         <div>
                           <h4 className="font-medium text-foreground mb-2">Milestones</h4>
                           <div className="space-y-2">
-                            {section.content.milestones.map((milestone, index) => (
+                            {(section.content.milestones ?? []).map((milestone, index) => (
                               <div key={index} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                                 <div className="flex-1">
                                   <p className="text-sm font-medium text-foreground">{milestone.title}</p>
@@ -321,7 +321,7 @@ export function PDPSections() {
                         <div>
                           <h4 className="font-medium text-foreground mb-2">Reflection Points</h4>
                           <ul className="space-y-1">
-                            {section.content.reflectionPoints.map((point, index) => (
+                            {(section.content.reflectionPoints ?? []).map((point, index) => (
                               <li key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
                                 <RefreshCw className="h-3 w-3 text-primary" />
                                 {point}

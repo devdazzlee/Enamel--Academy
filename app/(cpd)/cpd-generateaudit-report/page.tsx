@@ -227,7 +227,7 @@ export default function GenerateAuditReport() {
                     name="reportFormat"
                     value="comprehensive"
                     checked={reportFormat === 'comprehensive'}
-                    onChange={(e) => setReportFormat(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setReportFormat(e.target.value)}
                     icon={<FileText size={18} />}
                     label="Comprehensive PDF"
                     description="Full audit report with all records, reflections, and evidence"
@@ -237,7 +237,7 @@ export default function GenerateAuditReport() {
                     name="reportFormat"
                     value="summary"
                     checked={reportFormat === 'summary'}
-                    onChange={(e) => setReportFormat(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setReportFormat(e.target.value)}
                     icon={<FileText size={18} />}
                     label="Summary PDF"
                     description="Concise overview of CPD hours and compliance"
@@ -247,7 +247,7 @@ export default function GenerateAuditReport() {
                     name="reportFormat"
                     value="spreadsheet"
                     checked={reportFormat === 'spreadsheet'}
-                    onChange={(e) => setReportFormat(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setReportFormat(e.target.value)}
                     icon={<FileText size={18} />}
                     label="Excel Spreadsheet"
                     description="Detailed data table for analysis"
@@ -257,7 +257,7 @@ export default function GenerateAuditReport() {
                     name="reportFormat"
                     value="evidence"
                     checked={reportFormat === 'evidence'}
-                    onChange={(e) => setReportFormat(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setReportFormat(e.target.value)}
                     icon={<FileText size={18} />}
                     label="Evidence Pack (ZIP)"
                     description="All certificates and evidence files bundled"
@@ -283,7 +283,7 @@ export default function GenerateAuditReport() {
                     id="certificates"
                     label="Certificates"
                     checked={includeOptions.certificates}
-                    onChange={(e) =>
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setIncludeOptions({ ...includeOptions, certificates: e.target.checked })
                     }
                   />
@@ -291,7 +291,7 @@ export default function GenerateAuditReport() {
                     id="evidence"
                     label="Supporting Evidence"
                     checked={includeOptions.evidence}
-                    onChange={(e) =>
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setIncludeOptions({ ...includeOptions, evidence: e.target.checked })
                     }
                   />
@@ -299,7 +299,7 @@ export default function GenerateAuditReport() {
                     id="reflections"
                     label="Reflections"
                     checked={includeOptions.reflections}
-                    onChange={(e) =>
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setIncludeOptions({ ...includeOptions, reflections: e.target.checked })
                     }
                   />
@@ -307,7 +307,7 @@ export default function GenerateAuditReport() {
                     id="outcomes"
                     label="Learning Outcomes"
                     checked={includeOptions.outcomes}
-                    onChange={(e) =>
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setIncludeOptions({ ...includeOptions, outcomes: e.target.checked })
                     }
                   />
@@ -315,7 +315,7 @@ export default function GenerateAuditReport() {
                     id="verification"
                     label="Platform Verification Statement"
                     checked={includeOptions.verification}
-                    onChange={(e) =>
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setIncludeOptions({ ...includeOptions, verification: e.target.checked })
                     }
                   />
@@ -350,21 +350,6 @@ export default function GenerateAuditReport() {
       <Footer />
      
     </div>
-  );
-}
-
-function NavLink({ label, active = false }) {
-  return (
-    <a
-      href="#"
-      className={`px-3 py-2 rounded-lg text-sm transition-colors ${
-        active
-          ? 'bg-purple-50 text-purple-700 font-medium'
-          : 'text-gray-600 hover:text-purple-600 hover:bg-gray-50'
-      }`}
-    >
-      {label}
-    </a>
   );
 }
 

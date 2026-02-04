@@ -19,7 +19,7 @@ import {
 
 export default function CourseDetail() {
   const router = useRouter()
-  const [expandedSection, setExpandedSection] = useState(null);
+  const [expandedSection, setExpandedSection] = useState<number | null>(null);
 
   const courseStats = [
     { icon: <Clock />, value: "2 hours", label: "Duration" },

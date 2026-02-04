@@ -21,7 +21,27 @@ export default function PDPForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [currentStep, setCurrentStep] = useState(1);
-  const [formData, setFormData] = useState({
+
+  type CurrentSkill = { skill: string; level: string };
+  type SkillToDevelop = { skill: string; target: string };
+  type Milestone = { quarter: string; goal: string };
+
+  type PDPFormData = {
+    pdpName: string;
+    startDate: string;
+    endDate: string;
+    careerObjectives: string[];
+    currentSkills: CurrentSkill[];
+    skillsToDevelop: SkillToDevelop[];
+    selectedCourses: string[];
+    additionalResources: string;
+    duration: string;
+    milestones: Milestone[];
+    assessmentMethods: string[];
+    successCriteria: string[];
+  };
+
+  const [formData, setFormData] = useState<PDPFormData>({
     pdpName: '',
     startDate: '',
     endDate: '',
@@ -103,7 +123,7 @@ export default function PDPForm() {
     });
   };
 
-  const removeObjective = (index) => {
+  const removeObjective = (index: number) => {
     const newObjectives = formData.careerObjectives.filter((_, i) => i !== index);
     setFormData({ ...formData, careerObjectives: newObjectives });
   };
@@ -122,7 +142,7 @@ export default function PDPForm() {
     });
   };
 
-  const toggleCourse = (course) => {
+  const toggleCourse = (course: string) => {
     const isSelected = formData.selectedCourses.includes(course);
     if (isSelected) {
       setFormData({
@@ -144,12 +164,12 @@ export default function PDPForm() {
     });
   };
 
-  const removeMilestone = (index) => {
+  const removeMilestone = (index: number) => {
     const newMilestones = formData.milestones.filter((_, i) => i !== index);
     setFormData({ ...formData, milestones: newMilestones });
   };
 
-  const toggleAssessment = (method) => {
+  const toggleAssessment = (method: string) => {
     const isSelected = formData.assessmentMethods.includes(method);
     if (isSelected) {
       setFormData({
@@ -171,7 +191,7 @@ export default function PDPForm() {
     });
   };
 
-  const removeSuccessCriteria = (index) => {
+  const removeSuccessCriteria = (index: number) => {
     const newCriteria = formData.successCriteria.filter((_, i) => i !== index);
     setFormData({ ...formData, successCriteria: newCriteria });
   };
@@ -489,7 +509,7 @@ export default function PDPForm() {
                   <textarea
                     placeholder="Journal subscriptions, mentorship programs, clinical practice hours..."
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
-                    rows="4"
+                    rows={4}
                     value={formData.additionalResources}
                     onChange={(e) => setFormData({ ...formData, additionalResources: e.target.value })}
                   />
