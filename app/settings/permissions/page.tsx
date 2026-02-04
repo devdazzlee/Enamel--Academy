@@ -196,19 +196,20 @@ export default function ManagePermissionsPage() {
       <Navigation />
       
       <main className="flex-1">
-        <div className="mx-auto max-w-[860px] px-6 py-6">
+        <div className="mx-auto max-w-[860px] px-4 sm:px-6 py-4 sm:py-6">
           {/* Header */}
           <div className="flex items-center gap-2 text-sm text-[#6b7280]">
             <IconChevronLeft className="h-4 w-4" />
-            <span>Back to Settings</span>
+            <span className="hidden sm:inline">Back to Settings</span>
+            <span className="sm:hidden">Back</span>
           </div>
 
-          <div className="mt-6 flex items-start gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-purple-100">
-              <IconShield className="h-6 w-6 text-[#8b5cf6]" />
+          <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4">
+            <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-purple-100 flex-shrink-0">
+              <IconShield className="h-5 w-5 sm:h-6 sm:w-6 text-[#8b5cf6]" />
             </div>
-            <div>
-              <h1 className="text-2xl font-semibold text-[#1a1a1a]">
+            <div className="flex-1 min-w-0">
+              <h1 className="text-xl sm:text-2xl font-semibold text-[#1a1a1a]">
                 Manage Your Permissions
               </h1>
               <p className="mt-1 text-sm text-[#6b7280]">
@@ -218,90 +219,94 @@ export default function ManagePermissionsPage() {
           </div>
 
           {/* Card: Email Communications */}
-          <div className="mt-7 overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white">
-            <div className="flex items-center gap-3 border-b border-[#e5e7eb] bg-white px-6 py-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-50">
-                <IconMail className="h-5 w-5 text-[#8b5cf6]" />
+          <div className="mt-6 sm:mt-7 overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white">
+            <div className="flex items-center gap-3 border-b border-[#e5e7eb] bg-white px-4 sm:px-6 py-3 sm:py-4">
+              <div className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-lg bg-purple-50 flex-shrink-0">
+                <IconMail className="h-4 w-4 sm:h-5 sm:w-5 text-[#8b5cf6]" />
               </div>
-              <div className="font-semibold text-[#1a1a1a]">Email Communications</div>
+              <div className="font-semibold text-[#1a1a1a] text-sm sm:text-base">Email Communications</div>
             </div>
 
             <div className="divide-y divide-[#e5e7eb]">
               {emailRows.map((r) => (
                 <div
                   key={r.id}
-                  className="flex items-center justify-between gap-6 px-6 py-5"
+                  className="flex items-start justify-between gap-3 sm:gap-6 px-4 sm:px-6 py-4 sm:py-5"
                 >
-                  <div>
-                    <div className="text-sm font-medium text-[#1a1a1a]">
+                  <div className="flex-1 min-w-0 pr-2">
+                    <div className="text-sm font-medium text-[#1a1a1a] leading-tight">
                       {r.title}
                     </div>
-                    <div className="mt-1 text-sm text-[#6b7280]">{r.desc}</div>
+                    <div className="mt-1 text-sm text-[#6b7280] leading-relaxed">{r.desc}</div>
                   </div>
-                  <Toggle
-                    checked={!!toggles[r.id]}
-                    onChange={(n) => setToggle(r.id, n)}
-                    aria-label={r.title}
-                  />
+                  <div className="flex-shrink-0 pt-1">
+                    <Toggle
+                      checked={!!toggles[r.id]}
+                      onChange={(n) => setToggle(r.id, n)}
+                      aria-label={r.title}
+                    />
+                  </div>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Card: Data & Privacy */}
-          <div className="mt-6 overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white">
-            <div className="flex items-center gap-3 border-b border-[#e5e7eb] bg-white px-6 py-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-50">
-                <IconShield className="h-5 w-5 text-[#8b5cf6]" />
+          <div className="mt-4 sm:mt-6 overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white">
+            <div className="flex items-center gap-3 border-b border-[#e5e7eb] bg-white px-4 sm:px-6 py-3 sm:py-4">
+              <div className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-lg bg-purple-50 flex-shrink-0">
+                <IconShield className="h-4 w-4 sm:h-5 sm:w-5 text-[#8b5cf6]" />
               </div>
-              <div className="font-semibold text-[#1a1a1a]">Data &amp; Privacy</div>
+              <div className="font-semibold text-[#1a1a1a] text-sm sm:text-base">Data &amp; Privacy</div>
             </div>
 
             <div className="divide-y divide-[#e5e7eb]">
               {privacyRows.map((r) => (
                 <div
                   key={r.id}
-                  className="flex items-center justify-between gap-6 px-6 py-5"
+                  className="flex items-start justify-between gap-3 sm:gap-6 px-4 sm:px-6 py-4 sm:py-5"
                 >
-                  <div>
-                    <div className="text-sm font-medium text-[#1a1a1a]">
+                  <div className="flex-1 min-w-0 pr-2">
+                    <div className="text-sm font-medium text-[#1a1a1a] leading-tight">
                       {r.title}
                     </div>
-                    <div className="mt-1 text-sm text-[#6b7280]">{r.desc}</div>
+                    <div className="mt-1 text-sm text-[#6b7280] leading-relaxed">{r.desc}</div>
                   </div>
-                  <Toggle
-                    checked={!!toggles[r.id]}
-                    onChange={(n) => setToggle(r.id, n)}
-                    aria-label={r.title}
-                  />
+                  <div className="flex-shrink-0 pt-1">
+                    <Toggle
+                      checked={!!toggles[r.id]}
+                      onChange={(n) => setToggle(r.id, n)}
+                      aria-label={r.title}
+                    />
+                  </div>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Actions */}
-          <div className="mt-6 flex items-center gap-4">
+          <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
             <button
               type="button"
-              className="flex-1 rounded-xl bg-[#8b5cf6] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#7c3aed] active:bg-[#6d28d9] transition-colors"
+              className="w-full sm:flex-1 rounded-xl bg-[#8b5cf6] px-4 sm:px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#7c3aed] active:bg-[#6d28d9] transition-colors"
             >
               Save Preferences
             </button>
             <button
               type="button"
-              className="w-[120px] rounded-xl border border-[#e5e7eb] bg-white px-6 py-3 text-sm font-medium text-[#1a1a1a] hover:bg-[#f9fafb] transition-colors"
+              className="w-full sm:w-[120px] rounded-xl border border-[#e5e7eb] bg-white px-4 sm:px-6 py-3 text-sm font-medium text-[#1a1a1a] hover:bg-[#f9fafb] transition-colors"
             >
               Cancel
             </button>
           </div>
 
           {/* Privacy Notice */}
-          <div className="mt-6 rounded-2xl border border-blue-200 bg-blue-50 px-6 py-5">
+          <div className="mt-4 sm:mt-6 rounded-2xl border border-blue-200 bg-blue-50 px-4 sm:px-6 py-4 sm:py-5">
             <div className="flex items-start gap-3">
-              <div className="mt-[2px] flex h-8 w-8 items-center justify-center rounded-lg bg-white/60">
-                <IconLock className="h-5 w-5 text-blue-700" />
+              <div className="mt-[2px] flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-lg bg-white/60 flex-shrink-0">
+                <IconLock className="h-4 w-4 sm:h-5 sm:w-5 text-blue-700" />
               </div>
-              <div>
+              <div className="flex-1 min-w-0">
                 <div className="text-sm font-semibold text-blue-900">
                   Your Privacy Matters
                 </div>

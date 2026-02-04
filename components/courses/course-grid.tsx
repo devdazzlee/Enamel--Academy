@@ -87,15 +87,15 @@ export function CourseGrid({ activeFilters, searchQuery }: {
 
   return (
     <section>
-      <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <LayoutGrid className="h-5 w-5 text-primary" />
+      <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 flex items-center gap-2">
+        <LayoutGrid className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
         <span className="text-primary">08</span>{" "}
         <span className="text-muted-foreground">Courses</span>
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
         {filteredCourses.map((course) => (
           <div key={course.id} className="bg-card rounded-xl border border-border overflow-hidden">
-            <div className="relative h-32">
+            <div className="relative h-28 sm:h-32">
               <Image
                 src={course.image}
                 alt={course.title}
@@ -107,23 +107,23 @@ export function CourseGrid({ activeFilters, searchQuery }: {
                 }}
               />
             </div>
-            <div className="p-3">
-              <h3 className="font-medium text-foreground text-sm mb-2 line-clamp-2">
+            <div className="p-2.5 sm:p-3">
+              <h3 className="font-medium text-foreground text-xs sm:text-sm mb-2 line-clamp-2">
                 {course.title}
               </h3>
-              <div className="flex items-center gap-3 text-xs text-muted-foreground mb-3">
-                <span className="flex items-center gap-1">
-                  <Clock className="h-3 w-3" />
+              <div className="flex items-center gap-2 sm:gap-3 text-xs text-muted-foreground mb-2 sm:mb-3">
+                <span className="flex items-center gap-0.5 sm:gap-1">
+                  <Clock className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
                   {course.duration}
                 </span>
-                <span className="flex items-center gap-1">
-                  <FileText className="h-3 w-3" />
+                <span className="flex items-center gap-0.5 sm:gap-1">
+                  <FileText className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
                   {course.lessons} lessons
                 </span>
               </div>
               <button 
                 onClick={() => handleViewCourse(course.id)}
-                className="w-full py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors"
+                className="w-full py-1.5 sm:py-2 bg-primary text-primary-foreground rounded-lg text-xs sm:text-sm font-medium hover:bg-primary/90 transition-colors"
               >
                 View Course
               </button>

@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { EnamelLogo } from "./enamel-logo"
@@ -55,6 +56,7 @@ interface NavigationProps {
 
 export function Navigation({ activeItem }: NavigationProps) {
   const pathname = usePathname()
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   return (
     <header className="bg-white border-b border-[#e5e7eb] sticky top-0 z-50">
@@ -64,6 +66,7 @@ export function Navigation({ activeItem }: NavigationProps) {
             <EnamelLogo />
           </Link>
           
+          {/* Desktop Navigation */}
           <div className="hidden xl:flex items-center absolute left-1/2 transform -translate-x-1/2">
             {navItems.map((item) => {
               const Icon = item.icon
@@ -86,7 +89,22 @@ export function Navigation({ activeItem }: NavigationProps) {
             })}
           </div>
           
-          <div className="flex items-center gap-2">
+          {/* Mobile Menu Button */}
+          <div className="xl:hidden flex items-center gap-2">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="flex items-center gap-2 px-3 py-2 text-sm text-[#6b7280] hover:text-[#1a1a1a] rounded-lg hover:bg-[#f5f5f5] transition-colors"
+            >
+              {isMobileMenuOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
+            </button>
+          </div>
+          
+          {/* Desktop User Menu */}
+          <div className="hidden xl:flex items-center gap-2">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center gap-2 px-3 py-2 text-sm text-[#6b7280] hover:text-[#1a1a1a] rounded-lg hover:bg-[#f5f5f5] transition-colors">
@@ -119,6 +137,59 @@ export function Navigation({ activeItem }: NavigationProps) {
             <div className="w-2 h-2 rounded-full bg-[#8b5cf6]" />
           </div>
         </nav>
+        
+        {/* Mobile Navigation Menu */}
+        {isMobileMenuOpen && (
+          <div className="xl:hidden border-t border-[#e5e7eb] bg-white">
+            <div className="py-4 space-y-1">
+              {navItems.map((item) => {
+                const Icon = item.icon
+                const isActive = activeItem === item.label || pathname === item.href || pathname.startsWith(item.href + "/")
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={cn(
+                      "flex items-center gap-3 px-4 py-3 text-sm rounded-lg transition-colors",
+                      isActive
+                        ? "bg-[#8b5cf6]/10 text-[#8b5cf6] font-medium"
+                        : "text-[#6b7280] hover:text-[#1a1a1a] hover:bg-[#f5f5f5]"
+                    )}
+                  >
+                    <Icon className="h-5 w-5 flex-shrink-0" />
+                    <span>{item.label}</span>
+                  </Link>
+                )
+              })}
+              <div className="border-t border-[#e5e7eb] mt-4 pt-4">
+                <Link
+                  href="/profile"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-3 px-4 py-3 text-sm text-[#6b7280] hover:text-[#1a1a1a] hover:bg-[#f5f5f5] rounded-lg transition-colors"
+                >
+                  <User className="h-5 w-5" />
+                  <span>Profile</span>
+                </Link>
+                <Link
+                  href="/settings"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-3 px-4 py-3 text-sm text-[#6b7280] hover:text-[#1a1a1a] hover:bg-[#f5f5f5] rounded-lg transition-colors"
+                >
+                  <Settings className="h-5 w-5" />
+                  <span>Settings</span>
+                </Link>
+                <Link
+                  href="/login"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-3 px-4 py-3 text-sm text-[#6b7280] hover:text-[#1a1a1a] hover:bg-[#f5f5f5] rounded-lg transition-colors"
+                >
+                  Log out
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </header>
   )

@@ -177,28 +177,35 @@ export default function CoursePlayerPage() {
   return (
     <div className="min-h-screen bg-[#1a1a1a] text-white flex flex-col">
       {/* Header */}
-      <header className="flex items-center justify-between px-6 py-4 border-b border-[#333]">
-        <div className="flex items-center gap-6">
+      <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-[#333] gap-3 sm:gap-0">
+        <div className="flex items-center gap-3 sm:gap-6 w-full sm:w-auto">
           <button 
             onClick={() => router.push('/dashboard')}
-            className="flex items-center gap-2 text-[#8b5cf6] hover:text-[#a78bfa] transition-colors"
+            className="flex items-center gap-2 text-[#8b5cf6] hover:text-[#a78bfa] transition-colors text-sm sm:text-base"
           >
             <ChevronRight className="w-4 h-4 rotate-180" />
-            <span>Back to Course</span>
+            <span className="hidden sm:inline">Back to Course</span>
+            <span className="sm:hidden">Back</span>
           </button>
-          <h1 className="text-xl font-semibold">{course.title}</h1>
+          <h1 className="text-base sm:text-xl font-semibold leading-tight overflow-hidden flex-1 min-w-0 px-2" style={{
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical'
+          }}>{course.title}</h1>
         </div>
-        <div className="flex items-center gap-4">
-          <div className="w-48 bg-[#333] rounded-full h-2">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 w-full sm:w-auto">
+          <div className="w-full sm:w-48 bg-[#333] rounded-full h-2">
             <div className="bg-[#8b5cf6] h-2 rounded-full transition-all duration-300" style={{ width: `${course.progress}%` }} />
           </div>
-          <span className="text-sm text-gray-400">{course.progress}% complete</span>
-          <span className="text-sm text-gray-400">1 of {course.lessons} lessons</span>
+          <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-gray-400">
+            <span>{course.progress}% complete</span>
+            <span>1 of {course.lessons} lessons</span>
+          </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden flex-col lg:flex-row">
         {/* Video Player Section */}
         <main className="flex-1 flex flex-col">
           {/* Video Player */}
@@ -220,60 +227,63 @@ export default function CoursePlayerPage() {
                 className="absolute inset-0 flex items-center justify-center bg-black/30 cursor-pointer"
                 onClick={handlePlayPause}
               >
-                <div className="w-20 h-20 bg-[#8b5cf6] rounded-full flex items-center justify-center hover:bg-[#7c3aed] transition-colors">
-                  <Play className="w-8 h-8 text-white ml-1" />
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#8b5cf6] rounded-full flex items-center justify-center hover:bg-[#7c3aed] transition-colors">
+                  <Play className="w-6 h-6 sm:w-8 sm:h-8 text-white ml-1" />
                 </div>
               </div>
             )}
           </div>
 
           {/* Video Controls */}
-          <div className="bg-[#2a2a2a] px-6 py-4">
-            <div className="flex items-center gap-4 mb-3">
+          <div className="bg-[#2a2a2a] px-3 sm:px-6 py-2 sm:py-4">
+            {/* Primary Controls Row */}
+            <div className="flex items-center gap-2 sm:gap-4 mb-3">
               <SkipBack 
-                className="w-5 h-5 text-gray-400 cursor-pointer hover:text-white transition-colors" 
+                className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 cursor-pointer hover:text-white transition-colors flex-shrink-0" 
                 onClick={handleSkipBack}
               />
               <button 
                 onClick={handlePlayPause}
-                className="w-8 h-8 bg-[#8b5cf6] rounded-full flex items-center justify-center hover:bg-[#7c3aed] transition-colors"
+                className="w-6 h-6 sm:w-8 sm:h-8 bg-[#8b5cf6] rounded-full flex items-center justify-center hover:bg-[#7c3aed] transition-colors flex-shrink-0"
               >
                 {isPlaying ? (
-                  <Pause className="w-4 h-4 text-white" />
+                  <Pause className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                 ) : (
-                  <Play className="w-4 h-4 text-white ml-0.5" />
+                  <Play className="w-3 h-3 sm:w-4 sm:h-4 text-white ml-0.5" />
                 )}
               </button>
               <SkipForward 
-                className="w-5 h-5 text-gray-400 cursor-pointer hover:text-white transition-colors"
+                className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 cursor-pointer hover:text-white transition-colors flex-shrink-0"
                 onClick={handleSkipForward}
               />
               
-              <div className="flex-1 flex items-center gap-3">
-                <span className="text-sm text-gray-400">{formatTime(currentTime)}</span>
+              {/* Progress Bar */}
+              <div className="flex-1 flex items-center gap-2 sm:gap-3 min-w-0 px-2">
+                <span className="text-xs sm:text-sm text-gray-400 whitespace-nowrap flex-shrink-0">{formatTime(currentTime)}</span>
                 <input
                   type="range"
                   min="0"
                   max="100"
                   value={progress}
                   onChange={handleSeek}
-                  className="flex-1 h-1 bg-[#333] rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-[#8b5cf6] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
+                  className="flex-1 h-1 bg-[#333] rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-[#8b5cf6] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer min-w-[20px]"
                   style={{
                     background: `linear-gradient(to right, #8b5cf6 0%, #8b5cf6 ${progress}%, #333 ${progress}%, #333 100%)`
                   }}
                 />
-                <span className="text-sm text-gray-400">{formatTime(duration)}</span>
+                <span className="text-xs sm:text-sm text-gray-400 whitespace-nowrap flex-shrink-0">{formatTime(duration)}</span>
               </div>
 
-              <div className="flex items-center gap-4">
+              {/* Secondary Controls */}
+              <div className="flex items-center gap-1 sm:gap-4 flex-shrink-0">
                 <button 
                   onClick={handleMuteToggle}
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 hover:text-white transition-colors p-1"
                 >
                   {isMuted ? (
-                    <VolumeX className="w-5 h-5" />
+                    <VolumeX className="w-4 h-4 sm:w-5 sm:h-5" />
                   ) : (
-                    <Volume2 className="w-5 h-5" />
+                    <Volume2 className="w-4 h-4 sm:w-5 sm:h-5" />
                   )}
                 </button>
                 <input
@@ -283,17 +293,17 @@ export default function CoursePlayerPage() {
                   step="0.1"
                   value={isMuted ? 0 : volume}
                   onChange={(e) => handleVolumeChange(parseFloat(e.target.value))}
-                  className="w-20 h-1 bg-[#333] rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-2 [&::-webkit-slider-thumb]:h-2 [&::-webkit-slider-thumb]:bg-[#8b5cf6] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
+                  className="hidden sm:block w-20 h-1 bg-[#333] rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-2 [&::-webkit-slider-thumb]:h-2 [&::-webkit-slider-thumb]:bg-[#8b5cf6] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
                 />
                 <div className="relative">
                   <button 
                     onClick={() => setShowSettings(!showSettings)}
-                    className="text-gray-400 hover:text-white transition-colors"
+                    className="text-gray-400 hover:text-white transition-colors p-1"
                   >
-                    <Settings className="w-5 h-5" />
+                    <Settings className="w-4 h-4 sm:w-5 sm:h-5" />
                   </button>
                   {showSettings && (
-                    <div className="absolute bottom-8 right-0 bg-[#333] rounded-lg p-2 min-w-[150px]">
+                    <div className="absolute bottom-8 right-0 bg-[#333] rounded-lg p-2 min-w-[120px] sm:min-w-[150px] z-50">
                       <div className="text-xs text-gray-400 mb-2">Playback Speed</div>
                       {[0.5, 0.75, 1, 1.25, 1.5, 2].map(rate => (
                         <button
@@ -302,7 +312,7 @@ export default function CoursePlayerPage() {
                             setPlaybackRate(rate)
                             setShowSettings(false)
                           }}
-                          className={`block w-full text-left px-2 py-1 text-sm rounded hover:bg-[#444] ${
+                          className={`block w-full text-left px-2 py-1 text-xs sm:text-sm rounded hover:bg-[#444] ${
                             playbackRate === rate ? 'bg-[#8b5cf6] text-white' : 'text-gray-300'
                           }`}
                         >
@@ -313,48 +323,49 @@ export default function CoursePlayerPage() {
                   )}
                 </div>
                 <Maximize2 
-                  className="w-5 h-5 text-gray-400 cursor-pointer hover:text-white transition-colors"
+                  className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 cursor-pointer hover:text-white transition-colors p-1"
                   onClick={handleFullscreen}
                 />
               </div>
             </div>
             
-            <div>
-              <h3 className="text-lg font-medium mb-1">{currentLesson.title}</h3>
-              <p className="text-sm text-gray-400">{currentLesson.section}</p>
+            {/* Lesson Info */}
+            <div className="border-t border-[#444] pt-2 mt-2">
+              <h3 className="text-sm sm:text-base font-medium mb-1 truncate pr-2">{currentLesson.title}</h3>
+              <p className="text-xs sm:text-sm text-gray-400 truncate pr-2">{currentLesson.section}</p>
             </div>
           </div>
 
           {/* Mark Complete Button */}
-          <div className="px-6 py-4">
-            <button className="px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors flex items-center gap-2">
-              <CheckCircle className="w-5 h-5" />
+          <div className="px-4 sm:px-6 py-3 sm:py-4">
+            <button className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors flex items-center gap-2 justify-center sm:justify-start text-sm sm:text-base">
+              <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" />
               Mark Lesson as Complete
             </button>
           </div>
         </main>
 
         {/* Course Content Sidebar */}
-        <aside className="w-96 bg-[#2a2a2a] border-l border-[#333] overflow-y-auto">
-          <div className="p-6">
-            <h2 className="text-xl font-semibold mb-6">Course Content</h2>
+        <aside className="w-full lg:w-96 bg-[#2a2a2a] border-t lg:border-t-0 lg:border-l border-[#333] overflow-y-auto max-h-96 lg:max-h-none">
+          <div className="p-4 sm:p-6">
+            <h2 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">Course Content</h2>
             
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {courseContent.map((section) => (
                 <div key={section.id} className="border border-[#333] rounded-lg overflow-hidden">
                   <button
                     onClick={() => toggleSection(section.id)}
-                    className="w-full px-4 py-3 flex items-center justify-between hover:bg-[#333] transition-colors"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between hover:bg-[#333] transition-colors"
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
                       {expandedSections.includes(section.id) ? (
-                        <ChevronDown className="w-4 h-4" />
+                        <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
                       ) : (
-                        <ChevronRight className="w-4 h-4" />
+                        <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
                       )}
-                      <span className="font-medium">{section.title}</span>
+                      <span className="font-medium text-sm sm:text-base truncate">{section.title}</span>
                     </div>
-                    <span className="text-sm text-gray-400">{section.lessons.length} lessons</span>
+                    <span className="text-xs sm:text-sm text-gray-400 flex-shrink-0">{section.lessons.length} lessons</span>
                   </button>
                   
                   {expandedSections.includes(section.id) && (
@@ -362,25 +373,25 @@ export default function CoursePlayerPage() {
                       {section.lessons.map((lesson) => (
                         <div
                           key={lesson.id}
-                          className={`px-4 py-3 flex items-center justify-between hover:bg-[#333] transition-colors ${
+                          className={`px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between hover:bg-[#333] transition-colors ${
                             lesson.current ? 'bg-[#8b5cf6]/20 border-l-2 border-[#8b5cf6]' : ''
                           }`}
                         >
-                          <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
                             {lesson.completed ? (
-                              <CheckCircle className="w-5 h-5 text-green-500" />
+                              <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0" />
                             ) : lesson.current ? (
-                              <div className="w-5 h-5 bg-[#8b5cf6] rounded-full flex items-center justify-center">
-                                <Play className="w-3 h-3 text-white" />
+                              <div className="w-4 h-4 sm:w-5 sm:h-5 bg-[#8b5cf6] rounded-full flex items-center justify-center flex-shrink-0">
+                                <Play className="w-2 h-2 sm:w-3 sm:h-3 text-white" />
                               </div>
                             ) : (
-                              <div className="w-5 h-5 border border-gray-500 rounded-full" />
+                              <div className="w-4 h-4 sm:w-5 sm:h-5 border border-gray-500 rounded-full flex-shrink-0" />
                             )}
-                            <span className={`text-sm ${lesson.current ? 'text-[#8b5cf6]' : 'text-gray-300'}`}>
+                            <span className={`text-xs sm:text-sm ${lesson.current ? 'text-[#8b5cf6]' : 'text-gray-300'} truncate`}>
                               {lesson.title}
                             </span>
                           </div>
-                          <span className="text-sm text-gray-400">{lesson.duration}</span>
+                          <span className="text-xs sm:text-sm text-gray-400 flex-shrink-0">{lesson.duration}</span>
                         </div>
                       ))}
                     </div>
@@ -391,17 +402,17 @@ export default function CoursePlayerPage() {
 
             <button 
               onClick={() => router.push(`/course/${courseId}/assessment`)}
-              className="w-full mt-6 px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
+              className="w-full mt-4 sm:mt-6 px-4 sm:px-6 py-2 sm:py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors text-sm sm:text-base"
             >
               Take Assessment
             </button>
             
-            <button className="w-full mt-3 px-6 py-3 bg-[#8b5cf6] text-white rounded-lg font-medium hover:bg-[#7c3aed] transition-colors">
-              Course Overview
+            <button className="w-full mt-2 sm:mt-3 px-4 sm:px-6 py-2 sm:py-3 bg-[#8b5cf6] text-white rounded-lg font-medium hover:bg-[#7c3aed] transition-colors text-sm sm:text-base">
+              Download Certificate
             </button>
           </div>
         </aside>
       </div>
     </div>
-  )
+  );
 }

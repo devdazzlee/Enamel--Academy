@@ -37,9 +37,9 @@ export function ContinueLearning() {
         {inProgressCourses.slice(0, 2).map((course) => (
           <div
             key={course.id}
-            className="bg-white rounded-2xl border border-[#e5e7eb] p-4 flex flex-col md:flex-row gap-4"
+            className="bg-white rounded-2xl border border-[#e5e7eb] p-3 sm:p-4 flex flex-col md:flex-row gap-4"
           >
-            <div className="relative w-full md:w-48 h-32 rounded-xl overflow-hidden flex-shrink-0">
+            <div className="relative w-full h-32 md:h-48 md:w-48 rounded-xl overflow-hidden flex-shrink-0">
               <Image
                 src={course.image}
                 alt={course.title}
@@ -53,12 +53,12 @@ export function ContinueLearning() {
                   <span className="inline-block px-2 py-0.5 text-xs border border-[#e5e7eb] rounded-md mb-2">
                     {course.level}
                   </span>
-                  <h3 className="font-semibold text-[#1a1a1a] mb-1">{course.title}</h3>
-                  <p className="text-sm text-[#6b7280]">by {course.instructor}</p>
+                  <h3 className="font-semibold text-[#1a1a1a] mb-1 text-sm sm:text-base">{course.title}</h3>
+                  <p className="text-xs sm:text-sm text-[#6b7280]">by {course.instructor}</p>
                 </div>
               </div>
-              <div className="mt-4">
-                <div className="flex items-center justify-between text-sm mb-1">
+              <div className="mt-3 sm:mt-4">
+                <div className="flex items-center justify-between text-xs sm:text-sm mb-1">
                   <span className="text-[#6b7280]">Progress</span>
                   <span className="text-[#1a1a1a]">{course.progress}%</span>
                 </div>
@@ -72,16 +72,16 @@ export function ContinueLearning() {
                   {Math.round((course.progress / 100) * course.lessons)} of {course.lessons} lessons completed
                 </p>
               </div>
-              <p className="text-sm text-[#6b7280] mt-3">
+              <p className="text-xs sm:text-sm text-[#6b7280] mt-2 sm:mt-3">
                 Next: Module {Math.ceil((course.progress / 100) * 5) + 1}
               </p>
             </div>
             <div className="flex items-end">
               <button 
                 onClick={() => handleResume(course.id)}
-                className="w-12 h-12 rounded-xl bg-[#8b5cf6] flex items-center justify-center text-white hover:bg-[#7c3aed] transition-colors"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-[#8b5cf6] flex items-center justify-center text-white hover:bg-[#7c3aed] transition-colors"
               >
-                <Play className="h-5 w-5 fill-current" />
+                <Play className="h-4 w-4 sm:h-5 sm:w-5 fill-current" />
               </button>
             </div>
           </div>

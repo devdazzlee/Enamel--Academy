@@ -16,6 +16,13 @@ import {
   Save,
   CheckCircle
 } from 'lucide-react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function PDPForm() {
   const router = useRouter();
@@ -208,27 +215,28 @@ export default function PDPForm() {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white border-b">
-        <div className="max-w-6xl mx-auto px-6 py-6">
-          <button onClick={() => router.push('/pdp')} className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4">
-            <ArrowLeft size={20} />
-            Back to Dashboard
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
+          <button onClick={() => router.push('/pdp')} className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-3 sm:mb-4 text-sm sm:text-base">
+            <ArrowLeft size={16} />
+            <span className="hidden sm:inline">Back to Dashboard</span>
+            <span className="sm:hidden">Back</span>
           </button>
-          <h1 className="text-3xl font-bold text-purple-700 mb-2">
+          <h1 className="text-xl sm:text-3xl font-bold text-purple-700 mb-1 sm:mb-2">
             Create New Personal Development Plan
           </h1>
-          <p className="text-gray-600">Plan your professional development journey</p>
+          <p className="text-gray-600 text-sm sm:text-base">Plan your professional development journey</p>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 py-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
         {/* Progress Steps */}
-        <div className="bg-white rounded-lg p-8 mb-6 shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between">
+        <div className="bg-white rounded-lg p-4 sm:p-8 mb-4 sm:mb-6 shadow-sm border border-gray-200">
+          <div className="flex items-center justify-between overflow-x-auto">
             {steps.map((step, index) => (
               <React.Fragment key={step.number}>
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center min-w-0 px-2">
                   <div 
-                    className={`w-12 h-12 rounded-full flex items-center justify-center mb-2 ${
+                    className={`w-8 h-8 sm:w-12 sm:h-12 rounded-full flex items-center justify-center mb-1 sm:mb-2 ${
                       currentStep === step.number 
                         ? 'bg-purple-600 text-white' 
                         : currentStep > step.number
@@ -236,16 +244,16 @@ export default function PDPForm() {
                         : 'bg-gray-200 text-gray-500'
                     }`}
                   >
-                    {currentStep > step.number ? <CheckCircle size={24} /> : step.icon}
+                    {currentStep > step.number ? <CheckCircle size={16} /> : <div className="text-xs sm:text-base">{step.icon}</div>}
                   </div>
-                  <span className={`text-sm font-medium ${
+                  <span className={`text-xs sm:text-sm font-medium text-center ${
                     currentStep === step.number ? 'text-purple-700' : 'text-gray-600'
                   }`}>
                     {step.title}
                   </span>
                 </div>
                 {index < steps.length - 1 && (
-                  <div className={`flex-1 h-1 mx-4 ${
+                  <div className={`flex-1 h-0.5 sm:h-1 mx-2 sm:mx-4 min-w-[20px] ${
                     currentStep > step.number ? 'bg-green-500' : 'bg-gray-200'
                   }`} />
                 )}
@@ -255,21 +263,21 @@ export default function PDPForm() {
         </div>
 
         {/* Form Content */}
-        <div className="bg-white rounded-lg p-8 shadow-sm border border-gray-200">
+        <div className="bg-white rounded-lg p-4 sm:p-8 shadow-sm border border-gray-200">
           {/* Step 1: Career Objectives */}
           {currentStep === 1 && (
             <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center">
-                  <Target size={24} />
+              <div className="flex items-start gap-3 mb-4 sm:mb-6">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center flex-shrink-0">
+                  <Target size={16} />
                 </div>
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Career Objectives</h2>
-                  <p className="text-gray-600">Define your professional goals in dental practice</p>
+                <div className="flex-1 min-w-0">
+                  <h2 className="text-lg sm:text-2xl font-bold text-gray-900">Career Objectives</h2>
+                  <p className="text-gray-600 text-sm sm:text-base">Define your professional goals in dental practice</p>
                 </div>
               </div>
 
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     PDP Name
@@ -277,20 +285,20 @@ export default function PDPForm() {
                   <input
                     type="text"
                     placeholder="e.g., 2025 Professional Development Plan"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm sm:text-base"
                     value={formData.pdpName}
                     onChange={(e) => setFormData({ ...formData, pdpName: e.target.value })}
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Start Date
                     </label>
                     <input
                       type="date"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm sm:text-base"
                       value={formData.startDate}
                       onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
                     />
@@ -301,7 +309,7 @@ export default function PDPForm() {
                     </label>
                     <input
                       type="date"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm sm:text-base"
                       value={formData.endDate}
                       onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
                     />
@@ -354,63 +362,70 @@ export default function PDPForm() {
           {/* Step 2: Skills Assessment */}
           {currentStep === 2 && (
             <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center">
-                  <TrendingUp size={24} />
+              <div className="flex items-start gap-3 mb-4 sm:mb-6">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center flex-shrink-0">
+                  <TrendingUp size={16} />
                 </div>
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Skills Assessment</h2>
-                  <p className="text-gray-600">Evaluate your current skills and identify areas for growth</p>
+                <div className="flex-1 min-w-0">
+                  <h2 className="text-lg sm:text-2xl font-bold text-gray-900">Skills Assessment</h2>
+                  <p className="text-gray-600 text-sm sm:text-base">Evaluate your current skills and identify areas for growth</p>
                 </div>
               </div>
 
-              <div className="space-y-8">
+              <div className="space-y-4 sm:space-y-8">
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">Current Skills</h3>
-                  <p className="text-sm text-gray-600 mb-4">List your current dental skills and proficiency levels</p>
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2">Current Skills</h3>
+                  <p className="text-sm text-gray-600 mb-3 sm:mb-4">List your current dental skills and proficiency levels</p>
                   {formData.currentSkills.map((skill, index) => (
-                    <div key={index} className="flex gap-2 mb-3">
-                      <select
-                        className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    <div key={index} className="flex flex-col sm:flex-row gap-2 sm:gap-3 mb-3">
+                      <Select
                         value={skill.skill}
-                        onChange={(e) => {
+                        onValueChange={(value) => {
                           const newSkills = [...formData.currentSkills];
-                          newSkills[index].skill = e.target.value;
+                          newSkills[index].skill = value;
                           setFormData({ ...formData, currentSkills: newSkills });
                         }}
                       >
-                        <option value="">Select Skill</option>
-                        {dentalSpecialties.map(specialty => (
-                          <option key={specialty} value={specialty}>{specialty}</option>
-                        ))}
-                      </select>
-                      <select
-                        className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        <SelectTrigger className="flex-1">
+                          <SelectValue placeholder="Select Skill" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {dentalSpecialties.map(specialty => (
+                            <SelectItem key={specialty} value={specialty}>{specialty}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <Select
                         value={skill.level}
-                        onChange={(e) => {
+                        onValueChange={(value) => {
                           const newSkills = [...formData.currentSkills];
-                          newSkills[index].level = e.target.value;
+                          newSkills[index].level = value;
                           setFormData({ ...formData, currentSkills: newSkills });
                         }}
                       >
-                        {skillLevels.map(level => (
-                          <option key={level} value={level}>{level}</option>
-                        ))}
-                      </select>
+                        <SelectTrigger className="w-full sm:w-auto">
+                          <SelectValue placeholder="Level" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {skillLevels.map(level => (
+                            <SelectItem key={level} value={level}>{level}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                       <button
                         onClick={() => {
                           const newSkills = formData.currentSkills.filter((_, i) => i !== index);
                           setFormData({ ...formData, currentSkills: newSkills });
                         }}
-                        className="p-3 text-red-600 hover:bg-red-50 rounded-lg"
+                        className="p-2 sm:p-3 text-red-600 hover:bg-red-50 rounded-lg flex-shrink-0"
                       >
-                        <Trash2 size={20} />
+                        <Trash2 size={16} />
                       </button>
                     </div>
                   ))}
                   <button
                     onClick={addCurrentSkill}
-                    className="text-purple-600 hover:text-purple-700 font-medium flex items-center gap-2"
+                    className="text-purple-600 hover:text-purple-700 font-medium flex items-center gap-2 text-sm sm:text-base"
                   >
                     <Plus size={16} />
                     Add Current Skill
@@ -418,51 +433,58 @@ export default function PDPForm() {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">Skills to Develop</h3>
-                  <p className="text-sm text-gray-600 mb-4">Identify skills you want to improve and your target proficiency</p>
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2">Skills to Develop</h3>
+                  <p className="text-sm text-gray-600 mb-3 sm:mb-4">Identify skills you want to improve and your target proficiency</p>
                   {formData.skillsToDevelop.map((skill, index) => (
-                    <div key={index} className="flex gap-2 mb-3">
-                      <select
-                        className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    <div key={index} className="flex flex-col sm:flex-row gap-2 sm:gap-3 mb-3">
+                      <Select
                         value={skill.skill}
-                        onChange={(e) => {
+                        onValueChange={(value) => {
                           const newSkills = [...formData.skillsToDevelop];
-                          newSkills[index].skill = e.target.value;
+                          newSkills[index].skill = value;
                           setFormData({ ...formData, skillsToDevelop: newSkills });
                         }}
                       >
-                        <option value="">Select Skill</option>
-                        {dentalSpecialties.map(specialty => (
-                          <option key={specialty} value={specialty}>{specialty}</option>
-                        ))}
-                      </select>
-                      <select
-                        className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        <SelectTrigger className="flex-1">
+                          <SelectValue placeholder="Select Skill" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {dentalSpecialties.map(specialty => (
+                            <SelectItem key={specialty} value={specialty}>{specialty}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <Select
                         value={skill.target}
-                        onChange={(e) => {
+                        onValueChange={(value) => {
                           const newSkills = [...formData.skillsToDevelop];
-                          newSkills[index].target = e.target.value;
+                          newSkills[index].target = value;
                           setFormData({ ...formData, skillsToDevelop: newSkills });
                         }}
                       >
-                        {skillLevels.map(level => (
-                          <option key={level} value={`Target: ${level}`}>Target: {level}</option>
-                        ))}
-                      </select>
+                        <SelectTrigger className="w-full sm:w-auto">
+                          <SelectValue placeholder="Target" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {skillLevels.map(level => (
+                            <SelectItem key={level} value={level}>Target: {level}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                       <button
                         onClick={() => {
                           const newSkills = formData.skillsToDevelop.filter((_, i) => i !== index);
                           setFormData({ ...formData, skillsToDevelop: newSkills });
                         }}
-                        className="p-3 text-red-600 hover:bg-red-50 rounded-lg"
+                        className="p-2 sm:p-3 text-red-600 hover:bg-red-50 rounded-lg flex-shrink-0"
                       >
-                        <Trash2 size={20} />
+                        <Trash2 size={16} />
                       </button>
                     </div>
                   ))}
                   <button
                     onClick={addSkillToDevelop}
-                    className="text-purple-600 hover:text-purple-700 font-medium flex items-center gap-2"
+                    className="text-purple-600 hover:text-purple-700 font-medium flex items-center gap-2 text-sm sm:text-base"
                   >
                     <Plus size={16} />
                     Add Skill to Develop
@@ -475,40 +497,40 @@ export default function PDPForm() {
           {/* Step 3: Learning Plan */}
           {currentStep === 3 && (
             <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center">
-                  <FileText size={24} />
+              <div className="flex items-start gap-3 mb-4 sm:mb-6">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center flex-shrink-0">
+                  <FileText size={16} />
                 </div>
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Learning Plan</h2>
-                  <p className="text-gray-600">Select courses and learning activities to achieve your goals</p>
+                <div className="flex-1 min-w-0">
+                  <h2 className="text-lg sm:text-2xl font-bold text-gray-900">Learning Plan</h2>
+                  <p className="text-gray-600 text-sm sm:text-base">Select courses and learning activities to achieve your goals</p>
                 </div>
               </div>
 
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-3">Select Courses</h3>
-                  <p className="text-sm text-gray-600 mb-4">Choose the courses you want to include in your learning plan</p>
-                  <div className="grid grid-cols-2 gap-3">
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3">Select Courses</h3>
+                  <p className="text-sm text-gray-600 mb-3 sm:mb-4">Choose the courses you want to include in your learning plan</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                     {courses.map((course) => (
-                      <label key={course} className="flex items-center gap-3 p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                      <label key={course} className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
                         <input
                           type="checkbox"
                           checked={formData.selectedCourses.includes(course)}
                           onChange={() => toggleCourse(course)}
-                          className="w-4 h-4 text-purple-600 rounded focus:ring-purple-500"
+                          className="w-4 h-4 text-purple-600 rounded focus:ring-purple-500 flex-shrink-0"
                         />
-                        <span className="text-gray-700">{course}</span>
+                        <span className="text-gray-700 text-xs sm:text-sm leading-tight">{course}</span>
                       </label>
                     ))}
                   </div>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">Additional Resources</h3>
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2">Additional Resources</h3>
                   <textarea
                     placeholder="Journal subscriptions, mentorship programs, clinical practice hours..."
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none text-sm sm:text-base"
                     rows={4}
                     value={formData.additionalResources}
                     onChange={(e) => setFormData({ ...formData, additionalResources: e.target.value })}
@@ -521,39 +543,42 @@ export default function PDPForm() {
           {/* Step 4: Timeline & Milestones */}
           {currentStep === 4 && (
             <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center">
-                  <Calendar size={24} />
+              <div className="flex items-start gap-3 mb-4 sm:mb-6">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center flex-shrink-0">
+                  <Calendar size={16} />
                 </div>
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Timeline & Milestones</h2>
-                  <p className="text-gray-600">Set deadlines and track your progress</p>
+                <div className="flex-1 min-w-0">
+                  <h2 className="text-lg sm:text-2xl font-bold text-gray-900">Timeline & Milestones</h2>
+                  <p className="text-gray-600 text-sm sm:text-base">Set deadlines and track your progress</p>
                 </div>
               </div>
 
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">Duration</label>
-                  <select
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  <Select
                     value={formData.duration}
-                    onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
+                    onValueChange={(value) => setFormData({ ...formData, duration: value })}
                   >
-                    <option value="">Select Duration</option>
-                    {durations.map(duration => (
-                      <option key={duration} value={duration}>{duration}</option>
-                    ))}
-                  </select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Duration" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {durations.map((duration, index) => (
+                        <SelectItem key={index} value={duration}>{duration}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-3">Milestones</h3>
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3">Milestones</h3>
                   {formData.milestones.map((milestone, index) => (
-                    <div key={index} className="flex gap-2 mb-3">
+                    <div key={index} className="flex flex-col sm:flex-row gap-2 sm:gap-3 mb-3">
                       <input
                         type="text"
                         placeholder="Q1 2025"
-                        className="w-32 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        className="w-full sm:w-32 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm sm:text-base"
                         value={milestone.quarter}
                         onChange={(e) => {
                           const newMilestones = [...formData.milestones];
@@ -564,7 +589,7 @@ export default function PDPForm() {
                       <input
                         type="text"
                         placeholder="Complete Endodontics course"
-                        className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        className="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm sm:text-base"
                         value={milestone.goal}
                         onChange={(e) => {
                           const newMilestones = [...formData.milestones];
@@ -573,16 +598,19 @@ export default function PDPForm() {
                         }}
                       />
                       <button
-                        onClick={() => removeMilestone(index)}
-                        className="p-3 text-red-600 hover:bg-red-50 rounded-lg"
+                        onClick={() => {
+                          const newMilestones = formData.milestones.filter((_, i) => i !== index);
+                          setFormData({ ...formData, milestones: newMilestones });
+                        }}
+                        className="p-2 sm:p-3 text-red-600 hover:bg-red-50 rounded-lg flex-shrink-0"
                       >
-                        <Trash2 size={20} />
+                        <Trash2 size={16} />
                       </button>
                     </div>
                   ))}
                   <button
                     onClick={addMilestone}
-                    className="text-purple-600 hover:text-purple-700 font-medium flex items-center gap-2"
+                    className="text-purple-600 hover:text-purple-700 font-medium flex items-center gap-2 text-sm sm:text-base"
                   >
                     <Plus size={16} />
                     Add Milestone
@@ -595,44 +623,44 @@ export default function PDPForm() {
           {/* Step 5: Review & Reflection */}
           {currentStep === 5 && (
             <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center">
-                  <Eye size={24} />
+              <div className="flex items-start gap-3 mb-4 sm:mb-6">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center flex-shrink-0">
+                  <Eye size={16} />
                 </div>
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Review & Reflection</h2>
-                  <p className="text-gray-600">Evaluate your progress and adjust your plan</p>
+                <div className="flex-1 min-w-0">
+                  <h2 className="text-lg sm:text-2xl font-bold text-gray-900">Review & Reflection</h2>
+                  <p className="text-gray-600 text-sm sm:text-base">Evaluate your progress and adjust your plan</p>
                 </div>
               </div>
 
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">Assessment Methods</h3>
-                  <p className="text-sm text-gray-600 mb-4">Select how you'll evaluate your progress</p>
-                  <div className="grid grid-cols-2 gap-3">
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2 sm:mb-4">Assessment Methods</h3>
+                  <p className="text-sm text-gray-600 mb-3 sm:mb-4">Select how you'll evaluate your progress</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                     {assessmentOptions.map((method) => (
-                      <label key={method} className="flex items-center gap-3 p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                      <label key={method} className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
                         <input
                           type="checkbox"
                           checked={formData.assessmentMethods.includes(method)}
                           onChange={() => toggleAssessment(method)}
-                          className="w-4 h-4 text-purple-600 rounded focus:ring-purple-500"
+                          className="w-4 h-4 text-purple-600 rounded focus:ring-purple-500 flex-shrink-0"
                         />
-                        <span className="text-sm text-gray-700">{method}</span>
+                        <span className="text-gray-700 text-xs sm:text-sm leading-tight">{method}</span>
                       </label>
                     ))}
                   </div>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">Success Criteria</h3>
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3">Success Criteria</h3>
                   <p className="text-sm text-gray-600 mb-3">Define specific outcomes that indicate success</p>
                   {formData.successCriteria.map((criteria, index) => (
-                    <div key={index} className="flex gap-2 mb-3">
+                    <div key={index} className="flex flex-col sm:flex-row gap-2 sm:gap-3 mb-3">
                       <input
                         type="text"
                         placeholder="Complete 50 CPD hours"
-                        className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        className="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm sm:text-base"
                         value={criteria}
                         onChange={(e) => {
                           const newCriteria = [...formData.successCriteria];
@@ -642,15 +670,15 @@ export default function PDPForm() {
                       />
                       <button
                         onClick={() => removeSuccessCriteria(index)}
-                        className="p-3 text-red-600 hover:bg-red-50 rounded-lg"
+                        className="p-2 sm:p-3 text-red-600 hover:bg-red-50 rounded-lg flex-shrink-0"
                       >
-                        <Trash2 size={20} />
+                        <Trash2 size={16} />
                       </button>
                     </div>
                   ))}
                   <button
                     onClick={addSuccessCriteria}
-                    className="text-purple-600 hover:text-purple-700 font-medium flex items-center gap-2"
+                    className="text-purple-600 hover:text-purple-700 font-medium flex items-center gap-2 text-sm sm:text-base"
                   >
                     <Plus size={16} />
                     Add Success Criteria
@@ -661,35 +689,37 @@ export default function PDPForm() {
           )}
 
           {/* Navigation Buttons */}
-          <div className="flex justify-between mt-8 pt-6 border-t border-gray-200">
+          <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-4 mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200">
             <button
               onClick={handlePrevious}
               disabled={currentStep === 1}
-              className={`px-6 py-3 rounded-lg font-medium flex items-center gap-2 ${
+              className={`w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium flex items-center justify-center gap-2 text-sm sm:text-base ${
                 currentStep === 1
                   ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
               }`}
             >
-              <ChevronLeft size={20} />
+              <ChevronLeft size={16} />
               Previous
             </button>
             
             {currentStep === 5 ? (
               <button
                 onClick={() => router.push('/pdp?view=detail')}
-                className="px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition flex items-center gap-2"
+                className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition flex items-center justify-center gap-2 text-sm sm:text-base"
               >
-                <Save size={20} />
-                Save Changes
+                <Save size={16} />
+                <span className="hidden sm:inline">Save Changes</span>
+                <span className="sm:hidden">Save</span>
               </button>
             ) : (
               <button
                 onClick={handleNext}
-                className="px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition flex items-center gap-2"
+                className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition flex items-center justify-center gap-2 text-sm sm:text-base"
               >
-                Next
-                <ChevronRight size={20} />
+                <span className="hidden sm:inline">Next</span>
+                <span className="sm:hidden">Next</span>
+                <ChevronRight size={16} />
               </button>
             )}
           </div>

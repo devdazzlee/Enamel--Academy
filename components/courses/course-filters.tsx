@@ -1,8 +1,15 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronDown, Filter } from "lucide-react"
+import { Filter } from "lucide-react"
 import { cn } from "@/lib/utils"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 const filterOptions = {
   "Suggested For": [
@@ -38,26 +45,23 @@ const filterOptions = {
 }
 
 export function CourseFilters({ onFiltersChange }: { onFiltersChange: (filters: Record<string, string[]>) => void }) {
-  const [openFilter, setOpenFilter] = useState<string | null>(null)
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({})
 
-  const toggleFilter = (filter: string) => {
-    setOpenFilter(openFilter === filter ? null : filter)
-  }
-
-  const toggleOption = (filter: string, option: string) => {
-    const newFilters = setSelectedFilters((prev) => {
-      const current = prev[filter] || []
-      if (current.includes(option)) {
-        const updated = { ...prev, [filter]: current.filter((o) => o !== option) }
-        onFiltersChange(updated)
-        return updated
-      }
-      const updated = { ...prev, [filter]: [...current, option] }
-      onFiltersChange(updated)
-      return updated
-    })
-    return newFilters
+  const handleFilterChange = (filter: string, value: string) => {
+    const newFilters = { ...selectedFilters }
+    if (!newFilters[filter]) {
+      newFilters[filter] = []
+    }
+    
+    const currentValues = newFilters[filter]
+    if (currentValues.includes(value)) {
+      newFilters[filter] = currentValues.filter(v => v !== value)
+    } else {
+      newFilters[filter] = [...currentValues, value]
+    }
+    
+    setSelectedFilters(newFilters)
+    onFiltersChange(newFilters)
   }
 
   const clearAllFilters = () => {
@@ -69,12 +73,19 @@ export function CourseFilters({ onFiltersChange }: { onFiltersChange: (filters: 
     return Object.values(selectedFilters).reduce((total, filterArray) => total + filterArray.length, 0)
   }
 
+  const getFilterDisplayValue = (filter: string) => {
+    const values = selectedFilters[filter] || []
+    if (values.length === 0) return filter
+    if (values.length === 1) return values[0]
+    return `${values.length} selected`
+  }
+
   return (
-    <div className="mb-6">
-      <div className="flex items-center justify-between mb-4">
+    <div className="mb-4 sm:mb-6">
+      <div className="flex items-center justify-between mb-3 sm:mb-4">
         <div className="flex items-center gap-2">
           <Filter className="h-4 w-4 text-primary" />
-          <span className="text-primary font-medium">Filters</span>
+          <span className="text-primary font-medium text-sm sm:text-base">Filters</span>
           {getActiveFilterCount() > 0 && (
             <span className="bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full">
               {getActiveFilterCount()}
@@ -84,56 +95,35 @@ export function CourseFilters({ onFiltersChange }: { onFiltersChange: (filters: 
         {getActiveFilterCount() > 0 && (
           <button
             onClick={clearAllFilters}
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className="text-xs sm:text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             Clear all
           </button>
         )}
       </div>
-      <div className="flex flex-wrap gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3">
         {Object.keys(filterOptions).map((filter) => (
-          <div key={filter} className="relative">
-            <button
-              onClick={() => toggleFilter(filter)}
-              className={cn(
-                "flex items-center gap-2 px-4 py-2 border rounded-xl text-sm transition-colors",
-                openFilter === filter
-                  ? "border-primary bg-primary/5 text-primary"
-                  : "border-border bg-card text-foreground hover:border-primary/50"
-              )}
+          <div key={filter}>
+            <Select
+              value={selectedFilters[filter]?.[0] || ""}
+              onValueChange={(value) => handleFilterChange(filter, value)}
             >
-              <span>{filter}</span>
-              <ChevronDown className={cn(
-                "h-4 w-4 transition-transform",
-                openFilter === filter && "rotate-180"
-              )} />
-            </button>
-            
-            {openFilter === filter && filterOptions[filter as keyof typeof filterOptions].length > 0 && (
-              <div className="absolute top-full left-0 mt-2 w-72 bg-card border border-border rounded-xl shadow-lg z-50 p-4 max-h-80 overflow-y-auto">
-                <p className="font-semibold text-foreground mb-3">Select</p>
-                <div className="space-y-2">
-                  {filterOptions[filter as keyof typeof filterOptions].map((option) => (
-                    <label key={option} className="flex items-center justify-between cursor-pointer group">
-                      <div className="flex items-center gap-2">
-                        <input
-                          type="checkbox"
-                          checked={(selectedFilters[filter] || []).includes(option)}
-                          onChange={() => toggleOption(filter, option)}
-                          className="w-4 h-4 rounded border-border text-primary focus:ring-primary"
-                        />
-                        <span className="text-sm text-muted-foreground group-hover:text-foreground">
-                          {option}
-                        </span>
-                      </div>
-                      <span className="text-xs bg-primary text-primary-foreground px-2 py-0.5 rounded">
+              <SelectTrigger className="w-full bg-white border border-gray-200">
+                <SelectValue placeholder={filter} />
+              </SelectTrigger>
+              <SelectContent className="bg-white border border-gray-200 max-h-60">
+                {filterOptions[filter as keyof typeof filterOptions].map((option) => (
+                  <SelectItem key={option} value={option}>
+                    <div className="flex items-center justify-between w-full">
+                      <span className="truncate">{option}</span>
+                      <span className="text-xs bg-primary text-primary-foreground px-1.5 py-0.5 rounded ml-2 flex-shrink-0">
                         62
                       </span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-            )}
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         ))}
       </div>
