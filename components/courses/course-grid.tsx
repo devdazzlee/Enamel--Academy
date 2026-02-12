@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import { Clock, FileText, LayoutGrid } from "lucide-react"
 import { useRouter } from "next/navigation"
 
@@ -96,15 +95,10 @@ export function CourseGrid({ activeFilters, searchQuery }: {
         {filteredCourses.map((course) => (
           <div key={course.id} className="bg-card rounded-xl border border-border overflow-hidden">
             <div className="relative h-28 sm:h-32">
-              <Image
+              <img
                 src={course.image}
                 alt={course.title}
-                fill
-                className="object-cover"
-                onError={(e) => {
-                  // Fallback to a default image if the main image fails to load
-                  e.currentTarget.src = "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400&h=200&fit=crop"
-                }}
+                className="absolute inset-0 w-full h-full object-cover"
               />
             </div>
             <div className="p-2.5 sm:p-3">

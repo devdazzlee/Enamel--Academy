@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import { FileText } from "lucide-react"
 import { useRouter } from "next/navigation"
 
@@ -37,11 +36,10 @@ export function OngoingCourses() {
         {ongoingCourses.map((course) => (
           <div key={course.id} className="bg-card rounded-2xl border border-border overflow-hidden">
             <div className="relative h-32 sm:h-40">
-              <Image
-                src={course.image || "/placeholder.svg"}
+              <img
+                src={course.image}
                 alt={course.title}
-                fill
-                className="object-cover"
+                className="absolute inset-0 w-full h-full object-cover"
               />
             </div>
             <div className="p-3 sm:p-4">

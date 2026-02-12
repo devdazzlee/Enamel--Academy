@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import { Clock, FileText } from "lucide-react"
 import { useRouter } from "next/navigation"
 
@@ -40,11 +39,10 @@ export function RecommendedCourses() {
         {recommendedCourses.map((course) => (
           <div key={course.id} className="bg-card rounded-2xl border border-border overflow-hidden">
             <div className="relative h-40 sm:h-48">
-              <Image
-                src={course.image || "/placeholder.svg"}
+              <img
+                src={course.image}
                 alt={course.title}
-                fill
-                className="object-cover"
+                className="absolute inset-0 w-full h-full object-cover"
               />
               <span className="absolute top-2 sm:top-4 left-2 sm:left-4 px-2 sm:px-3 py-1 bg-primary text-primary-foreground text-xs font-medium rounded-md">
                 Suggested

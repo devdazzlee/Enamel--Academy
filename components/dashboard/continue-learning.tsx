@@ -1,7 +1,6 @@
 "use client"
 
 import { Play } from "lucide-react"
-import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useApp } from "@/lib/app-context"
 
@@ -40,11 +39,10 @@ export function ContinueLearning() {
             className="bg-white rounded-2xl border border-[#e5e7eb] p-3 sm:p-4 flex flex-col md:flex-row gap-4"
           >
             <div className="relative w-full h-32 md:h-48 md:w-48 rounded-xl overflow-hidden flex-shrink-0">
-              <Image
+              <img
                 src={course.image}
                 alt={course.title}
-                fill
-                className="object-cover"
+                className="absolute inset-0 w-full h-full object-cover"
               />
             </div>
             <div className="flex-1">
