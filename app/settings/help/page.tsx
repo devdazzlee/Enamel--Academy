@@ -109,62 +109,65 @@ export default function SettingsHelpPage() {
     <div className="min-h-screen bg-[#e8e8e8] flex flex-col">
       <Navigation />
 
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-6">
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 py-6">
         {/* Header */}
-        <div className="flex items-center gap-4 mb-8">
+        <div className="flex items-center gap-2 sm:gap-4 mb-6 sm:mb-8">
           <Link 
             href="/settings"
-            className="flex items-center gap-2 text-[#6b7280] hover:text-[#1a1a1a] transition-colors"
+            className="flex items-center gap-2 text-[#6b7280] hover:text-[#1a1a1a] transition-colors text-sm sm:text-base"
           >
-            <ArrowLeft className="h-5 w-5" />
-            Back to Settings
+            <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+            <span className="hidden sm:inline">Back to Settings</span>
+            <span className="sm:hidden">Back</span>
           </Link>
         </div>
 
-        <div className="bg-white rounded-2xl border border-border p-8">
-          <h1 className="text-2xl font-semibold mb-6">
+        <div className="bg-white rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 lg:p-8">
+          <h1 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6">
             <span className="text-[#1a1a1a]">Help </span>
             <span className="text-[#8b5cf6]">Center</span>
           </h1>
 
           {/* Search */}
-          <div className="relative mb-8">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#6b7280]" />
+          <div className="relative mb-6 sm:mb-8">
+            <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-[#6b7280]" />
             <input
               type="text"
               placeholder="Search for help articles..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]/20 focus:border-[#8b5cf6]"
+              className="w-full pl-10 sm:pl-12 pr-4 py-2.5 sm:py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]/20 focus:border-[#8b5cf6] text-sm sm:text-base"
             />
           </div>
 
           {/* Help Categories */}
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {filteredCategories.map((category) => {
               const Icon = category.icon;
               const isExpanded = expandedCategories.includes(category.id);
 
               return (
-                <div key={category.id} className="border border-border rounded-xl overflow-hidden">
+                <div key={category.id} className="border border-border rounded-lg sm:rounded-xl overflow-hidden">
                   <button
                     onClick={() => toggleCategory(category.id)}
-                    className="w-full px-6 py-4 bg-[#f8f9fa] hover:bg-[#f0f1f3] transition-colors flex items-center justify-between"
+                    className="w-full px-3 sm:px-6 py-3 sm:py-4 bg-[#f8f9fa] hover:bg-[#f0f1f3] transition-colors flex items-center justify-between"
                   >
-                    <div className="flex items-center gap-3">
-                      <Icon className="h-5 w-5 text-[#8b5cf6]" />
-                      <span className="font-medium text-[#1a1a1a]">{category.title}</span>
-                      <span className="text-sm text-[#6b7280]">({category.articles.length} articles)</span>
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <Icon className="h-4 w-4 sm:h-5 sm:w-5 text-[#8b5cf6]" />
+                      <div className="flex-1 text-left">
+                        <span className="font-medium text-[#1a1a1a] text-sm sm:text-base">{category.title}</span>
+                        <span className="text-xs sm:text-sm text-[#6b7280] block">({category.articles.length} articles)</span>
+                      </div>
                     </div>
-                    {isExpanded ? <ChevronUp className="h-5 w-5 text-[#6b7280]" /> : <ChevronDown className="h-5 w-5 text-[#6b7280]" />}
+                    {isExpanded ? <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-[#6b7280]" /> : <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-[#6b7280]" />}
                   </button>
 
                   {isExpanded && (
-                    <div className="p-6 space-y-4">
+                    <div className="p-3 sm:p-6 space-y-3 sm:space-y-4">
                       {category.articles.map((article, index) => (
-                        <div key={index} className="border-b border-gray-100 last:border-0 pb-4 last:pb-0">
-                          <h3 className="font-medium text-[#1a1a1a] mb-2">{article.question}</h3>
-                          <p className="text-sm text-[#6b7280] leading-relaxed">{article.answer}</p>
+                        <div key={index} className="border-b border-gray-100 last:border-0 pb-3 sm:pb-4 last:pb-0 last:sm:pb-0">
+                          <h3 className="font-medium text-[#1a1a1a] mb-2 text-sm sm:text-base">{article.question}</h3>
+                          <p className="text-xs sm:text-sm text-[#6b7280] leading-relaxed">{article.answer}</p>
                         </div>
                       ))}
                     </div>
@@ -175,21 +178,21 @@ export default function SettingsHelpPage() {
           </div>
 
           {/* Still Need Help */}
-          <div className="mt-8 p-6 bg-[#8b5cf6]/5 border border-[#8b5cf6]/20 rounded-xl">
-            <h3 className="font-semibold text-[#1a1a1a] mb-2">Still need help?</h3>
-            <p className="text-sm text-[#6b7280] mb-4">
+          <div className="mt-6 sm:mt-8 p-4 sm:p-6 bg-[#8b5cf6]/5 border border-[#8b5cf6]/20 rounded-lg sm:rounded-xl">
+            <h3 className="font-semibold text-[#1a1a1a] mb-2 text-sm sm:text-base">Still need help?</h3>
+            <p className="text-xs sm:text-sm text-[#6b7280] mb-3 sm:mb-4">
               Can't find what you're looking for? Our support team is here to help.
             </p>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
               <Link 
                 href="/settings/contact"
-                className="px-4 py-2 bg-[#8b5cf6] text-white rounded-lg text-sm font-medium hover:bg-[#7c3aed] transition-colors"
+                className="px-3 sm:px-4 py-2 sm:py-2.5 bg-[#8b5cf6] text-white rounded-lg text-sm sm:text-base font-medium hover:bg-[#7c3aed] transition-colors text-center"
               >
                 Contact Support
               </Link>
               <Link 
                 href="/help"
-                className="px-4 py-2 bg-white border border-[#8b5cf6] text-[#8b5cf6] rounded-lg text-sm font-medium hover:bg-[#8b5cf6]/10 transition-colors"
+                className="px-3 sm:px-4 py-2 sm:py-2.5 bg-white border border-[#8b5cf6] text-[#8b5cf6] rounded-lg text-sm sm:text-base font-medium hover:bg-[#8b5cf6]/10 transition-colors text-center"
               >
                 View Full Help Site
               </Link>

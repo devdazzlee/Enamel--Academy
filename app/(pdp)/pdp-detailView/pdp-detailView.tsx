@@ -15,7 +15,8 @@ import {
   Edit2,
   Save,
   X,
-  Plus
+  Plus,
+  ChevronDown
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -37,6 +38,7 @@ export default function PDPDetailView() {
   const searchParams = useSearchParams();
   const [isEditing, setIsEditing] = useState(false);
   const [editedPDPData, setEditedPDPData] = useState<typeof pdpData | null>(null);
+  const [isMobileModalOpen, setIsMobileModalOpen] = useState(false);
   
   const pdpData = {
     title: '2023 Annual Plan',
@@ -105,12 +107,17 @@ export default function PDPDetailView() {
   const handleEdit = () => {
     setEditedPDPData({ ...pdpData });
     setIsEditing(true);
+    // Open mobile modal if on mobile device
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      setIsMobileModalOpen(true);
+    }
   };
 
   const handleSave = () => {
-    // Here you would typically save the data to your backend
+    // Here you would typically save data to your backend
     console.log('Saving PDP data:', editedPDPData);
     setIsEditing(false);
+    setIsMobileModalOpen(false);
     // Show success message
     alert('PDP data saved successfully!');
   };
@@ -118,6 +125,7 @@ export default function PDPDetailView() {
   const handleCancel = () => {
     setEditedPDPData(null);
     setIsEditing(false);
+    setIsMobileModalOpen(false);
   };
 
   const updateCareerObjective = (index: number, value: string) => {
@@ -188,28 +196,54 @@ export default function PDPDetailView() {
             <div className="flex gap-2 sm:gap-3">
               {isEditing ? (
                 <>
-                  <Button onClick={handleSave} className="px-3 sm:px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-xs sm:text-sm">
+                  <Button 
+                    onClick={handleSave} 
+                    className="px-3 sm:px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-xs sm:text-sm hidden sm:flex"
+                  >
                     <Save size={16} />
-                    <span className="hidden sm:inline ml-1">Save</span>
+                    <span className="ml-1">Save</span>
                   </Button>
-                  <Button onClick={handleCancel} variant="outline" className="px-3 sm:px-4 py-2 text-xs sm:text-sm">
+                  <Button 
+                    onClick={handleCancel} 
+                    variant="outline" 
+                    className="px-3 sm:px-4 py-2 text-xs sm:text-sm hidden sm:flex"
+                  >
                     <X size={16} />
-                    <span className="hidden sm:inline ml-1">Cancel</span>
+                    <span className="ml-1">Cancel</span>
+                  </Button>
+                  {/* Mobile Edit Button */}
+                  <Button 
+                    onClick={() => setIsMobileModalOpen(true)}
+                    className="px-3 py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs sm:hidden"
+                  >
+                    <Edit2 size={16} />
+                    <span className="ml-1">Edit Form</span>
                   </Button>
                 </>
               ) : (
                 <>
-                  <Button onClick={handleEdit} variant="outline" className="px-3 sm:px-4 py-2 text-xs sm:text-sm">
+                  <Button 
+                    onClick={handleEdit} 
+                    variant="outline" 
+                    className="px-3 sm:px-4 py-2 text-xs sm:text-sm"
+                  >
                     <Edit2 size={16} />
                     <span className="hidden sm:inline ml-1">Edit</span>
                   </Button>
-                  <Button onClick={() => window.print()} variant="outline" className="px-3 sm:px-4 py-2 text-xs sm:text-sm">
+                  <Button 
+                    onClick={() => window.print()} 
+                    variant="outline" 
+                    className="px-3 sm:px-4 py-2 text-xs sm:text-sm hidden sm:flex"
+                  >
                     <Printer size={16} />
-                    <span className="hidden sm:inline ml-1">Print</span>
+                    <span className="ml-1">Print</span>
                   </Button>
-                  <Button onClick={() => window.print()} className="px-3 sm:px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs sm:text-sm">
+                  <Button 
+                    onClick={() => window.print()} 
+                    className="px-3 sm:px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs sm:text-sm hidden sm:flex"
+                  >
                     <FileDown size={16} />
-                    <span className="hidden sm:inline ml-1">PDF</span>
+                    <span className="ml-1">PDF</span>
                   </Button>
                 </>
               )}
@@ -253,35 +287,85 @@ export default function PDPDetailView() {
                 {isEditing ? (
                   <>
                     {currentData.careerObjectives.map((objective: string, index: number) => (
-                      <div key={index} className="flex flex-col sm:flex-row gap-2 sm:gap-3 p-2 sm:p-3 bg-gray-50 rounded-lg">
+                      <div key={index} className="flex flex-col gap-2 p-2 sm:p-3 bg-gray-50 rounded-lg">
                         <div className="flex items-start gap-2 flex-1">
                           <CheckCircle className="text-green-600 mt-0.5 flex-shrink-0" size={16} />
-                          <Select
-                            value={objective}
-                            onValueChange={(value) => updateCareerObjective(index, value)}
-                          >
-                            <SelectTrigger className="flex-1">
-                              <SelectValue placeholder="Select or type career objective" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="Become a specialist in Advanced Endodontics">Become a specialist in Advanced Endodontics</SelectItem>
-                              <SelectItem value="Achieve proficiency in Digital Smile Design">Achieve proficiency in Digital Smile Design</SelectItem>
-                              <SelectItem value="Obtain Implantology Certification">Obtain Implantology Certification</SelectItem>
-                              <SelectItem value="Develop expertise in aesthetic dentistry procedures">Develop expertise in aesthetic dentistry procedures</SelectItem>
-                              <SelectItem value="Master advanced surgical techniques">Master advanced surgical techniques</SelectItem>
-                              <SelectItem value="Become a leader in dental practice management">Become a leader in dental practice management</SelectItem>
-                              <SelectItem value="Specialize in pediatric dentistry">Specialize in pediatric dentistry</SelectItem>
-                              <SelectItem value="Excel in cosmetic dentistry">Excel in cosmetic dentistry</SelectItem>
-                              <SelectItem value="Become an orthodontic specialist">Become an orthodontic specialist</SelectItem>
-                              <SelectItem value="Master digital dentistry technologies">Master digital dentistry technologies</SelectItem>
-                            </SelectContent>
-                          </Select>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <button className="flex-1 flex items-center text-sm bg-white border border-gray-300 rounded-md px-3 py-2 text-left hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                <span className="flex-1">{objective || "Select or type career objective"}</span>
+                                <div className="ml-2 h-4 w-4 text-gray-400 flex-shrink-0">▼</div>
+                              </button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-full min-w-[300px] max-h-60 overflow-y-auto">
+                              <DropdownMenuItem 
+                                onClick={() => updateCareerObjective(index, "Become a specialist in Advanced Endodontics")}
+                                className={objective === "Become a specialist in Advanced Endodontics" ? "bg-purple-50 text-purple-700" : ""}
+                              >
+                                Become a specialist in Advanced Endodontics
+                              </DropdownMenuItem>
+                              <DropdownMenuItem 
+                                onClick={() => updateCareerObjective(index, "Achieve proficiency in Digital Smile Design")}
+                                className={objective === "Achieve proficiency in Digital Smile Design" ? "bg-purple-50 text-purple-700" : ""}
+                              >
+                                Achieve proficiency in Digital Smile Design
+                              </DropdownMenuItem>
+                              <DropdownMenuItem 
+                                onClick={() => updateCareerObjective(index, "Obtain Implantology Certification")}
+                                className={objective === "Obtain Implantology Certification" ? "bg-purple-50 text-purple-700" : ""}
+                              >
+                                Obtain Implantology Certification
+                              </DropdownMenuItem>
+                              <DropdownMenuItem 
+                                onClick={() => updateCareerObjective(index, "Develop expertise in aesthetic dentistry procedures")}
+                                className={objective === "Develop expertise in aesthetic dentistry procedures" ? "bg-purple-50 text-purple-700" : ""}
+                              >
+                                Develop expertise in aesthetic dentistry procedures
+                              </DropdownMenuItem>
+                              <DropdownMenuItem 
+                                onClick={() => updateCareerObjective(index, "Master advanced surgical techniques")}
+                                className={objective === "Master advanced surgical techniques" ? "bg-purple-50 text-purple-700" : ""}
+                              >
+                                Master advanced surgical techniques
+                              </DropdownMenuItem>
+                              <DropdownMenuItem 
+                                onClick={() => updateCareerObjective(index, "Become a leader in dental practice management")}
+                                className={objective === "Become a leader in dental practice management" ? "bg-purple-50 text-purple-700" : ""}
+                              >
+                                Become a leader in dental practice management
+                              </DropdownMenuItem>
+                              <DropdownMenuItem 
+                                onClick={() => updateCareerObjective(index, "Specialize in pediatric dentistry")}
+                                className={objective === "Specialize in pediatric dentistry" ? "bg-purple-50 text-purple-700" : ""}
+                              >
+                                Specialize in pediatric dentistry
+                              </DropdownMenuItem>
+                              <DropdownMenuItem 
+                                onClick={() => updateCareerObjective(index, "Excel in cosmetic dentistry")}
+                                className={objective === "Excel in cosmetic dentistry" ? "bg-purple-50 text-purple-700" : ""}
+                              >
+                                Excel in cosmetic dentistry
+                              </DropdownMenuItem>
+                              <DropdownMenuItem 
+                                onClick={() => updateCareerObjective(index, "Become an orthodontic specialist")}
+                                className={objective === "Become an orthodontic specialist" ? "bg-purple-50 text-purple-700" : ""}
+                              >
+                                Become an orthodontic specialist
+                              </DropdownMenuItem>
+                              <DropdownMenuItem 
+                                onClick={() => updateCareerObjective(index, "Master digital dentistry technologies")}
+                                className={objective === "Master digital dentistry technologies" ? "bg-purple-50 text-purple-700" : ""}
+                              >
+                                Master digital dentistry technologies
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
                         </div>
                         <Button
                           onClick={() => removeCareerObjective(index)}
                           variant="ghost"
                           size="sm"
-                          className="text-red-600 hover:text-red-700 hover:bg-red-50 flex-shrink-0"
+                          className="text-red-600 hover:text-red-700 hover:bg-red-50 flex-shrink-0 self-start sm:self-auto"
                         >
                           <X size={16} />
                         </Button>
@@ -332,8 +416,8 @@ export default function PDPDetailView() {
                   <div className="space-y-2 sm:space-y-3">
                     {isEditing ? (
                       currentData.currentSkills.map((skill: { skill: string; level: string }, index: number) => (
-                        <div key={index} className="flex flex-col sm:flex-row gap-2 sm:gap-3 p-2 sm:p-3 bg-gray-50 rounded-lg">
-                          <div className="flex items-center gap-2 flex-1">
+                        <div key={index} className="flex flex-col gap-2 p-2 sm:p-3 bg-gray-50 rounded-lg">
+                          <div className="flex items-start gap-2">
                             <CheckCircle className="text-green-600 flex-shrink-0" size={16} />
                             <Select
                               value={skill.skill}
@@ -349,7 +433,7 @@ export default function PDPDetailView() {
                                 });
                               }}
                             >
-                              <SelectTrigger className="flex-1">
+                              <SelectTrigger className="flex-1 text-sm">
                                 <SelectValue placeholder="Select skill" />
                               </SelectTrigger>
                               <SelectContent>
@@ -373,7 +457,7 @@ export default function PDPDetailView() {
                               });
                             }}
                           >
-                            <SelectTrigger className="w-full sm:w-auto">
+                            <SelectTrigger className="w-full text-sm">
                               <SelectValue placeholder="Level" />
                             </SelectTrigger>
                             <SelectContent>
@@ -404,8 +488,8 @@ export default function PDPDetailView() {
                   <div className="space-y-2 sm:space-y-3">
                     {isEditing ? (
                       currentData.skillsToDevelop.map((skill: { skill: string; target: string }, index: number) => (
-                        <div key={index} className="flex flex-col sm:flex-row gap-2 sm:gap-3 p-2 sm:p-3 bg-gray-50 rounded-lg">
-                          <div className="flex items-center gap-2 flex-1">
+                        <div key={index} className="flex flex-col gap-2 p-2 sm:p-3 bg-gray-50 rounded-lg">
+                          <div className="flex items-start gap-2">
                             <CheckCircle className="text-green-600 flex-shrink-0" size={16} />
                             <Select
                               value={skill.skill}
@@ -421,7 +505,7 @@ export default function PDPDetailView() {
                                 });
                               }}
                             >
-                              <SelectTrigger className="flex-1">
+                              <SelectTrigger className="flex-1 text-sm">
                                 <SelectValue placeholder="Select skill" />
                               </SelectTrigger>
                               <SelectContent>
@@ -445,7 +529,7 @@ export default function PDPDetailView() {
                               });
                             }}
                           >
-                            <SelectTrigger className="w-full sm:w-auto">
+                            <SelectTrigger className="w-full text-sm">
                               <SelectValue placeholder="Target" />
                             </SelectTrigger>
                             <SelectContent>
@@ -494,8 +578,8 @@ export default function PDPDetailView() {
                 {isEditing ? (
                   currentData.courses.map((course: { title: string; duration: string; status: string }, index: number) => (
                     <div key={index} className="p-3 sm:p-4 bg-gray-50 rounded-lg">
-                      <div className="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-4">
-                        <div className="flex items-start gap-2 flex-1">
+                      <div className="flex flex-col gap-3">
+                        <div className="flex items-start gap-2">
                           <CheckCircle className="text-green-600 mt-0.5 flex-shrink-0" size={16} />
                           <div className="flex-1">
                             <Select
@@ -512,7 +596,7 @@ export default function PDPDetailView() {
                                 });
                               }}
                             >
-                              <SelectTrigger className="flex-1 mb-2">
+                              <SelectTrigger className="flex-1 text-sm">
                                 <SelectValue placeholder="Select course" />
                               </SelectTrigger>
                               <SelectContent>
@@ -542,7 +626,7 @@ export default function PDPDetailView() {
                                 });
                               }}
                             >
-                              <SelectTrigger className="w-full sm:w-auto">
+                              <SelectTrigger className="w-full text-sm mt-2">
                                 <SelectValue placeholder="Duration" />
                               </SelectTrigger>
                               <SelectContent>
@@ -571,7 +655,7 @@ export default function PDPDetailView() {
                             });
                           }}
                         >
-                          <SelectTrigger className="w-full sm:w-auto">
+                          <SelectTrigger className="w-full text-sm">
                             <SelectValue placeholder="Status" />
                           </SelectTrigger>
                           <SelectContent>
@@ -624,65 +708,63 @@ export default function PDPDetailView() {
               <div className="space-y-3 sm:space-y-4">
                 {isEditing ? (
                   currentData.milestones.map((milestone: { quarter: string; goal: string; status: string }, index: number) => (
-                    <div key={index} className="flex items-start gap-2 sm:gap-3">
-                      <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-2">
-                          <div className="flex-1 min-w-0">
-                            <div className="flex flex-col sm:flex-row gap-2 mb-2">
-                              <Select
-                                value={milestone.quarter}
-                                onValueChange={(value) => {
-                                  setEditedPDPData(prev => {
-                                    if (!prev) return prev;
-                                    return {
-                                      ...prev,
-                                      milestones: prev.milestones.map((m, i) => 
-                                        i === index ? { ...m, quarter: value } : m
-                                      )
-                                    };
-                                  });
-                                }}
-                              >
-                                <SelectTrigger className="w-full sm:w-auto">
-                                  <SelectValue placeholder="Quarter" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="Q1 2025">Q1 2025</SelectItem>
-                                  <SelectItem value="Q2 2025">Q2 2025</SelectItem>
-                                  <SelectItem value="Q3 2025">Q3 2025</SelectItem>
-                                  <SelectItem value="Q4 2025">Q4 2025</SelectItem>
-                                  <SelectItem value="Q1 2026">Q1 2026</SelectItem>
-                                  <SelectItem value="Q2 2026">Q2 2026</SelectItem>
-                                  <SelectItem value="Q3 2026">Q3 2026</SelectItem>
-                                  <SelectItem value="Q4 2026">Q4 2026</SelectItem>
-                                </SelectContent>
-                              </Select>
-                              <Select
-                                value={milestone.status}
-                                onValueChange={(value) => {
-                                  setEditedPDPData(prev => {
-                                    if (!prev) return prev;
-                                    return {
-                                      ...prev,
-                                      milestones: prev.milestones.map((m, i) => 
-                                        i === index ? { ...m, status: value } : m
-                                      )
-                                    };
-                                  });
-                                }}
-                              >
-                                <SelectTrigger className="w-full sm:w-auto">
-                                  <SelectValue placeholder="Status" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="Not Started">Not Started</SelectItem>
-                                  <SelectItem value="In Progress">In Progress</SelectItem>
-                                  <SelectItem value="Completed">Completed</SelectItem>
-                                  <SelectItem value="Delayed">Delayed</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </div>
+                    <div key={index} className="flex flex-col gap-3">
+                      <div className="flex items-start gap-2 sm:gap-3">
+                        <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-col gap-2">
+                            <Select
+                              value={milestone.quarter}
+                              onValueChange={(value) => {
+                                setEditedPDPData(prev => {
+                                  if (!prev) return prev;
+                                  return {
+                                    ...prev,
+                                    milestones: prev.milestones.map((m, i) => 
+                                      i === index ? { ...m, quarter: value } : m
+                                    )
+                                  };
+                                });
+                              }}
+                            >
+                              <SelectTrigger className="w-full sm:w-auto text-sm">
+                                <SelectValue placeholder="Quarter" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="Q1 2025">Q1 2025</SelectItem>
+                                <SelectItem value="Q2 2025">Q2 2025</SelectItem>
+                                <SelectItem value="Q3 2025">Q3 2025</SelectItem>
+                                <SelectItem value="Q4 2025">Q4 2025</SelectItem>
+                                <SelectItem value="Q1 2026">Q1 2026</SelectItem>
+                                <SelectItem value="Q2 2026">Q2 2026</SelectItem>
+                                <SelectItem value="Q3 2026">Q3 2026</SelectItem>
+                                <SelectItem value="Q4 2026">Q4 2026</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <Select
+                              value={milestone.status}
+                              onValueChange={(value) => {
+                                setEditedPDPData(prev => {
+                                  if (!prev) return prev;
+                                  return {
+                                    ...prev,
+                                    milestones: prev.milestones.map((m, i) => 
+                                      i === index ? { ...m, status: value } : m
+                                    )
+                                  };
+                                });
+                              }}
+                            >
+                              <SelectTrigger className="w-full text-sm">
+                                <SelectValue placeholder="Status" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="Not Started">Not Started</SelectItem>
+                                <SelectItem value="In Progress">In Progress</SelectItem>
+                                <SelectItem value="Completed">Completed</SelectItem>
+                                <SelectItem value="Delayed">Delayed</SelectItem>
+                              </SelectContent>
+                            </Select>
                             <Select
                               value={milestone.goal}
                               onValueChange={(value) => {
@@ -697,7 +779,7 @@ export default function PDPDetailView() {
                                 });
                               }}
                             >
-                              <SelectTrigger className="flex-1">
+                              <SelectTrigger className="flex-1 text-sm">
                                 <SelectValue placeholder="Milestone goal" />
                               </SelectTrigger>
                               <SelectContent>
@@ -775,6 +857,155 @@ export default function PDPDetailView() {
             </div>
           </div>
         </div>
+
+        {/* Mobile Edit Modal */}
+        {isMobileModalOpen && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 sm:hidden">
+            <div className="bg-white rounded-xl shadow-2xl w-full max-h-[90vh] overflow-hidden">
+              {/* Modal Header */}
+              <div className="bg-gradient-to-r from-purple-600 to-purple-700 text-white p-4">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h3 className="text-lg font-bold">Edit PDP</h3>
+                    <p className="text-purple-100 text-sm">Edit your professional development plan</p>
+                  </div>
+                  <button 
+                    onClick={handleCancel}
+                    className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+                  >
+                    <X size={20} className="text-white" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Modal Content */}
+              <div className="p-4 overflow-y-auto max-h-[calc(90vh-80px)]">
+                {/* Career Objectives Section */}
+                <div className="mb-6">
+                  <h4 className="text-base font-bold text-gray-900 mb-3">Career Objectives</h4>
+                  <div className="space-y-3">
+                    {editedPDPData?.careerObjectives.map((objective, index) => (
+                      <div key={index} className="flex flex-col gap-2 p-3 bg-gray-50 rounded-lg">
+                        <div className="flex items-start gap-2 flex-1">
+                          <CheckCircle className="text-green-600 mt-0.5 flex-shrink-0" size={16} />
+                          <Select
+                            value={objective}
+                            onValueChange={(value) => updateCareerObjective(index, value)}
+                          >
+                            <SelectTrigger className="flex-1 text-sm">
+                              <SelectValue placeholder="Select career objective" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="Become a specialist in Advanced Endodontics">Become a specialist in Advanced Endodontics</SelectItem>
+                              <SelectItem value="Achieve proficiency in Digital Smile Design">Achieve proficiency in Digital Smile Design</SelectItem>
+                              <SelectItem value="Obtain Implantology Certification">Obtain Implantology Certification</SelectItem>
+                              <SelectItem value="Develop expertise in aesthetic dentistry procedures">Develop expertise in aesthetic dentistry procedures</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <Button
+                          onClick={() => removeCareerObjective(index)}
+                          variant="ghost"
+                          size="sm"
+                          className="text-red-600 hover:text-red-700 hover:bg-red-50 self-start"
+                        >
+                          <X size={16} />
+                        </Button>
+                      </div>
+                    ))}
+                    <Button
+                      onClick={addCareerObjective}
+                      variant="outline"
+                      className="w-full border-dashed border-2 border-purple-300 text-purple-600 hover:bg-purple-50"
+                    >
+                      <Plus size={16} className="mr-2" />
+                      Add Career Objective
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Skills Section */}
+                <div className="mb-6">
+                  <h4 className="text-base font-bold text-gray-900 mb-3">Current Skills</h4>
+                  <div className="space-y-3">
+                    {editedPDPData?.currentSkills.map((skill, index) => (
+                      <div key={index} className="flex flex-col gap-2 p-3 bg-gray-50 rounded-lg">
+                        <div className="flex items-start gap-2">
+                          <CheckCircle className="text-green-600 flex-shrink-0" size={16} />
+                          <Select
+                            value={skill.skill}
+                            onValueChange={(value) => {
+                              setEditedPDPData(prev => {
+                                if (!prev) return prev;
+                                return {
+                                  ...prev,
+                                  currentSkills: prev.currentSkills.map((s, i) => 
+                                    i === index ? { ...s, skill: value } : s
+                                  )
+                                };
+                              });
+                            }}
+                          >
+                            <SelectTrigger className="flex-1 text-sm">
+                              <SelectValue placeholder="Select skill" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {dentalSpecialties.map(specialty => (
+                                <SelectItem key={specialty} value={specialty}>{specialty}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <Select
+                          value={skill.level}
+                          onValueChange={(value) => {
+                            setEditedPDPData(prev => {
+                              if (!prev) return prev;
+                              return {
+                                ...prev,
+                                currentSkills: prev.currentSkills.map((s, i) => 
+                                  i === index ? { ...s, level: value } : s
+                                )
+                              };
+                            });
+                          }}
+                        >
+                          <SelectTrigger className="w-full text-sm">
+                            <SelectValue placeholder="Level" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {skillLevels.map(level => (
+                              <SelectItem key={level} value={level}>{level}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Modal Actions */}
+                <div className="flex gap-3 mt-6 pt-4 border-t">
+                  <Button 
+                    onClick={handleSave}
+                    className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+                  >
+                    <Save size={16} className="mr-2" />
+                    Save Changes
+                  </Button>
+                  <Button 
+                    onClick={handleCancel}
+                    variant="outline"
+                    className="flex-1"
+                  >
+                    <X size={16} className="mr-2" />
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
     
       </div>

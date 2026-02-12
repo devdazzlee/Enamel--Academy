@@ -292,7 +292,10 @@ export default function CPDDashboard() {
                   <span className="text-gray-600">{cpdData.pdpProgress.completed} of {cpdData.pdpProgress.total} goals completed</span>
                   <span className="font-semibold text-purple-600">{cpdData.pdpProgress.percentage}%</span>
                 </div>
-                <button className="w-full mt-3 sm:mt-4 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition-colors text-sm sm:text-base">
+                <button 
+                  onClick={() => router.push('/pdp')}
+                  className="w-full mt-3 sm:mt-4 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition-colors text-sm sm:text-base"
+                >
                   View Full PDP
                 </button>
               </div>
@@ -317,7 +320,10 @@ export default function CPDDashboard() {
                     <span className="text-base sm:text-lg font-bold text-gray-900">23</span>
                   </div>
                 </div>
-                <button className="w-full mt-3 sm:mt-4 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition-colors text-sm sm:text-base">
+                <button 
+                  onClick={() => router.push('/certificates')}
+                  className="w-full mt-3 sm:mt-4 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-medium transition-colors text-sm sm:text-base"
+                >
                   View Evidence
                 </button>
               </div>

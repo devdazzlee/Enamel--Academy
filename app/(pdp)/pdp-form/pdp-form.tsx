@@ -23,6 +23,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function PDPForm() {
   const router = useRouter();
@@ -231,12 +237,43 @@ export default function PDPForm() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
         {/* Progress Steps */}
         <div className="bg-white rounded-lg p-4 sm:p-8 mb-4 sm:mb-6 shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between overflow-x-auto">
+          {/* Mobile Stepper */}
+          <div className="sm:hidden">
+            <div className="flex items-center justify-between mb-3">
+              {steps.map((step, index) => (
+                <React.Fragment key={step.number}>
+                  <button
+                    onClick={() => setCurrentStep(step.number)}
+                    className={`w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 transition-colors ${
+                      currentStep === step.number 
+                        ? 'bg-purple-600 text-white ring-2 ring-purple-300 ring-offset-1' 
+                        : currentStep > step.number
+                        ? 'bg-green-500 text-white'
+                        : 'bg-gray-200 text-gray-500'
+                    }`}
+                  >
+                    {currentStep > step.number ? <CheckCircle size={14} /> : <span className="text-xs font-semibold">{step.number}</span>}
+                  </button>
+                  {index < steps.length - 1 && (
+                    <div className={`flex-1 h-0.5 mx-1.5 ${
+                      currentStep > step.number ? 'bg-green-500' : 'bg-gray-200'
+                    }`} />
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+            <p className="text-center text-sm font-semibold text-purple-700">
+              Step {currentStep}: {steps[currentStep - 1].title}
+            </p>
+          </div>
+
+          {/* Desktop Stepper */}
+          <div className="hidden sm:flex items-center justify-between">
             {steps.map((step, index) => (
               <React.Fragment key={step.number}>
                 <div className="flex flex-col items-center min-w-0 px-2">
                   <div 
-                    className={`w-8 h-8 sm:w-12 sm:h-12 rounded-full flex items-center justify-center mb-1 sm:mb-2 ${
+                    className={`w-12 h-12 rounded-full flex items-center justify-center mb-2 ${
                       currentStep === step.number 
                         ? 'bg-purple-600 text-white' 
                         : currentStep > step.number
@@ -244,16 +281,16 @@ export default function PDPForm() {
                         : 'bg-gray-200 text-gray-500'
                     }`}
                   >
-                    {currentStep > step.number ? <CheckCircle size={16} /> : <div className="text-xs sm:text-base">{step.icon}</div>}
+                    {currentStep > step.number ? <CheckCircle size={16} /> : <div className="text-base">{step.icon}</div>}
                   </div>
-                  <span className={`text-xs sm:text-sm font-medium text-center ${
+                  <span className={`text-sm font-medium text-center ${
                     currentStep === step.number ? 'text-purple-700' : 'text-gray-600'
                   }`}>
                     {step.title}
                   </span>
                 </div>
                 {index < steps.length - 1 && (
-                  <div className={`flex-1 h-0.5 sm:h-1 mx-2 sm:mx-4 min-w-[20px] ${
+                  <div className={`flex-1 h-1 mx-4 min-w-[20px] ${
                     currentStep > step.number ? 'bg-green-500' : 'bg-gray-200'
                   }`} />
                 )}
@@ -325,20 +362,126 @@ export default function PDPForm() {
                   </p>
                   {formData.careerObjectives.map((objective, index) => (
                     <div key={index} className="flex gap-2 mb-3">
-                      <select
-                        className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                        value={objective}
-                        onChange={(e) => {
-                          const newObjectives = [...formData.careerObjectives];
-                          newObjectives[index] = e.target.value;
-                          setFormData({ ...formData, careerObjectives: newObjectives });
-                        }}
-                      >
-                        <option value="">Select a dental specialty</option>
-                        {dentalSpecialties.map(specialty => (
-                          <option key={specialty} value={specialty}>{specialty}</option>
-                        ))}
-                      </select>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <button className="flex-1 flex items-center px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm hover:bg-gray-50 transition-colors text-left">
+                            <span className="flex-1">{objective || "Select a dental specialty"}</span>
+                            <div className="ml-2 h-4 w-4 text-gray-400 flex-shrink-0">▼</div>
+                          </button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="w-full min-w-[300px] max-h-60 overflow-y-auto">
+                          <DropdownMenuItem 
+                            onClick={() => {
+                              const newObjectives = formData.careerObjectives.map((obj, i) => 
+                                i === index ? "Become a specialist in Advanced Endodontics" : obj
+                              );
+                              setFormData({ ...formData, careerObjectives: newObjectives });
+                            }}
+                            className={objective === "Become a specialist in Advanced Endodontics" ? "bg-purple-50 text-purple-700" : ""}
+                          >
+                            Become a specialist in Advanced Endodontics
+                          </DropdownMenuItem>
+                          <DropdownMenuItem 
+                            onClick={() => {
+                              const newObjectives = formData.careerObjectives.map((obj, i) => 
+                                i === index ? "Achieve proficiency in Digital Smile Design" : obj
+                              );
+                              setFormData({ ...formData, careerObjectives: newObjectives });
+                            }}
+                            className={objective === "Achieve proficiency in Digital Smile Design" ? "bg-purple-50 text-purple-700" : ""}
+                          >
+                            Achieve proficiency in Digital Smile Design
+                          </DropdownMenuItem>
+                          <DropdownMenuItem 
+                            onClick={() => {
+                              const newObjectives = formData.careerObjectives.map((obj, i) => 
+                                i === index ? "Obtain Implantology Certification" : obj
+                              );
+                              setFormData({ ...formData, careerObjectives: newObjectives });
+                            }}
+                            className={objective === "Obtain Implantology Certification" ? "bg-purple-50 text-purple-700" : ""}
+                          >
+                            Obtain Implantology Certification
+                          </DropdownMenuItem>
+                          <DropdownMenuItem 
+                            onClick={() => {
+                              const newObjectives = formData.careerObjectives.map((obj, i) => 
+                                i === index ? "Develop expertise in aesthetic dentistry procedures" : obj
+                              );
+                              setFormData({ ...formData, careerObjectives: newObjectives });
+                            }}
+                            className={objective === "Develop expertise in aesthetic dentistry procedures" ? "bg-purple-50 text-purple-700" : ""}
+                          >
+                            Develop expertise in aesthetic dentistry procedures
+                          </DropdownMenuItem>
+                          <DropdownMenuItem 
+                            onClick={() => {
+                              const newObjectives = formData.careerObjectives.map((obj, i) => 
+                                i === index ? "Master advanced surgical techniques" : obj
+                              );
+                              setFormData({ ...formData, careerObjectives: newObjectives });
+                            }}
+                            className={objective === "Master advanced surgical techniques" ? "bg-purple-50 text-purple-700" : ""}
+                          >
+                            Master advanced surgical techniques
+                          </DropdownMenuItem>
+                          <DropdownMenuItem 
+                            onClick={() => {
+                              const newObjectives = formData.careerObjectives.map((obj, i) => 
+                                i === index ? "Become a leader in dental practice management" : obj
+                              );
+                              setFormData({ ...formData, careerObjectives: newObjectives });
+                            }}
+                            className={objective === "Become a leader in dental practice management" ? "bg-purple-50 text-purple-700" : ""}
+                          >
+                            Become a leader in dental practice management
+                          </DropdownMenuItem>
+                          <DropdownMenuItem 
+                            onClick={() => {
+                              const newObjectives = formData.careerObjectives.map((obj, i) => 
+                                i === index ? "Specialize in pediatric dentistry" : obj
+                              );
+                              setFormData({ ...formData, careerObjectives: newObjectives });
+                            }}
+                            className={objective === "Specialize in pediatric dentistry" ? "bg-purple-50 text-purple-700" : ""}
+                          >
+                            Specialize in pediatric dentistry
+                          </DropdownMenuItem>
+                          <DropdownMenuItem 
+                            onClick={() => {
+                              const newObjectives = formData.careerObjectives.map((obj, i) => 
+                                i === index ? "Excel in cosmetic dentistry" : obj
+                              );
+                              setFormData({ ...formData, careerObjectives: newObjectives });
+                            }}
+                            className={objective === "Excel in cosmetic dentistry" ? "bg-purple-50 text-purple-700" : ""}
+                          >
+                            Excel in cosmetic dentistry
+                          </DropdownMenuItem>
+                          <DropdownMenuItem 
+                            onClick={() => {
+                              const newObjectives = formData.careerObjectives.map((obj, i) => 
+                                i === index ? "Become an orthodontic specialist" : obj
+                              );
+                              setFormData({ ...formData, careerObjectives: newObjectives });
+                            }}
+                            className={objective === "Become an orthodontic specialist" ? "bg-purple-50 text-purple-700" : ""}
+                          >
+                            Become an orthodontic specialist
+                          </DropdownMenuItem>
+                          <DropdownMenuItem 
+                            onClick={() => {
+                              const newObjectives = formData.careerObjectives.map((obj, i) => 
+                                i === index ? "Master digital dentistry technologies" : obj
+                              );
+                              setFormData({ ...formData, careerObjectives: newObjectives });
+                            }}
+                            className={objective === "Master digital dentistry technologies" ? "bg-purple-50 text-purple-700" : ""}
+                          >
+                            Master digital dentistry technologies
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                       <button
                         onClick={() => removeObjective(index)}
                         className="p-3 text-red-600 hover:bg-red-50 rounded-lg"

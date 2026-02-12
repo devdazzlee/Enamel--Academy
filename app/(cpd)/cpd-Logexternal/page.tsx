@@ -4,9 +4,11 @@ import React, { useState } from 'react';
 import { ArrowLeft, Upload, CheckCircle, Info } from 'lucide-react';
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
+import { useRouter } from 'next/navigation';
 
 
 export default function LogExternalCPD() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     activityTitle: '',
     provider: '',
@@ -49,24 +51,28 @@ export default function LogExternalCPD() {
        <Navigation />
   
       {/* Header Banner */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-gradient-to-r from-purple-600 to-purple-700 rounded-2xl p-8 shadow-lg">
-          <div className="flex items-center space-x-4">
-            <button className="w-10 h-10 bg-purple-500 hover:bg-purple-400 rounded-lg flex items-center justify-center transition-colors">
-              <ArrowLeft className="text-white" size={20} />
-            </button>
-            <div>
-              <h2 className="text-3xl font-bold text-white mb-2">Log External CPD</h2>
-              <p className="text-purple-100">Record CPD completed outside the platform</p>
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-6 lg:py-8">
+        <div className="bg-gradient-to-r from-purple-600 to-purple-700 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center space-x-3 sm:space-x-4">
+              <button 
+                onClick={() => router.back()}
+                className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-500 hover:bg-purple-400 rounded-lg flex items-center justify-center transition-colors"
+              >
+                <ArrowLeft className="text-white w-4 h-4 sm:w-5 sm:h-5" />
+              </button>
+              <div>
+                <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-1 sm:mb-2">Log External CPD</h2>
+                <p className="text-purple-100 text-xs sm:text-sm lg:text-base">Record CPD completed outside platform</p>
+              </div>
             </div>
           </div>
         </div>
-
-        {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
+      {/* Main Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mt-6 sm:mt-8">
           {/* Left Column - Form */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100">
+            <div className="bg-white rounded-xl p-4 sm:p-6 lg:p-8 shadow-sm border border-gray-100">
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Activity Details</h3>
               <p className="text-sm text-gray-600 mb-6">
                 Enter information about your CPD activity. Fields marked with * are required.
@@ -85,7 +91,7 @@ export default function LogExternalCPD() {
                     onChange={(e) =>
                       setFormData({ ...formData, activityTitle: e.target.value })
                     }
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm sm:text-base"
                   />
                 </div>
 
@@ -101,12 +107,12 @@ export default function LogExternalCPD() {
                     onChange={(e) =>
                       setFormData({ ...formData, provider: e.target.value })
                     }
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm sm:text-base"
                   />
                 </div>
 
                 {/* Date and Hours Row */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Date Completed *
@@ -119,10 +125,10 @@ export default function LogExternalCPD() {
                         onChange={(e) =>
                           setFormData({ ...formData, dateCompleted: e.target.value })
                         }
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm sm:text-base"
                       />
                       <svg
-                        className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-gray-400"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -147,13 +153,13 @@ export default function LogExternalCPD() {
                       onChange={(e) =>
                         setFormData({ ...formData, cpdHours: e.target.value })
                       }
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm sm:text-base"
                     />
                   </div>
                 </div>
 
                 {/* Category and Type Row */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       GDC Category *
@@ -163,7 +169,7 @@ export default function LogExternalCPD() {
                       onChange={(e) =>
                         setFormData({ ...formData, category: e.target.value })
                       }
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm sm:text-base"
                     >
                       <option value="">Select category</option>
                       {gdcCategories.map((cat) => (
@@ -182,7 +188,7 @@ export default function LogExternalCPD() {
                       onChange={(e) =>
                         setFormData({ ...formData, activityType: e.target.value })
                       }
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm sm:text-base"
                     >
                       <option value="">Select type</option>
                       <option value="course">Course</option>
@@ -205,12 +211,12 @@ export default function LogExternalCPD() {
                   </p>
                   <textarea
                     rows={4}
-                    placeholder="Describe the key learning outcomes and knowledge gained..."
+                    placeholder="Describe key learning outcomes and knowledge gained..."
                     value={formData.learningOutcomes}
                     onChange={(e) =>
                       setFormData({ ...formData, learningOutcomes: e.target.value })
                     }
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none text-sm sm:text-base"
                   />
                 </div>
 
@@ -229,7 +235,7 @@ export default function LogExternalCPD() {
                     onChange={(e) =>
                       setFormData({ ...formData, reflection: e.target.value })
                     }
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none text-sm sm:text-base"
                   />
                 </div>
 
@@ -248,7 +254,7 @@ export default function LogExternalCPD() {
                     onChange={(e) =>
                       setFormData({ ...formData, application: e.target.value })
                     }
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none text-sm sm:text-base"
                   />
                 </div>
 
@@ -268,17 +274,17 @@ export default function LogExternalCPD() {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex space-x-4 pt-4">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4">
                   <button
                     type="submit"
-                    className="flex-1 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold flex items-center justify-center space-x-2 transition-colors"
+                    className="w-full sm:flex-1 py-3 sm:py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold flex items-center justify-center space-x-2 transition-colors text-sm sm:text-base"
                   >
-                    <CheckCircle size={20} />
-                    <span>Log CPD Activity</span>
+                    <CheckCircle size={20} className="w-5 h-5 sm:w-5 sm:h-5" />
+                    <span className="font-medium">Log CPD Activity</span>
                   </button>
                   <button
                     type="button"
-                    className="px-8 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-semibold transition-colors"
+                    className="w-full sm:w-auto px-6 sm:px-8 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-semibold transition-colors text-sm sm:text-base"
                   >
                     Cancel
                   </button>

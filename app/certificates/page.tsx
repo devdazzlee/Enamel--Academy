@@ -4,7 +4,8 @@ import { useState } from "react"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { CertificateModal } from "@/components/certificate-modal"
-import { Search, ChevronDown, Download, Calendar, Clock, Award, Filter, FileText, Eye } from "lucide-react"
+import { Search, ChevronDown, Download, Calendar, Clock, Award, Filter, FileText, Eye, ChevronRight } from "lucide-react"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu"
 import jsPDF from 'jspdf';
 import { toPng } from 'html-to-image';
 import * as XLSX from 'xlsx';
@@ -167,7 +168,9 @@ export default function CertificatesPage() {
       const matchesSearch = cert.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           cert.instructor.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           cert.id.toLowerCase().includes(searchQuery.toLowerCase())
-      const matchesCategory = !selectedCategory || cert.category.toLowerCase() === selectedCategory.toLowerCase()
+      const matchesCategory = !selectedCategory || 
+        cert.category.toLowerCase().replace(/\s+/g, '-').includes(selectedCategory.toLowerCase()) ||
+        selectedCategory.toLowerCase().includes(cert.category.toLowerCase().replace(/\s+/g, '-'))
       return matchesSearch && matchesCategory
     })
     .sort((a, b) => {
@@ -433,33 +436,78 @@ export default function CertificatesPage() {
               </h2>
               <div>
                 <label className="text-xs sm:text-sm text-[#6b7280] mb-1 sm:mb-2 block">Categories</label>
-                <div className="relative">
-                  <select
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="w-full px-3 py-2 bg-[#f5f5f5] border-0 rounded-lg text-xs sm:text-sm text-[#9ca3af] appearance-none focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]/20"
-                  >
-                    <option value="">All Categories</option>
-                    <option value="clinical">Clinical</option>
-                    <option value="compliance">Compliance</option>
-                    <option value="professional">Professional Development</option>
-                  </select>
-                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#9ca3af] pointer-events-none" />
-                </div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="w-full px-3 py-2 bg-[#f5f5f5] border-0 rounded-lg text-xs sm:text-sm text-[#9ca3af] appearance-none focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]/20 flex items-center justify-between hover:bg-[#e8e8e8] transition-colors">
+                    <span>{selectedCategory ? selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1) : "All Categories"}</span>
+                    <ChevronDown className="h-4 w-4" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56 bg-white border border-[#e5e7eb] rounded-lg shadow-md">
+                    <DropdownMenuLabel className="text-xs sm:text-sm text-[#6b7280] px-3 py-2">Select Category</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem 
+                      onClick={() => setSelectedCategory("")}
+                      className="text-xs sm:text-sm text-[#1a1a1a] hover:bg-[#f9f5ff] hover:text-[#8b5cf6] cursor-pointer"
+                    >
+                      All Categories
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => setSelectedCategory("clinical")}
+                      className="text-xs sm:text-sm text-[#1a1a1a] hover:bg-[#f9f5ff] hover:text-[#8b5cf6] cursor-pointer"
+                    >
+                      Clinical
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => setSelectedCategory("compliance")}
+                      className="text-xs sm:text-sm text-[#1a1a1a] hover:bg-[#f9f5ff] hover:text-[#8b5cf6] cursor-pointer"
+                    >
+                      Compliance
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => setSelectedCategory("professional")}
+                      className="text-xs sm:text-sm text-[#1a1a1a] hover:bg-[#f9f5ff] hover:text-[#8b5cf6] cursor-pointer"
+                    >
+                      Professional Development
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
               
               <div className="mt-3 sm:mt-4">
                 <label className="text-xs sm:text-sm text-[#6b7280] mb-1 sm:mb-2 block">Sort By</label>
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  className="w-full px-3 py-2 bg-[#f5f5f5] border-0 rounded-lg text-xs sm:text-sm text-[#9ca3af] appearance-none focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]/20"
-                >
-                  <option value="date">Date</option>
-                  <option value="title">Title</option>
-                  <option value="cpdHours">CPD Hours</option>
-                  <option value="score">Score</option>
-                </select>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="w-full px-3 py-2 bg-[#f5f5f5] border-0 rounded-lg text-xs sm:text-sm text-[#9ca3af] appearance-none focus:outline-none focus:ring-2 focus:ring-[#8b5cf6]/20 flex items-center justify-between hover:bg-[#e8e8e8] transition-colors">
+                    <span>{sortBy.charAt(0).toUpperCase() + sortBy.slice(1)}</span>
+                    <ChevronDown className="h-4 w-4" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56 bg-white border border-[#e5e7eb] rounded-lg shadow-md">
+                    <DropdownMenuLabel className="text-xs sm:text-sm text-[#6b7280] px-3 py-2">Sort By</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem 
+                      onClick={() => setSortBy("date")}
+                      className="text-xs sm:text-sm text-[#1a1a1a] hover:bg-[#f9f5ff] hover:text-[#8b5cf6] cursor-pointer"
+                    >
+                      Date
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => setSortBy("title")}
+                      className="text-xs sm:text-sm text-[#1a1a1a] hover:bg-[#f9f5ff] hover:text-[#8b5cf6] cursor-pointer"
+                    >
+                      Title
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => setSortBy("cpdHours")}
+                      className="text-xs sm:text-sm text-[#1a1a1a] hover:bg-[#f9f5ff] hover:text-[#8b5cf6] cursor-pointer"
+                    >
+                      CPD Hours
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => setSortBy("score")}
+                      className="text-xs sm:text-sm text-[#1a1a1a] hover:bg-[#f9f5ff] hover:text-[#8b5cf6] cursor-pointer"
+                    >
+                      Score
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
           </div>
