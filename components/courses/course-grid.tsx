@@ -37,28 +37,28 @@ const courses = [
     title: "Pediatric Dentistry",
     duration: "3h",
     lessons: 11,
-    image: "https://images.unsplash.com/photo-1582719471388-4dcefb7d0fd8?w=400&h=200&fit=crop",
+    image: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400&h=200&fit=crop&crop=center",
   },
   {
     id: 6,
     title: "Orthodontic Treatment",
     duration: "5h",
     lessons: 20,
-    image: "https://images.unsplash.com/photo-1559839734-2b71ea19dce8?w=400&h=200&fit=crop",
+    image: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=400&h=200&fit=crop&crop=center",
   },
   {
     id: 7,
     title: "Endodontic Procedures",
     duration: "3.5h",
     lessons: 14,
-    image: "https://images.unsplash.com/photo-1601225184983-7da4b9d1a7a2?w=400&h=200&fit=crop",
+    image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=400&h=200&fit=crop&crop=center",
   },
   {
     id: 8,
     title: "Periodontal Therapy",
     duration: "2h",
     lessons: 9,
-    image: "https://images.unsplash.com/photo-1611689384274-2a4c6b9b8b5c?w=400&h=200&fit=crop",
+    image: "https://images.unsplash.com/photo-1571772996211-2f02c9727629?w=400&h=200&fit=crop&crop=center",
   },
 ]
 
