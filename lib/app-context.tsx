@@ -327,7 +327,17 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       try {
         const parsed = JSON.parse(savedState)
         if (parsed.user) setUser(parsed.user)
-        if (parsed.courses) setCourses(parsed.courses)
+        if (parsed.courses) {
+          // Merge saved courses with defaults to always use correct image URLs
+          const mergedCourses = parsed.courses.map((savedCourse: Course) => {
+            const defaultCourse = defaultCourses.find(dc => dc.id === savedCourse.id)
+            return {
+              ...savedCourse,
+              image: defaultCourse?.image ?? savedCourse.image ?? "",
+            }
+          })
+          setCourses(mergedCourses)
+        }
         if (parsed.pdpPlans) setPDPPlans(parsed.pdpPlans)
         if (parsed.certificates) setCertificates(parsed.certificates)
         if (parsed.cpdEntries) setCpdEntries(parsed.cpdEntries)
