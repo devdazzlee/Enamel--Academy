@@ -125,8 +125,8 @@ export function CertificateModal({ isOpen, onClose, certificate }: CertificateMo
         }
       `}</style>
       
-      <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-end sm:items-center justify-center z-50 sm:p-4">
-        <div className="bg-white w-full max-h-[95vh] sm:max-h-[90vh] overflow-hidden rounded-t-2xl sm:rounded-xl shadow-2xl sm:max-w-4xl lg:max-w-6xl">
+      <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-stretch sm:items-center justify-center z-50 sm:p-4">
+        <div className="bg-white w-full h-full sm:h-auto sm:max-h-[90vh] overflow-hidden sm:rounded-xl shadow-2xl sm:max-w-4xl lg:max-w-6xl flex flex-col">
           {/* Header */}
           <div className="bg-[#8b5cf6] text-white p-3 sm:p-6">
             <div className="flex items-start justify-between gap-3 mb-3 sm:mb-0">
@@ -163,7 +163,7 @@ export function CertificateModal({ isOpen, onClose, certificate }: CertificateMo
           </div>
 
           {/* Certificate Content */}
-          <div className="p-3 sm:p-6 overflow-y-auto max-h-[calc(95vh-140px)] sm:max-h-[calc(90vh-140px)]">
+          <div className="p-3 sm:p-6 overflow-y-auto flex-1 sm:max-h-[calc(90vh-140px)]">
             <div ref={certificateRef} className="bg-white rounded-lg shadow-sm p-4 sm:p-8 lg:p-12 border border-gray-200">
               {/* Award Icon */}
               <div className="flex justify-center mb-3 sm:mb-6">
