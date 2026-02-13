@@ -562,23 +562,77 @@ export default function CertificatesPage() {
           </div>
         </div>
 
-        {/* Table */}
-        <div className="bg-white rounded-xl border border-[#e5e7eb] overflow-hidden">
+        {/* Mobile Card View */}
+        <div className="md:hidden space-y-3">
+          {filteredAndSortedData.map((certificate) => (
+            <div key={certificate.id} className="bg-white rounded-xl border border-[#e5e7eb] p-4">
+              <div className="flex items-start justify-between gap-3 mb-3">
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-sm font-semibold text-[#1a1a1a] leading-snug">{certificate.title}</h3>
+                  <p className="text-xs text-[#6b7280] mt-1">by {certificate.instructor}</p>
+                  <p className="text-xs text-[#9ca3af] mt-0.5">ID: {certificate.id}</p>
+                </div>
+                <div className="flex items-center gap-1 flex-shrink-0">
+                  <button
+                    onClick={() => handleViewCertificate(certificate.id)}
+                    className="p-2 text-[#8b5cf6] hover:bg-[#8b5cf6]/10 rounded-lg transition-colors"
+                    title="View Certificate"
+                  >
+                    <Eye className="h-4 w-4" />
+                  </button>
+                  <button
+                    onClick={() => handleDownloadCertificate(certificate.id, certificate.title)}
+                    className="p-2 text-[#8b5cf6] hover:bg-[#8b5cf6]/10 rounded-lg transition-colors"
+                    title="Download Certificate"
+                  >
+                    <Download className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="flex items-center gap-1.5 text-xs text-[#6b7280]">
+                  <Calendar className="h-3.5 w-3.5" />
+                  <span>{new Date(certificate.date).toLocaleDateString()}</span>
+                </div>
+                <span className="text-[#e5e7eb]">•</span>
+                <div className="flex items-center gap-1.5 text-xs text-[#6b7280]">
+                  <Clock className="h-3.5 w-3.5" />
+                  <span>{certificate.timeTaken}</span>
+                </div>
+                <span className="text-[#e5e7eb]">•</span>
+                <span className={`inline-flex px-2 py-0.5 text-xs font-medium rounded-full ${
+                  certificate.format === "Online" ? "bg-blue-100 text-blue-700" :
+                  certificate.format === "Workshop" ? "bg-green-100 text-green-700" :
+                  certificate.format === "Hands-on" ? "bg-purple-100 text-purple-700" :
+                  "bg-gray-100 text-gray-700"
+                }`}>
+                  {certificate.format}
+                </span>
+                <span className="inline-flex px-2 py-0.5 text-xs font-medium rounded-full bg-green-100 text-green-700">
+                  {certificate.status}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop Table View */}
+        <div className="hidden md:block bg-white rounded-xl border border-[#e5e7eb] overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[600px]">
+            <table className="w-full">
               <thead className="bg-[#f9f5ff] border-b border-[#e5e7eb]">
                 <tr>
                   {activeFilters.filter(f => f.active).map((filter) => (
                     <th 
                       key={filter.label}
-                      className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-medium text-[#6b7280] uppercase tracking-wider cursor-pointer hover:bg-[#f0ebff] transition-colors"
+                      className="px-4 lg:px-6 py-3 lg:py-4 text-left text-xs font-medium text-[#6b7280] uppercase tracking-wider cursor-pointer hover:bg-[#f0ebff] transition-colors"
                       onClick={() => {
                         if (filter.label === "Date") handleSort("date")
                         if (filter.label === "Title") handleSort("title")
                         if (filter.label === "Time Taken") handleSort("cpdHours")
                       }}
                     >
-                      <div className="flex items-center gap-1 sm:gap-2">
+                      <div className="flex items-center gap-2">
                         <span className="truncate">{filter.label}</span>
                         {(filter.label === "Date" || filter.label === "Title" || filter.label === "Time Taken") && (
                           <span className="text-[#8b5cf6] flex-shrink-0">
@@ -590,7 +644,7 @@ export default function CertificatesPage() {
                       </div>
                     </th>
                   ))}
-                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-medium text-[#6b7280] uppercase tracking-wider">
+                  <th className="px-4 lg:px-6 py-3 lg:py-4 text-left text-xs font-medium text-[#6b7280] uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
@@ -599,10 +653,10 @@ export default function CertificatesPage() {
                 {filteredAndSortedData.map((certificate) => (
                   <tr key={certificate.id} className="hover:bg-[#f9f5ff] transition-colors">
                     {activeFilters.filter(f => f.active).map((filter) => (
-                      <td key={filter.label} className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
+                      <td key={filter.label} className="px-4 lg:px-6 py-3 lg:py-4 whitespace-nowrap">
                         {filter.label === "Date" && (
                           <div>
-                            <div className="text-xs sm:text-sm font-medium text-[#1a1a1a]">
+                            <div className="text-sm font-medium text-[#1a1a1a]">
                               {new Date(certificate.date).toLocaleDateString()}
                             </div>
                             <div className="text-xs text-[#6b7280]">
@@ -612,13 +666,13 @@ export default function CertificatesPage() {
                         )}
                         {filter.label === "Title" && (
                           <div>
-                            <div className="text-xs sm:text-sm font-medium text-[#1a1a1a] truncate max-w-[150px] sm:max-w-none">{certificate.title}</div>
+                            <div className="text-sm font-medium text-[#1a1a1a]">{certificate.title}</div>
                             <div className="text-xs text-[#6b7280]">ID: {certificate.id}</div>
-                            <div className="text-xs text-[#6b7280] truncate max-w-[150px] sm:max-w-none">Instructor: {certificate.instructor}</div>
+                            <div className="text-xs text-[#6b7280]">Instructor: {certificate.instructor}</div>
                           </div>
                         )}
                         {filter.label === "Format" && (
-                          <span className={`inline-flex px-1.5 sm:px-2 py-1 text-xs font-medium rounded-full ${
+                          <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
                             certificate.format === "Online" ? "bg-blue-100 text-blue-700" :
                             certificate.format === "Workshop" ? "bg-green-100 text-green-700" :
                             certificate.format === "Hands-on" ? "bg-purple-100 text-purple-700" :
@@ -628,15 +682,15 @@ export default function CertificatesPage() {
                           </span>
                         )}
                         {filter.label === "Status" && (
-                          <span className="inline-flex px-1.5 sm:px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700">
+                          <span className="inline-flex px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700">
                             {certificate.status}
                           </span>
                         )}
                         {filter.label === "Time Taken" && (
-                          <div className="text-xs sm:text-sm text-[#1a1a1a]">{certificate.timeTaken}</div>
+                          <div className="text-sm text-[#1a1a1a]">{certificate.timeTaken}</div>
                         )}
                         {filter.label === "Type" && (
-                          <span className={`inline-flex px-1.5 sm:px-2 py-1 text-xs font-medium rounded-full ${
+                          <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
                             certificate.type === "Core CPD" ? "bg-[#8b5cf6]/10 text-[#8b5cf6]" :
                             certificate.type === "Mandatory" ? "bg-red-100 text-red-700" :
                             certificate.type === "Advanced" ? "bg-orange-100 text-orange-700" :
@@ -646,7 +700,7 @@ export default function CertificatesPage() {
                           </span>
                         )}
                         {filter.label === "Categories" && (
-                          <span className={`inline-flex px-1.5 sm:px-2 py-1 text-xs font-medium rounded-full ${
+                          <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
                             certificate.category === "Clinical" ? "bg-blue-100 text-blue-700" :
                             certificate.category === "Compliance" ? "bg-red-100 text-red-700" :
                             "bg-green-100 text-green-700"
@@ -656,21 +710,21 @@ export default function CertificatesPage() {
                         )}
                       </td>
                     ))}
-                    <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
-                      <div className="flex items-center gap-1 sm:gap-2">
+                    <td className="px-4 lg:px-6 py-3 lg:py-4 whitespace-nowrap">
+                      <div className="flex items-center gap-2">
                         <button
                           onClick={() => handleViewCertificate(certificate.id)}
-                          className="p-1.5 sm:p-2 text-[#8b5cf6] hover:bg-[#8b5cf6]/10 rounded-lg transition-colors"
+                          className="p-2 text-[#8b5cf6] hover:bg-[#8b5cf6]/10 rounded-lg transition-colors"
                           title="View Certificate"
                         >
-                          <Eye className="h-3 w-3 sm:h-4 sm:w-4" />
+                          <Eye className="h-4 w-4" />
                         </button>
                         <button
                           onClick={() => handleDownloadCertificate(certificate.id, certificate.title)}
-                          className="p-1.5 sm:p-2 text-[#8b5cf6] hover:bg-[#8b5cf6]/10 rounded-lg transition-colors"
+                          className="p-2 text-[#8b5cf6] hover:bg-[#8b5cf6]/10 rounded-lg transition-colors"
                           title="Download Certificate"
                         >
-                          <Download className="h-3 w-3 sm:h-4 sm:w-4" />
+                          <Download className="h-4 w-4" />
                         </button>
                       </div>
                     </td>
@@ -679,15 +733,15 @@ export default function CertificatesPage() {
               </tbody>
             </table>
           </div>
-          
-          {filteredAndSortedData.length === 0 && (
-            <div className="text-center py-8 sm:py-12">
-              <FileText className="h-10 w-10 sm:h-12 sm:w-12 text-[#9ca3af] mx-auto mb-3 sm:mb-4" />
-              <p className="text-[#9ca3af] text-base sm:text-lg">No certificates found</p>
-              <p className="text-[#9ca3af] text-xs sm:text-sm mt-2">Try adjusting your search or filters</p>
-            </div>
-          )}
         </div>
+          
+        {filteredAndSortedData.length === 0 && (
+          <div className="bg-white rounded-xl border border-[#e5e7eb] text-center py-8 sm:py-12">
+            <FileText className="h-10 w-10 sm:h-12 sm:w-12 text-[#9ca3af] mx-auto mb-3 sm:mb-4" />
+            <p className="text-[#9ca3af] text-base sm:text-lg">No certificates found</p>
+            <p className="text-[#9ca3af] text-xs sm:text-sm mt-2">Try adjusting your search or filters</p>
+          </div>
+        )}
       </main>
 
       <Footer />
