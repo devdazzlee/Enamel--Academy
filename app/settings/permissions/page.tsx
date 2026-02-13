@@ -1,5 +1,6 @@
 'use client';
 import React, { useMemo, useState } from "react";
+import Link from "next/link";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 
@@ -198,11 +199,11 @@ export default function ManagePermissionsPage() {
       <main className="flex-1">
         <div className="mx-auto max-w-[860px] px-4 sm:px-6 py-4 sm:py-6">
           {/* Header */}
-          <div className="flex items-center gap-2 text-sm text-[#6b7280]">
+          <Link href="/settings" className="inline-flex items-center gap-2 text-sm text-[#6b7280] hover:text-[#1a1a1a] transition-colors">
             <IconChevronLeft className="h-4 w-4" />
             <span className="hidden sm:inline">Back to Settings</span>
             <span className="sm:hidden">Back</span>
-          </div>
+          </Link>
 
           <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4">
             <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-purple-100 flex-shrink-0">
