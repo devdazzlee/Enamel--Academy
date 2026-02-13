@@ -61,13 +61,13 @@ export function Navigation({ activeItem }: NavigationProps) {
   return (
     <header className="bg-white border-b border-[#e5e7eb] sticky top-0 z-50">
       <div className="w-full px-4">
-        <nav className="flex items-center justify-between h-16 relative">
-          <Link href="/dashboard" className="flex-shrink-0">
+        <nav className="flex items-center h-16 gap-1">
+          <Link href="/dashboard" className="flex-shrink-0 mr-1">
             <EnamelLogo />
           </Link>
           
           {/* Desktop Navigation */}
-          <div className="hidden xl:flex items-center absolute left-1/2 transform -translate-x-1/2">
+          <div className="hidden xl:flex items-center flex-1 min-w-0 justify-center">
             {navItems.map((item) => {
               const Icon = item.icon
               const isActive = activeItem === item.label || pathname === item.href || pathname.startsWith(item.href + "/")
@@ -76,13 +76,13 @@ export function Navigation({ activeItem }: NavigationProps) {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "flex items-center gap-1.5 px-3 py-2.5 text-sm whitespace-nowrap rounded-lg transition-colors",
+                    "flex items-center gap-1 xl:px-2 2xl:px-3 py-2 text-xs 2xl:text-sm whitespace-nowrap rounded-lg transition-colors",
                     isActive
                       ? "bg-[#8b5cf6]/10 text-[#8b5cf6] font-medium"
                       : "text-[#6b7280] hover:text-[#1a1a1a] hover:bg-[#f5f5f5]"
                   )}
                 >
-                  <Icon className="h-5 w-5 flex-shrink-0" />
+                  <Icon className="h-4 w-4 2xl:h-5 2xl:w-5 flex-shrink-0" />
                   <span>{item.label}</span>
                 </Link>
               )
@@ -90,7 +90,7 @@ export function Navigation({ activeItem }: NavigationProps) {
           </div>
           
           {/* Mobile Menu Button */}
-          <div className="xl:hidden flex items-center gap-2">
+          <div className="xl:hidden flex items-center gap-2 ml-auto">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="flex items-center gap-2 px-3 py-2 text-sm text-[#6b7280] hover:text-[#1a1a1a] rounded-lg hover:bg-[#f5f5f5] transition-colors"
@@ -104,7 +104,7 @@ export function Navigation({ activeItem }: NavigationProps) {
           </div>
           
           {/* Desktop User Menu */}
-          <div className="hidden xl:flex items-center gap-2">
+          <div className="hidden xl:flex items-center gap-2 flex-shrink-0">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="flex items-center gap-2 px-3 py-2 text-sm text-[#6b7280] hover:text-[#1a1a1a] rounded-lg hover:bg-[#f5f5f5] transition-colors">
