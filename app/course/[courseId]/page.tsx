@@ -165,36 +165,36 @@ const learnPages = [
   {
     title: "Emergency Response Procedures",
     content: (
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         {/* Video Placeholder */}
-        <div className="bg-gray-900 rounded-xl overflow-hidden">
-          <div className="aspect-video flex flex-col items-center justify-center relative">
-            <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mb-4 cursor-pointer hover:bg-purple-700 transition-colors">
-              <Play className="w-7 h-7 text-white ml-1" />
+        <div className="bg-gray-900 rounded-lg sm:rounded-xl overflow-hidden">
+          <div className="aspect-video flex flex-col items-center justify-center relative px-4">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-purple-600 rounded-full flex items-center justify-center mb-3 sm:mb-4 cursor-pointer hover:bg-purple-700 transition-colors">
+              <Play className="w-5 h-5 sm:w-7 sm:h-7 text-white ml-0.5 sm:ml-1" />
             </div>
-            <h4 className="text-white font-semibold text-lg">BLS and Emergency Management</h4>
-            <p className="text-gray-400 text-sm mt-1">18:30</p>
+            <h4 className="text-white font-semibold text-sm sm:text-lg text-center">BLS and Emergency Management</h4>
+            <p className="text-gray-400 text-xs sm:text-sm mt-1">18:30</p>
             <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-700">
               <div className="h-1 bg-purple-600 w-0" />
             </div>
           </div>
           {/* Video Controls */}
-          <div className="flex items-center gap-3 px-4 py-3 bg-gray-800">
-            <SkipBack className="w-4 h-4 text-gray-400 cursor-pointer" />
-            <div className="w-9 h-9 bg-purple-600 rounded-full flex items-center justify-center cursor-pointer">
-              <Play className="w-4 h-4 text-white ml-0.5" />
+          <div className="flex items-center gap-2 sm:gap-3 px-2 sm:px-4 py-2 sm:py-3 bg-gray-800">
+            <SkipBack className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400 cursor-pointer flex-shrink-0" />
+            <div className="w-8 h-8 sm:w-9 sm:h-9 bg-purple-600 rounded-full flex items-center justify-center cursor-pointer flex-shrink-0">
+              <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white ml-0.5" />
             </div>
-            <SkipForward className="w-4 h-4 text-gray-400 cursor-pointer" />
-            <span className="text-gray-400 text-sm ml-2">0:00 / 18:30</span>
+            <SkipForward className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400 cursor-pointer flex-shrink-0" />
+            <span className="text-gray-400 text-xs sm:text-sm ml-1 sm:ml-2 whitespace-nowrap">0:00 / 18:30</span>
             <div className="flex-1" />
-            <Volume2 className="w-4 h-4 text-gray-400 cursor-pointer" />
-            <Settings className="w-4 h-4 text-gray-400 cursor-pointer" />
-            <Maximize2 className="w-4 h-4 text-gray-400 cursor-pointer" />
+            <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400 cursor-pointer flex-shrink-0" />
+            <Settings className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400 cursor-pointer flex-shrink-0 hidden sm:block" />
+            <Maximize2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400 cursor-pointer flex-shrink-0" />
           </div>
         </div>
-        <div className="flex items-start gap-3 bg-purple-50 border border-purple-200 rounded-lg p-3">
+        <div className="flex items-start gap-2 sm:gap-3 bg-purple-50 border border-purple-200 rounded-lg p-2.5 sm:p-3">
           <Play className="w-4 h-4 text-purple-600 mt-0.5 flex-shrink-0" />
-          <p className="text-purple-700 text-sm">
+          <p className="text-purple-700 text-xs sm:text-sm">
             Please watch the complete video presentation before proceeding to the next section.
           </p>
         </div>
@@ -417,10 +417,10 @@ export default function CoursePlayerPage() {
 
   const renderAbout = () => (
     <div>
-      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">
+      <h1 className="text-xl sm:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">
         {course.title}
       </h1>
-      <div className="flex flex-wrap gap-2 mb-6">
+      <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
         <span className="px-3 py-1 bg-purple-600 text-white text-xs font-semibold rounded-full">
           {courseDetails.cpdHours} CPD Hours
         </span>
@@ -432,8 +432,8 @@ export default function CoursePlayerPage() {
         </span>
       </div>
 
-      <div className="bg-white border border-gray-200 rounded-2xl p-5 sm:p-8 space-y-8">
-        <h2 className="text-purple-600 font-semibold text-lg">Course Details</h2>
+      <div className="bg-white border border-gray-200 rounded-xl sm:rounded-2xl p-4 sm:p-8 space-y-6 sm:space-y-8">
+        <h2 className="text-purple-600 font-semibold text-base sm:text-lg">Course Details</h2>
 
         {/* Aims */}
         <div>
@@ -533,14 +533,14 @@ export default function CoursePlayerPage() {
 
     return (
       <div>
-        <div className="flex items-center justify-between mb-4">
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">{page.title}</h1>
-          <span className="text-sm text-gray-500 border border-gray-300 px-3 py-1 rounded-full whitespace-nowrap ml-3">
+        <div className="flex items-start justify-between gap-3 mb-4">
+          <h1 className="text-lg sm:text-2xl font-bold text-gray-900">{page.title}</h1>
+          <span className="text-xs sm:text-sm text-gray-500 border border-gray-300 px-2 sm:px-3 py-1 rounded-full whitespace-nowrap flex-shrink-0">
             Page {learnPage + 1} of {learnPages.length}
           </span>
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-2xl p-5 sm:p-8">
+        <div className="bg-white border border-gray-200 rounded-xl sm:rounded-2xl p-4 sm:p-8">
           {isConsent ? (
             /* Consent & Declaration */
             <div className="space-y-4">
@@ -583,15 +583,15 @@ export default function CoursePlayerPage() {
         </div>
 
         {/* Navigation */}
-        <div className="flex items-center justify-between mt-6">
+        <div className="flex items-center justify-between mt-4 sm:mt-6 gap-3">
           <button
             onClick={() => {
               if (learnPage > 0) setLearnPage(learnPage - 1)
               else setActiveSection("about")
             }}
-            className="px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2 text-sm font-medium"
+            className="px-3 sm:px-4 py-2 sm:py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             Previous
           </button>
 
@@ -605,22 +605,23 @@ export default function CoursePlayerPage() {
                 }
               }}
               disabled={!consentChecked}
-              className={`px-5 py-2.5 rounded-lg font-semibold flex items-center gap-2 text-sm transition-colors ${
+              className={`px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg font-semibold flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm transition-colors ${
                 consentChecked
                   ? "bg-purple-600 text-white hover:bg-purple-700"
                   : "bg-gray-200 text-gray-400 cursor-not-allowed"
               }`}
             >
-              Proceed to Assessment
-              <ArrowRight className="w-4 h-4" />
+              <span className="hidden sm:inline">Proceed to Assessment</span>
+              <span className="sm:hidden">Assessment</span>
+              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </button>
           ) : (
             <button
               onClick={() => setLearnPage(learnPage + 1)}
-              className="px-5 py-2.5 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors flex items-center gap-2 text-sm"
+              className="px-4 sm:px-5 py-2 sm:py-2.5 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm"
             >
               Next
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </button>
           )}
         </div>
@@ -634,10 +635,10 @@ export default function CoursePlayerPage() {
 
     return (
       <div>
-        <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">Assessment</h1>
-        <p className="text-gray-500 text-sm mb-6">Answer all questions to complete this section</p>
+        <h1 className="text-lg sm:text-2xl font-bold text-gray-900 mb-1">Assessment</h1>
+        <p className="text-gray-500 text-xs sm:text-sm mb-4 sm:mb-6">Answer all questions to complete this section</p>
 
-        <div className="space-y-8">
+        <div className="space-y-6 sm:space-y-8">
           {quizQuestions.map((q, qi) => (
             <div key={q.id}>
               <h3 className="font-semibold text-gray-900 mb-3 text-sm sm:text-base">
@@ -652,7 +653,7 @@ export default function CoursePlayerPage() {
                       copy[qi] = oi
                       setSelectedAnswers(copy)
                     }}
-                    className={`w-full text-left px-4 py-3 rounded-lg border text-sm transition-colors ${
+                    className={`w-full text-left px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border text-xs sm:text-sm transition-colors ${
                       selectedAnswers[qi] === oi
                         ? "border-purple-600 bg-purple-50 text-purple-700 font-medium"
                         : "border-gray-200 hover:border-gray-300 text-gray-700"
@@ -771,14 +772,14 @@ export default function CoursePlayerPage() {
             const isCorrect = userAnswer === q.correctAnswer
 
             return (
-              <div key={q.id} className="border border-gray-200 rounded-xl p-4 sm:p-5">
+              <div key={q.id} className="border border-gray-200 rounded-lg sm:rounded-xl p-3 sm:p-5">
                 <div className="flex items-start gap-2 mb-3">
                   {isCorrect ? (
-                    <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   ) : (
-                    <XCircle className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
+                    <XCircle className="w-4 h-4 sm:w-5 sm:h-5 text-red-500 mt-0.5 flex-shrink-0" />
                   )}
-                  <h4 className="font-semibold text-gray-900 text-sm sm:text-base">
+                  <h4 className="font-semibold text-gray-900 text-xs sm:text-base">
                     Q{qi + 1} {q.question}
                   </h4>
                 </div>
@@ -792,14 +793,14 @@ export default function CoursePlayerPage() {
                     else if (isUserOpt && !isCorrect) classes = "border-red-300 bg-red-50"
 
                     return (
-                      <div key={oi} className={`px-4 py-2.5 rounded-lg border text-sm flex items-center justify-between ${classes}`}>
+                      <div key={oi} className={`px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg border text-xs sm:text-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-0 ${classes}`}>
                         <span className="text-gray-900">{opt}</span>
-                        <div className="flex gap-2 flex-shrink-0 ml-2">
+                        <div className="flex gap-2 flex-shrink-0">
                           {isUserOpt && !isCorrect && (
-                            <span className="text-xs font-medium text-red-600 bg-red-100 px-2 py-0.5 rounded-full">Your Answer</span>
+                            <span className="text-[10px] sm:text-xs font-medium text-red-600 bg-red-100 px-1.5 sm:px-2 py-0.5 rounded-full">Your Answer</span>
                           )}
                           {isCorrectOpt && (
-                            <span className="text-xs font-medium text-green-700 bg-green-100 px-2 py-0.5 rounded-full">Correct</span>
+                            <span className="text-[10px] sm:text-xs font-medium text-green-700 bg-green-100 px-1.5 sm:px-2 py-0.5 rounded-full">Correct</span>
                           )}
                         </div>
                       </div>
@@ -827,15 +828,15 @@ export default function CoursePlayerPage() {
 
   const renderResources = () => (
     <div>
-      <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">Resources</h1>
-      <p className="text-gray-500 text-sm mb-6">Additional resources and further reading</p>
+      <h1 className="text-lg sm:text-2xl font-bold text-gray-900 mb-1">Resources</h1>
+      <p className="text-gray-500 text-xs sm:text-sm mb-4 sm:mb-6">Additional resources and further reading</p>
 
-      <div className="bg-white border border-gray-200 rounded-2xl p-5 sm:p-6 space-y-3">
+      <div className="bg-white border border-gray-200 rounded-xl sm:rounded-2xl p-3 sm:p-6 space-y-2 sm:space-y-3">
         {resources.map((r, i) => (
           <a
             key={i}
             href="#"
-            className="flex items-center justify-between p-4 border border-gray-200 rounded-xl hover:border-purple-300 hover:bg-purple-50/30 transition-colors group"
+            className="flex items-center justify-between p-3 sm:p-4 border border-gray-200 rounded-lg sm:rounded-xl hover:border-purple-300 hover:bg-purple-50/30 transition-colors group"
           >
             <div className="flex items-start gap-3">
               <Link2 className="w-5 h-5 text-purple-600 mt-0.5 flex-shrink-0" />
@@ -865,10 +866,10 @@ export default function CoursePlayerPage() {
 
   const renderFeedback = () => (
     <div>
-      <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">Feedback</h1>
-      <p className="text-gray-500 text-sm mb-6">Please rate your experience with this course</p>
+      <h1 className="text-lg sm:text-2xl font-bold text-gray-900 mb-1">Feedback</h1>
+      <p className="text-gray-500 text-xs sm:text-sm mb-4 sm:mb-6">Please rate your experience with this course</p>
 
-      <div className="bg-white border border-gray-200 rounded-2xl p-5 sm:p-8 space-y-6">
+      <div className="bg-white border border-gray-200 rounded-xl sm:rounded-2xl p-4 sm:p-8 space-y-5 sm:space-y-6">
         {feedbackCriteria.map((criteria, ci) => (
           <div key={ci}>
             <p className="text-gray-700 text-sm mb-2">{criteria}</p>
@@ -884,7 +885,7 @@ export default function CoursePlayerPage() {
                   className="transition-transform hover:scale-110"
                 >
                   <Star
-                    className={`w-8 h-8 ${
+                    className={`w-6 h-6 sm:w-8 sm:h-8 ${
                       star <= ratings[ci] ? "text-yellow-400 fill-yellow-400" : "text-gray-300"
                     }`}
                   />
@@ -906,20 +907,20 @@ export default function CoursePlayerPage() {
             </div>
           </div>
 
-      <div className="flex items-center justify-between mt-6">
+      <div className="flex items-center justify-between mt-4 sm:mt-6 gap-3">
         <button
           onClick={() => setEvaluateSub("resources")}
-          className="px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2 text-sm font-medium"
+          className="px-3 sm:px-4 py-2 sm:py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           Previous
         </button>
         <button
           onClick={handleSubmitFeedback}
-          className="px-5 py-2.5 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors flex items-center gap-2 text-sm"
+          className="px-3 sm:px-5 py-2 sm:py-2.5 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm"
         >
           Submit Feedback
-          <ArrowRight className="w-4 h-4" />
+          <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </button>
       </div>
     </div>
@@ -928,25 +929,25 @@ export default function CoursePlayerPage() {
   const renderCompleted = () => (
     <div>
       {/* Course Completed Banner */}
-      <div className="bg-green-50 border border-green-200 rounded-2xl p-5 sm:p-6 mb-6">
-        <div className="flex items-start gap-3">
-          <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
+      <div className="bg-green-50 border border-green-200 rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-4 sm:mb-6">
+        <div className="flex items-start gap-2 sm:gap-3">
+          <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-600 flex-shrink-0 mt-0.5" />
           <div>
-            <h2 className="text-lg font-bold text-green-800">Course Completed!</h2>
-            <p className="text-green-700 text-sm">Congratulations on completing this CPD course</p>
+            <h2 className="text-base sm:text-lg font-bold text-green-800">Course Completed!</h2>
+            <p className="text-green-700 text-xs sm:text-sm">Congratulations on completing this CPD course</p>
           </div>
         </div>
       </div>
 
       {/* Next Steps */}
-      <div className="bg-white border border-gray-200 rounded-2xl p-5 sm:p-6 mb-6">
-        <h3 className="text-purple-600 font-semibold mb-3">Next Steps</h3>
-        <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-4">
-          <p className="text-purple-700 text-sm">
+      <div className="bg-white border border-gray-200 rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-4 sm:mb-6">
+        <h3 className="text-purple-600 font-semibold text-sm sm:text-base mb-3">Next Steps</h3>
+        <div className="bg-purple-50 border border-purple-200 rounded-lg p-3 sm:p-4 mb-4">
+          <p className="text-purple-700 text-xs sm:text-sm">
             Add a reflection to your training to receive your CPD certificate and log these hours to your CPD record.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                   <button
             onClick={async () => {
               try {
@@ -964,14 +965,14 @@ export default function CoursePlayerPage() {
                 console.log("Share cancelled", err)
               }
             }}
-            className="px-4 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 text-sm"
+            className="px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 text-xs sm:text-sm"
           >
             <Award className="w-4 h-4" />
             Share Achievement
                   </button>
           <button
             onClick={() => router.push(`/course/${courseId}/reflection`)}
-            className="px-4 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors flex items-center justify-center gap-2 text-sm"
+            className="px-3 sm:px-4 py-2.5 sm:py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors flex items-center justify-center gap-2 text-xs sm:text-sm"
           >
             <FileText className="w-4 h-4" />
             Add Reflection
@@ -980,9 +981,9 @@ export default function CoursePlayerPage() {
                           </div>
 
       {/* Course Summary */}
-      <div className="bg-white border border-gray-200 rounded-2xl p-5 sm:p-6 mb-6">
-        <h3 className="text-purple-600 font-semibold mb-4">Course Summary</h3>
-        <h4 className="font-bold text-gray-900 mb-3">What You Learned</h4>
+      <div className="bg-white border border-gray-200 rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-4 sm:mb-6">
+        <h3 className="text-purple-600 font-semibold text-sm sm:text-base mb-3 sm:mb-4">Course Summary</h3>
+        <h4 className="font-bold text-gray-900 text-sm sm:text-base mb-3">What You Learned</h4>
         <ul className="space-y-2 mb-6">
           {courseDetails.learningOutcomes.slice(0, 3).map((l, i) => (
             <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
@@ -991,18 +992,18 @@ export default function CoursePlayerPage() {
             </li>
           ))}
         </ul>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="border border-green-200 bg-green-50 rounded-xl p-4">
-            <p className="text-green-600 text-xs font-medium flex items-center gap-1 mb-1">
-              <Award className="w-3.5 h-3.5" /> CPD Hours
+        <div className="grid grid-cols-2 gap-3 sm:gap-4">
+          <div className="border border-green-200 bg-green-50 rounded-lg sm:rounded-xl p-3 sm:p-4">
+            <p className="text-green-600 text-[10px] sm:text-xs font-medium flex items-center gap-1 mb-1">
+              <Award className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> CPD Hours
             </p>
-            <p className="text-2xl font-bold text-gray-900">{courseDetails.cpdHours}</p>
+            <p className="text-xl sm:text-2xl font-bold text-gray-900">{courseDetails.cpdHours}</p>
                         </div>
-          <div className="border border-green-200 bg-green-50 rounded-xl p-4">
-            <p className="text-green-600 text-xs font-medium flex items-center gap-1 mb-1">
-              <Award className="w-3.5 h-3.5" /> Score
+          <div className="border border-green-200 bg-green-50 rounded-lg sm:rounded-xl p-3 sm:p-4">
+            <p className="text-green-600 text-[10px] sm:text-xs font-medium flex items-center gap-1 mb-1">
+              <Award className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> Score
             </p>
-            <p className="text-2xl font-bold text-gray-900">{scorePercent}%</p>
+            <p className="text-xl sm:text-2xl font-bold text-gray-900">{scorePercent}%</p>
                     </div>
                 </div>
             </div>
@@ -1050,7 +1051,7 @@ export default function CoursePlayerPage() {
         </aside>
 
         {/* Main */}
-        <main className="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 max-w-4xl">
+        <main className="flex-1 min-w-0 p-3 sm:p-6 lg:p-8 max-w-4xl">
           {activeSection === "about" && renderAbout()}
           {activeSection === "learn" && renderLearn()}
           {activeSection === "assess" && renderAssess()}
