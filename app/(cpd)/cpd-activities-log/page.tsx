@@ -582,8 +582,8 @@ Issued on: ${new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'lo
       
       {/* Activity Details Modal */}
       {isModalOpen && selectedActivity && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-4 p-3 sm:p-4">
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden my-4 sm:my-0">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex flex-col sm:flex-row sm:items-center sm:justify-center z-50 sm:p-4">
+          <div className="bg-white shadow-2xl w-full flex-1 sm:flex-initial sm:max-w-2xl sm:max-h-[90vh] overflow-hidden sm:rounded-xl flex flex-col">
             {/* Modal Header */}
             <div className="bg-gradient-to-r from-purple-600 to-purple-700 text-white p-4 sm:p-6">
               <div className="flex justify-between items-start">
@@ -601,7 +601,7 @@ Issued on: ${new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'lo
             </div>
 
             {/* Modal Content */}
-            <div className="p-4 sm:p-6 lg:p-8 overflow-y-auto max-h-[calc(95vh-80px)] sm:max-h-[calc(90vh-120px)]">
+            <div className="p-4 sm:p-6 lg:p-8 overflow-y-auto flex-1">
               {/* Activity Title and Description */}
               <div className="mb-4 sm:mb-6">
                 <div className="flex items-start sm:items-center gap-2 sm:gap-3 mb-2 sm:mb-3">

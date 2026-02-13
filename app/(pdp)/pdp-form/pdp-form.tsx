@@ -361,12 +361,12 @@ export default function PDPForm() {
                     What dental specialties or skills do you want to develop?
                   </p>
                   {formData.careerObjectives.map((objective, index) => (
-                    <div key={index} className="flex gap-2 mb-3">
+                    <div key={index} className="flex items-center gap-1.5 sm:gap-2 mb-3 min-w-0">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <button className="flex-1 flex items-center px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm hover:bg-gray-50 transition-colors text-left">
-                            <span className="flex-1">{objective || "Select a dental specialty"}</span>
-                            <div className="ml-2 h-4 w-4 text-gray-400 flex-shrink-0">▼</div>
+                          <button className="flex-1 flex items-center px-2.5 sm:px-4 py-2.5 sm:py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-xs sm:text-sm hover:bg-gray-50 transition-colors text-left min-w-0">
+                            <span className="flex-1 truncate">{objective || "Select a dental specialty"}</span>
+                            <div className="ml-1.5 sm:ml-2 h-4 w-4 text-gray-400 flex-shrink-0">▼</div>
                           </button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-full min-w-[300px] max-h-60 overflow-y-auto">
@@ -484,9 +484,9 @@ export default function PDPForm() {
                       </DropdownMenu>
                       <button
                         onClick={() => removeObjective(index)}
-                        className="p-3 text-red-600 hover:bg-red-50 rounded-lg"
+                        className="p-1.5 sm:p-2.5 text-red-600 hover:bg-red-50 rounded-lg flex-shrink-0"
                       >
-                        <Trash2 size={20} />
+                        <Trash2 size={16} className="sm:w-5 sm:h-5" />
                       </button>
                     </div>
                   ))}

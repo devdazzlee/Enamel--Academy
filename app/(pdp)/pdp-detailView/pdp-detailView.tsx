@@ -416,9 +416,9 @@ export default function PDPDetailView() {
                   <div className="space-y-2 sm:space-y-3">
                     {isEditing ? (
                       currentData.currentSkills.map((skill: { skill: string; level: string }, index: number) => (
-                        <div key={index} className="flex flex-col gap-2 p-2 sm:p-3 bg-gray-50 rounded-lg">
-                          <div className="flex items-start gap-2">
-                            <CheckCircle className="text-green-600 flex-shrink-0" size={16} />
+                        <div key={index} className="flex flex-col gap-2 p-2 sm:p-3 bg-gray-50 rounded-lg overflow-hidden">
+                          <div className="flex items-start gap-2 min-w-0">
+                            <CheckCircle className="text-green-600 flex-shrink-0 mt-0.5" size={16} />
                             <Select
                               value={skill.skill}
                               onValueChange={(value) => {
@@ -433,7 +433,7 @@ export default function PDPDetailView() {
                                 });
                               }}
                             >
-                              <SelectTrigger className="flex-1 text-sm">
+                              <SelectTrigger className="flex-1 text-sm min-w-0">
                                 <SelectValue placeholder="Select skill" />
                               </SelectTrigger>
                               <SelectContent>
@@ -443,29 +443,31 @@ export default function PDPDetailView() {
                               </SelectContent>
                             </Select>
                           </div>
-                          <Select
-                            value={skill.level}
-                            onValueChange={(value) => {
-                              setEditedPDPData(prev => {
-                                if (!prev) return prev;
-                                return {
-                                  ...prev,
-                                  currentSkills: prev.currentSkills.map((s, i) => 
-                                    i === index ? { ...s, level: value } : s
-                                  )
-                                };
-                              });
-                            }}
-                          >
-                            <SelectTrigger className="w-full text-sm">
-                              <SelectValue placeholder="Level" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {skillLevels.map(level => (
-                                <SelectItem key={level} value={level}>{level}</SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
+                          <div className="pl-6">
+                            <Select
+                              value={skill.level}
+                              onValueChange={(value) => {
+                                setEditedPDPData(prev => {
+                                  if (!prev) return prev;
+                                  return {
+                                    ...prev,
+                                    currentSkills: prev.currentSkills.map((s, i) => 
+                                      i === index ? { ...s, level: value } : s
+                                    )
+                                  };
+                                });
+                              }}
+                            >
+                              <SelectTrigger className="w-full text-sm">
+                                <SelectValue placeholder="Level" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {skillLevels.map(level => (
+                                  <SelectItem key={level} value={level}>{level}</SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </div>
                         </div>
                       ))
                     ) : (
@@ -860,78 +862,71 @@ export default function PDPDetailView() {
 
         {/* Mobile Edit Modal */}
         {isMobileModalOpen && (
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 sm:hidden">
-            <div className="bg-white rounded-xl shadow-2xl w-full max-h-[90vh] overflow-hidden">
+          <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex flex-col z-50 sm:hidden">
+            <div className="bg-white shadow-2xl w-full flex-1 flex flex-col overflow-hidden">
               {/* Modal Header */}
-              <div className="bg-gradient-to-r from-purple-600 to-purple-700 text-white p-4">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h3 className="text-lg font-bold">Edit PDP</h3>
-                    <p className="text-purple-100 text-sm">Edit your professional development plan</p>
-                  </div>
-                  <button 
-                    onClick={handleCancel}
-                    className="p-2 hover:bg-white/20 rounded-lg transition-colors"
-                  >
-                    <X size={20} className="text-white" />
-                  </button>
-                </div>
+              <div className="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-4 py-3 relative">
+                <h3 className="text-base font-bold pr-8">Edit PDP</h3>
+                <p className="text-purple-100 text-xs">Edit your professional development plan</p>
+                <button 
+                  onClick={handleCancel}
+                  className="absolute top-3 right-3 p-1.5 hover:bg-white/20 rounded-lg transition-colors"
+                >
+                  <X size={18} className="text-white" />
+                </button>
               </div>
 
               {/* Modal Content */}
-              <div className="p-4 overflow-y-auto max-h-[calc(90vh-80px)]">
+              <div className="px-3 py-3 overflow-y-auto flex-1">
                 {/* Career Objectives Section */}
-                <div className="mb-6">
-                  <h4 className="text-base font-bold text-gray-900 mb-3">Career Objectives</h4>
-                  <div className="space-y-3">
+                <div className="mb-5">
+                  <h4 className="text-sm font-bold text-gray-900 mb-2">Career Objectives</h4>
+                  <div className="space-y-2">
                     {editedPDPData?.careerObjectives.map((objective, index) => (
-                      <div key={index} className="flex flex-col gap-2 p-3 bg-gray-50 rounded-lg">
-                        <div className="flex items-start gap-2 flex-1">
-                          <CheckCircle className="text-green-600 mt-0.5 flex-shrink-0" size={16} />
-                          <Select
-                            value={objective}
-                            onValueChange={(value) => updateCareerObjective(index, value)}
-                          >
-                            <SelectTrigger className="flex-1 text-sm">
-                              <SelectValue placeholder="Select career objective" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="Become a specialist in Advanced Endodontics">Become a specialist in Advanced Endodontics</SelectItem>
-                              <SelectItem value="Achieve proficiency in Digital Smile Design">Achieve proficiency in Digital Smile Design</SelectItem>
-                              <SelectItem value="Obtain Implantology Certification">Obtain Implantology Certification</SelectItem>
-                              <SelectItem value="Develop expertise in aesthetic dentistry procedures">Develop expertise in aesthetic dentistry procedures</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-                        <Button
-                          onClick={() => removeCareerObjective(index)}
-                          variant="ghost"
-                          size="sm"
-                          className="text-red-600 hover:text-red-700 hover:bg-red-50 self-start"
+                      <div key={index} className="flex items-center gap-1.5 p-2 bg-gray-50 rounded-lg">
+                        <CheckCircle className="text-green-600 flex-shrink-0" size={14} />
+                        <Select
+                          value={objective}
+                          onValueChange={(value) => updateCareerObjective(index, value)}
                         >
-                          <X size={16} />
-                        </Button>
+                          <SelectTrigger className="flex-1 text-xs h-8">
+                            <SelectValue placeholder="Select career objective" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Become a specialist in Advanced Endodontics">Become a specialist in Advanced Endodontics</SelectItem>
+                            <SelectItem value="Achieve proficiency in Digital Smile Design">Achieve proficiency in Digital Smile Design</SelectItem>
+                            <SelectItem value="Obtain Implantology Certification">Obtain Implantology Certification</SelectItem>
+                            <SelectItem value="Develop expertise in aesthetic dentistry procedures">Develop expertise in aesthetic dentistry procedures</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <button
+                          onClick={() => removeCareerObjective(index)}
+                          className="p-1 text-red-500 hover:text-red-700 hover:bg-red-50 rounded flex-shrink-0"
+                        >
+                          <X size={14} />
+                        </button>
                       </div>
                     ))}
                     <Button
                       onClick={addCareerObjective}
                       variant="outline"
-                      className="w-full border-dashed border-2 border-purple-300 text-purple-600 hover:bg-purple-50"
+                      size="sm"
+                      className="w-full border-dashed border-2 border-purple-300 text-purple-600 hover:bg-purple-50 text-xs h-8"
                     >
-                      <Plus size={16} className="mr-2" />
+                      <Plus size={14} className="mr-1.5" />
                       Add Career Objective
                     </Button>
                   </div>
                 </div>
 
                 {/* Skills Section */}
-                <div className="mb-6">
-                  <h4 className="text-base font-bold text-gray-900 mb-3">Current Skills</h4>
-                  <div className="space-y-3">
+                <div className="mb-5">
+                  <h4 className="text-sm font-bold text-gray-900 mb-2">Current Skills</h4>
+                  <div className="space-y-2">
                     {editedPDPData?.currentSkills.map((skill, index) => (
-                      <div key={index} className="flex flex-col gap-2 p-3 bg-gray-50 rounded-lg">
-                        <div className="flex items-start gap-2">
-                          <CheckCircle className="text-green-600 flex-shrink-0" size={16} />
+                      <div key={index} className="p-2 bg-gray-50 rounded-lg space-y-1.5 overflow-hidden">
+                        <div className="flex items-center gap-1.5 min-w-0">
+                          <CheckCircle className="text-green-600 flex-shrink-0" size={14} />
                           <Select
                             value={skill.skill}
                             onValueChange={(value) => {
@@ -946,7 +941,7 @@ export default function PDPDetailView() {
                               });
                             }}
                           >
-                            <SelectTrigger className="flex-1 text-sm">
+                            <SelectTrigger className="flex-1 text-xs h-8 min-w-0">
                               <SelectValue placeholder="Select skill" />
                             </SelectTrigger>
                             <SelectContent>
@@ -956,49 +951,53 @@ export default function PDPDetailView() {
                             </SelectContent>
                           </Select>
                         </div>
-                        <Select
-                          value={skill.level}
-                          onValueChange={(value) => {
-                            setEditedPDPData(prev => {
-                              if (!prev) return prev;
-                              return {
-                                ...prev,
-                                currentSkills: prev.currentSkills.map((s, i) => 
-                                  i === index ? { ...s, level: value } : s
-                                )
-                              };
-                            });
-                          }}
-                        >
-                          <SelectTrigger className="w-full text-sm">
-                            <SelectValue placeholder="Level" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {skillLevels.map(level => (
-                              <SelectItem key={level} value={level}>{level}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                        <div className="pl-5">
+                          <Select
+                            value={skill.level}
+                            onValueChange={(value) => {
+                              setEditedPDPData(prev => {
+                                if (!prev) return prev;
+                                return {
+                                  ...prev,
+                                  currentSkills: prev.currentSkills.map((s, i) => 
+                                    i === index ? { ...s, level: value } : s
+                                  )
+                                };
+                              });
+                            }}
+                          >
+                            <SelectTrigger className="w-full text-xs h-8">
+                              <SelectValue placeholder="Level" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {skillLevels.map(level => (
+                                <SelectItem key={level} value={level}>{level}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 {/* Modal Actions */}
-                <div className="flex gap-3 mt-6 pt-4 border-t">
+                <div className="flex gap-2 pt-3 border-t sticky bottom-0 bg-white pb-1">
                   <Button 
                     onClick={handleSave}
-                    className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+                    size="sm"
+                    className="flex-1 bg-green-600 hover:bg-green-700 text-white text-xs h-9"
                   >
-                    <Save size={16} className="mr-2" />
+                    <Save size={14} className="mr-1.5" />
                     Save Changes
                   </Button>
                   <Button 
                     onClick={handleCancel}
                     variant="outline"
-                    className="flex-1"
+                    size="sm"
+                    className="flex-1 text-xs h-9"
                   >
-                    <X size={16} className="mr-2" />
+                    <X size={14} className="mr-1.5" />
                     Cancel
                   </Button>
                 </div>
